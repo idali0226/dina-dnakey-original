@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:f="http://java.sun.com/jsf/core"  >
+
+    <h:head >
+        <link rel="shortcut icon" href="//www.dina-web.net/dnakey/resources/images/favicon.ico" type="image/x-icon" />
+        
+        <title>
+            #{msg.headername} 
+        </title>   
+          
+    </h:head> 
+
+    <f:view locale="#{languages.locale}"  >
+        
+        <ui:remove>
+            <f:metadata> 
+                <f:event listener="#{blast.init()}"  type="preRenderView"  /> 
+            </f:metadata>
+        </ui:remove>
+
+        
+        <h:body styleClass="background"> 	    
+            <h:outputScript library="js" name="dnakeyjs.js" target="head"/>    
+            <h:outputStylesheet library="css" name="dnakey.css"  />
+
+            <div style="width: 960px; margin: auto;"> 
+                <div id="header" style="width: 960px; ">
+                    <ui:insert name="header" >
+                        <ui:include src="/pages/header.xhtml" />
+                    </ui:insert> 
+                </div> 
+
+                <div id="main" >
+                    <ui:insert name="content"/>
+                </div>  
+
+                <div id="footer" >
+                    <ui:insert name="footer" >
+                        <ui:include src="/pages/footer.xhtml" />
+                    </ui:insert>
+                </div>
+
+            </div>
+
+        </h:body>
+    </f:view>
+</html>

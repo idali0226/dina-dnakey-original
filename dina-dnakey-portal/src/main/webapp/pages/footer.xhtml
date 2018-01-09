@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui" >
+    <body>
+        <ui:composition>   
+            <h:panelGroup  layout="block"   id="foot" >
+                <h:panelGroup layout="block" styleClass="footstyle"   >
+                    <h:form  id="footform"> 
+                        <h:panelGroup layout="block" styleClass="textfoot" style="float: left;">
+                            <br />
+                            <br /> 
+                            <br /> 
+                            <h:panelGroup layout="block">
+                                <h:commandLink action="#{navigate.contact()}" value="#{msg.contact}"  styleClass="textfoot" />   
+                            </h:panelGroup>
+                            <br />
+                            <br /> 
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" styleClass="textfoot"  style="float: right; padding-top: 10px; padding-right: 20px;">
+
+                            <h:outputLink value="#{msg.formasurl}"  target="_blank" > 
+                                <p:graphicImage value="/resources/images/formas.png" styleClass="img" title="#{msg.formas}" /> 
+                            </h:outputLink>  
+                        </h:panelGroup>
+                    </h:form>
+                </h:panelGroup>  
+            </h:panelGroup>
+
+
+        </ui:composition>
+    </body>
+</html>
+

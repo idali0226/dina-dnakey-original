@@ -1,0 +1,173 @@
+body * {
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size: 10px;
+}
+
+.mainbody { 
+    background-color: #C0C0C0;
+}
+
+
+.mainpage {   
+    width: 980px;
+    margin-left: auto;
+    margin-right:  auto;
+    background-color: #FFFFFF;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.mainpage .header {   
+    width: 960px; 
+    margin-left: auto;
+    margin-right:  auto;
+    overflow: hidden;
+    background-color: #999999;   
+} 
+    
+div.mainpage .footer {    
+    width: 960px; 
+    margin-left: auto;
+    margin-right:  auto;
+    overflow: hidden;
+    background-color: #999999;   
+} 
+
+div.mainpage .content {   
+    width: 960px; 
+    margin-left: auto;
+    margin-right:  auto;   
+    background-color: #FFFFFF; 
+    overflow: visible;
+    padding-bottom: 40px;
+} 
+
+.images {
+    border: none;
+}
+
+.leftcol {
+    width: 200px;
+}
+
+.rightcol {
+    width: 700px;
+    text-align: center;
+}
+
+ 
+.leftmenupanel {
+    padding-left: 20px;
+}
+
+
+
+
+
+.rightdiv {
+    text-align: right;
+    width: 150px;
+    float: right;   
+}
+
+
+
+
+
+
+
+
+
+/****************************************** left menu link css'************************************/
+.leftmenupanel a, .leftmenupanel a:link {
+    color: #999999;
+    text-decoration: none;
+}
+
+
+.leftmenupanel a:hover {
+    color:  #999999;
+    text-decoration: underline;
+}
+
+
+
+.alignTop {
+    vertical-align:top;
+}
+
+
+
+
+
+
+
+
+.colwidth30 {
+    width: 30px;
+}
+
+.colwidth50 {
+    width: 50px;
+}
+
+.colwidth70 {
+    width: 70px;
+}
+
+.colwidth80 {
+    width: 80px;
+}
+
+
+.colwidth200 {
+    width: 200px;
+}
+
+.colwidth130 {
+    width: 130px;
+}
+
+.colwidth300 {
+    width: 300px;
+}
+
+.colwidth450 {
+    width: 450px;
+}
+
+
+
+.resulttextfont {
+/*    font-family:  monospace;*/
+        font-family: courier; 
+    font-size: 7px; 
+    font-size: 11px !important;  
+}
+
+
+.resulttextfont1 {
+    font-family:  courier;
+    font-size: 7px; 
+    font-size: 10px !important;  
+}
+
+
+
+/*\*/
+html>.resulttextfont1 {
+    font-family:  monospace;
+    font-size: 7px;   
+}
+/**/
+
+
+
+/* datatable*/
+.ui-datatable * {
+    border : 0px !important;   
+    padding: 0px;  
+    padding-bottom: 2px !important;
+    padding-top: 2px !important;
+}
+

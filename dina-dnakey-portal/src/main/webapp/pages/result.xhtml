@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" 
+      xmlns:f="http://java.sun.com/jsf/core" >
+    <body>
+
+    <ui:composition  template="/templates/masterLayout.xhtml">     
+        <ui:define name="content">  
+            <h:form id="resultform"> 
+                <h:panelGrid id="resultpanal" width="900px"> 
+
+                    <!-- **************************************** single result **************************************** --> 
+                    <h:panelGrid cellpadding="2" cellspacing="0"   > 
+
+                        <h:panelGrid columns="1" styleClass="rightpanel100">   
+                            <p:commandButton actionListener="#{blast.newblast}"   
+                                             title="#{msg.btnewsequence}" value="#{msg.btnewsequence}"   />
+                        </h:panelGrid>  
+
+                        <h:panelGrid columns="3" style="padding-left: 20px; width: 900px;" 
+                                     cellpadding="1" cellspacing="0" 
+                                     columnClasses="colwidth50,colwidth30,colwidth450"> 
+                            <h:outputText value="#{msg.method}" styleClass="resulttextfont" />    
+                            <h:outputText value=" : " styleClass="resulttextfont" /> 
+                            <h:outputText value="#{blast.metadata.version}" styleClass="resulttextfont" /> 
+
+                            <h:outputText value="#{msg.database}" styleClass="resulttextfont" /> 
+                            <h:outputText value=" : " styleClass="resulttextfont" /> 
+                            <h:outputText value="#{blast.database} [#{blast.metadata.statistic.dbNum} #{msg.sequences}; 
+                                          #{blast.metadata.statistic.dbLen} #{msg.totalletters}]" 
+                                          styleClass="resulttextfont" />  
+
+                            <h:outputText value="#{msg.query1}" styleClass="resulttextfont" /> 
+                            <h:outputText value=" : " styleClass="resulttextfont" /> 
+                            <h:outputText value="#{blast.metadata.query.query}" styleClass="resulttextfont" /> 
+
+                            <h:outputText value="#{msg.length}" styleClass="resulttextfont" /> 
+                            <h:outputText value=" : " styleClass="resulttextfont" /> 
+                            <h:outputText value="#{blast.metadata.query.queryLen}" styleClass="resulttextfont" /> 
+                        </h:panelGrid> 
+
+                        <p:separator />
+
+                              
+                    </h:panelGrid>   
+                </h:panelGrid> 
+            </h:form> 
+        </ui:define>
+    </ui:composition>
+</body>
+</html>
+
+
+
+
+
+
