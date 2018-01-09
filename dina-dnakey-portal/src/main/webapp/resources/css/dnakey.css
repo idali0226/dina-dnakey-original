@@ -1,7 +1,7 @@
 /* 
     Document   : dnakey.css
     Created on : 2013-nov-22, 14:14:41
-    Author     : Sofia Ivarsson
+    Author     : Sofia Ivarsson, Ida Li
     Description: Baserad på NRMs grafiska profil och pollenrapporten -sitevision.
     Stylesheet for DNA-key portal, NRM
 */
@@ -137,7 +137,10 @@
 }
 
 .columns{
-    margin-left:20px; margin-right: 20px; margin-top:20px; font-size: 14px; 
+    margin-left:20px;
+    margin-right: 20px; 
+    margin-top:20px; 
+    font-size: 14px; 
 }
 
 .column1{
@@ -146,7 +149,7 @@
 }
 
 .column2 {
-    width: 63%; 
+    width: 60%; 
     float:left;
     margin-left: 20px;
     margin-right: 20px;
@@ -155,6 +158,10 @@
     width: 30%; 
     float:right;   
     margin-right: 20px;
+}
+
+.maincolumn {
+    width: 100%;
 }
 
 .lonecolumn{
@@ -317,6 +324,13 @@ a {
     color:#ffffff;
     font-family: "Arial",sans-serif;   
 }
+
+.formasurl {
+    float: right; 
+    padding-top: 10px; 
+    padding-right: 20px;
+}
+
 
  
 

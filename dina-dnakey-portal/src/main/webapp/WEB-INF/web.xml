@@ -19,16 +19,7 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    
-<!--    <servlet>
-        <servlet-name>Resource Servlet</servlet-name>
-        <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>Resource Servlet</servlet-name>
-        <url-pattern>/primefaces_resource/*</url-pattern>
-    </servlet-mapping>-->
+ 
     
     <context-param>
         <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -41,11 +32,7 @@
         <init-param>
             <param-name>thresholdSize</param-name>
             <param-value>51200</param-value>
-        </init-param>
-<!--        <init-param>
-            <param-name>uploadDirectory</param-name>
-            <param-value>/Users/idali/temp/blast/db/temp</param-value>
-        </init-param>-->
+        </init-param> 
     </filter>
     <filter-mapping>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>

@@ -16,42 +16,7 @@
                     <h:outputLink value="#{msg.nrmurl}"  target="_blank" > 
                         <p:graphicImage value="/resources/images/headerimages/logoNRM.png" styleClass="noborder" title="#{msg.nrm}" /> 
                     </h:outputLink>  
-                </h:panelGrid>  
-                <h:panelGrid styleClass="topmenu" cellpadding="0" cellspacing="0"  >
-                    <h:form  id="headform"> 
-                        <h:panelGrid id="topmenupanel" columns="2"  cellpadding="0" cellspacing="0"  >
-                            <h:panelGrid width="860px;"  cellpadding="0" cellspacing="0" >
-                                <h:panelGroup>
-                                    <ul>
-                                        <li>
-                                            <h:commandLink action="#{navigate.home()}" value="#{msg.start}" styleClass="#{styleBean.tab1}" />     
-                                        </li> 
-                                        <li> 
-                                            <h:commandLink action="#{blast.dnaidentification}" value="#{msg.whatisdnakey}" styleClass="#{styleBean.tab2}"  />     
-                                        </li> 
-                                        <li>
-                                            <h:commandLink action="#{blast.about}" value="#{msg.aboutdnakey}" styleClass="#{styleBean.tab3}" />      
-                                        </li> 
-                                        <li>
-                                            <h:commandLink action="#{blast.links}" value="#{msg.links}" styleClass="#{styleBean.tab4}" />  
-                                        </li> 
-                                    </ul>   
-                                </h:panelGroup>
-                            </h:panelGrid>
-                            
-                            <h:panelGrid style="text-align: right; " columns="2"  cellpadding="0" cellspacing="0"  >   
-                                <h:panelGrid columns="2"  rendered="#{languages.isSwedish}" cellpadding="0" cellspacing="0"  >
-                                    <p:graphicImage value="/resources/images/icons/icons_en.png" styleClass="img" title="#{msg.nrm}" /> 
-                                    <h:commandLink action="#{languages.changelanguage('en')}" value="#{languages.language}"  style="border: none; " />   
-                                </h:panelGrid>
-                                <h:panelGrid columns="2" rendered="#{!languages.isSwedish}" cellpadding="0" cellspacing="0"  >
-                                    <p:graphicImage value="/resources/images/icons/icons_sv.png" styleClass="img" title="#{msg.nrm}" /> 
-                                    <h:commandLink action="#{languages.changelanguage('sv')}" value="#{languages.language}"  style="border: none; " />   
-                                </h:panelGrid> 
-                            </h:panelGrid> 
-                        </h:panelGrid>   
-                    </h:form> 
-                </h:panelGrid> 
+                </h:panelGrid>   
             </h:panelGrid>  
         </ui:composition>
     </body>

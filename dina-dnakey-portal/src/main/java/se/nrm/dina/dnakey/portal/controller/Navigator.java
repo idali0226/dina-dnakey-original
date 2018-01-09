@@ -54,25 +54,25 @@ public class Navigator implements Serializable  {
         redirectPage(HOME_PATH); 
     }
     
-//    public void dnakey() {
-//        log.info("dnakey");  
-//        
-//        style.resetTabStyle(1);
-//        redirectPage(DNAKEY_PATH); 
-//    }
-//    
-//    public void about() {
-//        log.info("about");  
-//        
-//        style.resetTabStyle(2);
-//        redirectPage(ABOUT_PATH); 
-//    }
-//    
-//    public void externalLinks() {
-//        
-//        style.resetTabStyle(3);
-//        redirectPage(EXTERNAL_LINK_PATH);
-//    }
+    public void dnakey() {
+        log.info("dnakey");  
+        
+        style.resetTabStyle(1);
+        redirectPage(DNAKEY_PATH); 
+    }
+    
+    public void about() {
+        log.info("about");  
+        
+        style.resetTabStyle(2);
+        redirectPage(ABOUT_PATH); 
+    }
+    
+    public void externalLinks() {
+        
+        style.resetTabStyle(3);
+        redirectPage(EXTERNAL_LINK_PATH);
+    }
     
         
     public void contact() { 

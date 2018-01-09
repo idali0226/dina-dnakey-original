@@ -6,119 +6,41 @@
         <ui:composition  template="/templates/masterLayout.xhtml">  
             <ui:define name="content"  >   
                 <!-- ************************************** contact page ************************************* -->
-                <h:panelGroup styleClass="columns" layout="block" id="contactPanel"  >
+                <h:panelGroup styleClass="maincolumn" layout="block" id="contactPanel"  >
                     
-                    <h:panelGroup styleClass="column2 lonecolumn" layout="block"   >
+                    <h:panelGroup styleClass="maincolumn lonecolumn" layout="block"   >
                         <h:panelGroup  styleClass="header"  layout="block" >
                             <h:outputText value="#{msg.contactus}"  />  
                         </h:panelGroup> 
 
                         <h:panelGroup styleClass="text" layout="block" > 
-                            Hör gärna av dig till oss med frågor, tips och kommentarer. Vi försöker alltid hjälpa till så gott vi kan.
+                            #{msg.contactpagetext1}   
                         </h:panelGroup>
                         <br />
                         <br />
                         <h:panelGroup styleClass="text subheader" layout="block" >
-                            Postadress och kontaktuppgifter
+                            #{msg.contactpagetext2}  
                         </h:panelGroup>  
 
                         <h:panelGroup styleClass="text" layout="block" > 
-                            Svenska DNA-nyckeln<br />
-                            Naturhistoriska riksmuseet<br />
-                            Box 50007<br />
-                            104 05 Stockholm 
+                            #{msg.headername}<br />
+                            #{msg.nrm}<br />
+                            #{msg.box}<br />
+                            #{msg.postzip} 
                         </h:panelGroup>
 
                         <br />
                         <br />
 
                         <h:panelGroup styleClass="text"  layout="block" > 
-                            <h:outputText  value="Telefon (växel):"  style="font-weight: bold; padding-right: 10px; " />  
+                            <h:outputText  value="#{msg.phone}"  style="font-weight: bold; padding-right: 10px; " />  
                             <h:outputText value="0729664172"  />  
                         </h:panelGroup>   
                         <h:panelGroup styleClass="text"  layout="block" >
-                            <font style="font-weight: bold;">E-post</font>:   
+                            <font style="font-weight: bold;">#{msg.email}</font>:   
                             <h:outputLink value="mailto:stefan.daume@nrm.se" style="padding-left: 60px;">stefan.daume@nrm.se</h:outputLink>
                         </h:panelGroup>      
-                    </h:panelGroup> 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <h:panelGroup styleClass="column2 lonecolumn" layout="block"  rendered="#{languages.isSwedish}"   >
-                        <h:panelGroup  styleClass="header"  layout="block" >
-                            <h:outputText value="#{msg.contactus}"  />  
-                        </h:panelGroup> 
-
-                        <h:panelGroup styleClass="text" layout="block" > 
-                            Hör gärna av dig till oss med frågor, tips och kommentarer. Vi försöker alltid hjälpa till så gott vi kan.
-                        </h:panelGroup>
-                        <br />
-                        <br />
-                        <h:panelGroup styleClass="text subheader" layout="block" >
-                            Postadress och kontaktuppgifter
-                        </h:panelGroup>  
-
-                        <h:panelGroup styleClass="text" layout="block" > 
-                            Svenska DNA-nyckeln<br />
-                            Naturhistoriska riksmuseet<br />
-                            Box 50007<br />
-                            104 05 Stockholm 
-                        </h:panelGroup>
-
-                        <br />
-                        <br />
-
-                        <h:panelGroup styleClass="text"  layout="block" > 
-                            <h:outputText  value="Telefon (växel):"  style="font-weight: bold; padding-right: 10px; " />  
-                            <h:outputText value="0729664172"  />  
-                        </h:panelGroup>   
-                        <h:panelGroup styleClass="text"  layout="block" >
-                            <font style="font-weight: bold;">E-post</font>:   
-                            <h:outputLink value="mailto:stefan.daume@nrm.se" style="padding-left: 60px;">stefan.daume@nrm.se</h:outputLink>
-                        </h:panelGroup>      
-                    </h:panelGroup> 
-
-
-                    <h:panelGroup styleClass="column2 lonecolumn" layout="block"  rendered="#{!languages.isSwedish}"   >
-                        <h:panelGroup  styleClass="header"  layout="block" >
-                            <h:outputText value="#{msg.contactus}"  />  
-                        </h:panelGroup> 
-
-                        <h:panelGroup styleClass="text" layout="block" > 
-                            Feel free to contact us with questions, suggestions and comments.  
-                        </h:panelGroup>
-                        <br />
-                        <br />
-                        <h:panelGroup styleClass="text subheader" layout="block" >
-                            Contact details
-                        </h:panelGroup>  
-
-                        <h:panelGroup styleClass="text" layout="block" > 
-                            The Swedish DNA Key<br />
-                            Swedish Museum of Natural History<br />
-                            Box 50007<br />
-                            104 05 Stockholm 
-                        </h:panelGroup>
-
-                        <br />
-                        <br />
-
-                        <h:panelGroup styleClass="text"  layout="block" > 
-                            <h:outputText  value="Phone:"  style="font-weight: bold; padding-right: 30px; " />  
-                            <h:outputText value="0729664172"  />  
-                        </h:panelGroup>   
-                        <h:panelGroup styleClass="text"  layout="block" >
-                            <font style="font-weight: bold;">Email</font>:   
-                            <h:outputLink value="mailto:stefan.daume@nrm.se" style="padding-left: 32px;">stefan.daume@nrm.se</h:outputLink>
-                        </h:panelGroup>     
-
-                    </h:panelGroup> 
+                    </h:panelGroup>  
                 </h:panelGroup>
             </ui:define>
         </ui:composition>
