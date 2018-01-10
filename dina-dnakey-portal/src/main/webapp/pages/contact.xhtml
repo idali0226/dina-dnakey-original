@@ -6,9 +6,8 @@
         <ui:composition  template="/templates/masterLayout.xhtml">  
             <ui:define name="content"  >   
                 <!-- ************************************** contact page ************************************* -->
-                <h:panelGroup styleClass="maincolumn" layout="block" id="contactPanel"  >
-                    
-                    <h:panelGroup styleClass="maincolumn lonecolumn" layout="block"   >
+                <h:panelGroup styleClass="columns" layout="block" id="contactPanel"  >
+                    <h:panelGroup styleClass="column1" layout="block" >
                         <h:panelGroup  styleClass="header"  layout="block" >
                             <h:outputText value="#{msg.contactus}"  />  
                         </h:panelGroup> 
@@ -33,13 +32,26 @@
                         <br />
 
                         <h:panelGroup styleClass="text"  layout="block" > 
-                            <h:outputText  value="#{msg.phone}"  style="font-weight: bold; padding-right: 10px; " />  
-                            <h:outputText value="0729664172"  />  
-                        </h:panelGroup>   
+                            <h:panelGroup styleClass="contact1" layout="block">
+                                <h:outputText  value="#{msg.phone}"  /> 
+                            </h:panelGroup>
+                            
+                            <h:panelGroup styleClass="contact2" layout="block">
+                                <h:outputText value="0729664172"  />  
+                            </h:panelGroup> 
+                        </h:panelGroup>    
+                        <br />
+                        
                         <h:panelGroup styleClass="text"  layout="block" >
-                            <font style="font-weight: bold;">#{msg.email}</font>:   
-                            <h:outputLink value="mailto:stefan.daume@nrm.se" style="padding-left: 60px;">stefan.daume@nrm.se</h:outputLink>
-                        </h:panelGroup>      
+                            <h:panelGroup styleClass="contact1" layout="block">
+                                <h:outputText  value="#{msg.email}"  /> 
+                            </h:panelGroup>
+                            
+                            <h:panelGroup styleClass="contact2" layout="block">
+                                <h:outputLink value="mailto:stefan.daume@nrm.se" >stefan.daume@nrm.se</h:outputLink>
+                            </h:panelGroup>  
+                        </h:panelGroup>    
+                          
                     </h:panelGroup>  
                 </h:panelGroup>
             </ui:define>

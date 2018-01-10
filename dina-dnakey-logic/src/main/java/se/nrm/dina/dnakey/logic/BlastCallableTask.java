@@ -9,9 +9,8 @@ package se.nrm.dina.dnakey.logic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.Callable;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;  
 import org.apache.commons.io.IOUtils;
-import org.slf4j.LoggerFactory;
 import se.nrm.dina.dnakey.logic.metadata.BlastMetadata; 
 import se.nrm.dina.dnakey.logic.metadata.MetadataDataFactory;
 

@@ -1,0 +1,617 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:p="http://primefaces.org/ui"   >
+    <body>
+        <ui:composition  template="/templates/masterLayout.xhtml">  
+            <ui:define name="content"  >   
+                <!-- ************************************** about dnakey page ************************************* --> 
+                <h:form  id="aboutForm"> 
+                    <h:panelGroup styleClass="columns" layout="block" id="keypanel"  >
+                        <p:remoteCommand 
+                            action="#{navigate.scrollToSection()}" 
+                            value="Scroll to section" autoRun="true" update="scrollSection"/>
+                        <p:remoteCommand 
+                                action="#{navigate.resetTopMenuCSS(2)}" 
+                                    value="Set topmenu css" autoRun="true" />
+
+                        <h:panelGroup styleClass="column1 lonecolumn" layout="block" rendered="#{languages.isSwedish}"> 
+                            <h:panelGroup  styleClass="header"  layout="block" >
+                                <h:outputText value="Om DNA-nyckeln" /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Med DNA-nyckelns sökverktyg kan man göra likhetssökningar mellan en okänd DNA sekvens (sk 
+                                <h:link value="frågesekvens" fragment="querysequence" styleClass="linktext" />) och ett stort antal sekvenser lagrade i ett antal 
+                                <h:link value="databaser" fragment="database" styleClass="linktext" />. Den sökmetod som används här är 
+                                <h:link value="BLAST" fragment="blast" styleClass="linktext" />, en statistisk metod för att snabbt hitta sekvensregioner, eller 
+                                <h:link value="träffsekvenser" fragment="hitsequences" styleClass="linktext" />, med hög likhet.
+                            </h:panelGroup>    
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Resultaten av en sökning visas som en lista med de 10 bästa träffarna i den valda databasen för varje frågesekvens. För närvarande finns 
+                                en begränsning i maximala antalet sekvenser (100) som kan användas vid en individuell sökning.
+                            </h:panelGroup>   
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Om sökningen finner sekvenser i databasen med tillräckligt hög 
+                                <h:link value="likhet" fragment="likhet" styleClass="linktext" /> (≥99%), så visas resultaten och medföljande data för sekvensen i 
+                                databasen som en tabell med ett antal klickbara länkar. Beroende på vilken databas som används så kan en del av kolumnerna sakna information 
+                                för de sekvensträffar som visas.
+                            </h:panelGroup>  
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                I ordning visas katalognummer i 
+                                <h:link value="Naturarv" fragment="naturarv" styleClass="linktext" />
+                                (<h:link value="Katalognr" fragment="katalognr" styleClass="linktext" />), 
+                                det vetenskapliga namnet med länk till 
+                                <h:link value="Naturforskaren" fragment="naturforskaren" styleClass="linktext" />
+                                (<h:link value="Vetenskapligt namn" fragment="vetenskapligtnamn" styleClass="linktext" />), namn på 
+                                den genregion träffsekvensen representerar 
+                                (<h:link value="Markör" fragment="markor" styleClass="linktext" />), 
+                                accessionsnummer och länk till sekvens i 
+                                <h:link value="GenBank" fragment="genbank" styleClass="linktext" />
+                                (<h:link value="GenBank acc." fragment="genbankacc"  styleClass="linktext" />), ID nummer och länk till sekvens i 
+                                <h:link value="BOLD" fragment="bold" styleClass="linktext" />
+                                (<h:link value="BOLD sekv. ID" fragment="boldsekvid" styleClass="linktext" />), procentuell likhet 
+                                (<h:link value="Likhet" fragment="likhet" styleClass="linktext" />), 
+                                poäng (<h:link value="Poäng" fragment="poang" styleClass="linktext" />), samt 
+                                E-värde (<h:link value="E-värde" fragment="evalue" styleClass="linktext" />). 
+                                De tre sista kolumnerna är detaljer relaterade 
+                                till <h:link value="BLAST" fragment="blast" styleClass="linktext" />-algoritmen.
+                            </h:panelGroup> 
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Om man expanderar raden för träffsekvensen (genom att klicka på pilsymbolen i vänsterkant), och träffsekvensen har länkade data till andra databaser, 
+                                visas ytterligare information. Bland annat kan information från naturarv visas (Samling, Svenskt namn, Lokal, Koordinater, Datum, Insamlare). Utöver 
+                                detta kan knappen Karta visa fyndplatsens koordinater på    
+                                <h:outputLink  value="https://maps.google.se/" title="Google Maps"  target="_blank" styleClass="linktext" >Google Maps</h:outputLink>   
+                                knappen Bilder visar klickbara bilder lagrade i Naturarv (högerklickar man på bilden ges fler länkar till ytterligare databaser). Slutligen visar knappen 
+                                <h:link value="Linjering" fragment="linjering" styleClass="linktext" /> 
+                                en grafisk jämförelse (linjering) mellan positionerna i den del där frågesekvensen ("Query") och träffsekvensen ("Subjc") visar hög likhet.
+                            </h:panelGroup> 
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Om ingen matchning sker mellan sekvenserna i databasen och frågesekvensen - det kan tex ske om frågesekvensen representerar en helt annan gen än som 
+                                för närvarande finns representerade i databaserna - då visas en länk med följande text "Det går inte att matcha några poster i den valda databasen! 
+                                Pröva en Sökning i genbank". Om man klickar på "Sök i GenBank" så påbörjas en ny BLAST-sökning (med standardinställningar) på GenBanks 
+
+                                <h:outputLink  value="#{blast.blastportalUrl}"  title="BLAST-portal"  target="_blank" styleClass="linktext">BLAST-portal</h:outputLink>,  
+                                och därefter genereras en ny länk till resultatet.
+                            </h:panelGroup>  
+                            <br />  
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Nedan följer en lista över de nyckelord och begrepp som nämns på DNA-nyckelns sidor. 
+                            </h:panelGroup> 
+                            <br /><br />   
+                        </h:panelGroup>
+
+                        <h:panelGroup styleClass="column1 lonecolumn" layout="block" rendered="#{!languages.isSwedish}">
+
+                            <h:panelGroup  styleClass="header"  layout="block" >
+                                <h:outputText value="On the DNA key" /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Using the DNA key search tools one can perform similarity searches between an unknown DNA sequence (so-called 
+                                <h:link value="query sequence" fragment="querysequence" styleClass="linktext" />) and a large number of sequences stored in a several 
+                                <h:link value="databases" fragment="database" styleClass="linktext" />. The search method used here is 
+                                <h:link value="BLAST" fragment="blast" styleClass="linktext"/>, a statistical method for quickly finding sequence regions, or 
+                                <h:link value="hit sequences" fragment="hitsequences" styleClass="linktext" />, with high similarity.
+                            </h:panelGroup>    
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                The results of a search are displayed as a list of the top 10 hits in the selected database for each query sequence. Currently there is a limitation in the 
+                                maximum number of sequences (100) that can be used for an individual search.
+                            </h:panelGroup>   
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                If the search finds sequences in the database with sufficiently high  
+                                <h:link value="similarity" fragment="likhet" styleClass="linktext" /> (≥99%), then the results are displayed, with the data 
+                                provided on the sequence from the database as a table with a number of clickable links. Depending on the database that is used, some of the columns have no 
+                                information for the displayed hit sequences.
+                            </h:panelGroup>  
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Data fields, in the order of display, are catalog number in the 
+                                <h:link value="Naturarv" fragment="naturarv" styleClass="linktext" />
+                                (<h:link value="CatalogNo" fragment="katalognr" styleClass="linktext" />), 
+                                the scientific name with link to  
+                                <h:link value="Naturforskaren" fragment="naturforskaren" styleClass="linktext" />
+                                (<h:link value="Scientific name" fragment="vetenskapligtnamn" styleClass="linktext" />), the name of the gene region represented by the hit sequence 
+                                (<h:link value="Marker" fragment="markor" styleClass="linktext" />), 
+                                accession number and link to the sequence in 
+                                <h:link value="GenBank" fragment="genbank" styleClass="linktext" />
+                                (<h:link value="GenBank acc." fragment="genbankacc"  styleClass="linktext" />), ID number and link to the sequence in 
+                                <h:link value="BOLD" fragment="bold" styleClass="linktext" />
+                                (<h:link value="BOLD Seq. ID" fragment="boldsekvid" styleClass="linktext" />), percentage similarity 
+                                (<h:link value="similarity" fragment="likhet" styleClass="linktext" />), 
+                                score (<h:link value="Score" fragment="poang" styleClass="linktext" />), as well as  
+                                E-value (<h:link value="E-value" fragment="evalue" styleClass="linktext" />). 
+                                The last three columns are the details related to the 
+                                <h:link value="BLAST" fragment="blast" styleClass="linktext" /> algorithm.
+                            </h:panelGroup> 
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                If one expands the row for the hit sequence (by clicking on the arrow symbol on the left side), and the hit sequence has links to data in other databases, additional 
+                                information will be displayed. Among other things, information from https://www.dina-web.net/naturarv/ will be shown (Collection, Swedish names, Local, Coordinates, Date, Collector). In addition, 
+                                the “Map” button shows location coordinates on 
+                                <h:outputLink  value="https://maps.google.se/" title="Google Maps"  target="_blank" styleClass="linktext">Google Maps</h:outputLink>   
+                                The “Images” button displays clickable images stored in “Naturarv” (right click on the picture shows more links to additional databases). Finally, the  
+                                <h:link value="Alignment" fragment="linjering" styleClass="linktext" /> 
+                                button shows a graphical comparison (alignment) between positions in the parts where the query sequence ("Query") and the hit sequence ("Subjc") have high similarity.
+                            </h:panelGroup> 
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                If no match is made between the sequences in the database and query sequence - which can happen, for instance, when the query sequence represents a completely different 
+                                gene than is currently represented in the database - then a link is displayed with the following text “Can not match any records in the selected database! Try a search 
+                                of GenBank.” If you click on “Search GenBank” a new BLAST search (with default settings) is performed on GenBank's 
+
+                                <h:outputLink  value="#{blast.blastportalUrl}"  title="BLAST portal"  target="_blank" styleClass="linktext">BLAST portal</h:outputLink>,  
+                                and then a new link to the results is generated.
+                            </h:panelGroup>  
+                            <br />  
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                Below is a list of key words and concepts mentioned on DNA key webpages.
+                            </h:panelGroup> 
+                            <br /><br />   
+                        </h:panelGroup>  
+
+                         
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <h:panelGroup styleClass="column1 lonecolumn" layout="block" id="scrollSection">
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" style="font-size: 18px;" > 
+                                #{msg.aboutglossary}<br />
+                            </h:panelGroup>
+  
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="16s">16S</span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  >  
+                                #{msg.about16s}
+                            </h:panelGroup> 
+             
+                            <br />  
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="svenskaorganismer">
+                                    <h:outputText value="#{msg.aboutbarcodesequences}" /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext1}
+                                <h:link value="#{msg.abouttext2}" fragment="svenskaryggradsdjur" styleClass="linktext"/>  
+                                #{msg.abouttext3} 
+                                <h:link value="#{msg.abouttext4}" fragment="genbankdatabas" styleClass="linktext"/>  
+                                #{msg.abouttext5}<h:link value="Databas" fragment="database" styleClass="linktext"/>.
+                            </h:panelGroup>  
+                            <br /> 
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                #{msg.abouttext6}<br /> 
+                            </h:panelGroup>
+   
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                #{msg.abouttext7}<h:link value="Markör" fragment="markor" styleClass="linktext"/>.
+                            </h:panelGroup>
+
+                            <br /> 
+
+                            <h:panelGroup  styleClass="subheader text" id="blastanchorpanelen" layout="block" >  
+                                <span id="blast">BLAST</span><br />   
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                #{msg.abouttext8}
+                                <h:outputLink  value="http://www.ncbi.nlm.nih.gov/books/NBK21097/" title="NCBI"  target="_blank" styleClass="linktext" >#{msg.abouttext9}</h:outputLink>   
+                                #{msg.abouttext10}<h:link value="#{msg.abouttext11}" fragment="sokmetod" styleClass="linktext"/>.
+                            </h:panelGroup>
+ 
+
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="bold">BOLD</span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                #{msg.abouttext12}<h:link value="BOLD" fragment="bold" styleClass="linktext"/>). 
+                                #{msg.abouttext13} 
+                                <h:link value="COI" fragment="coi"  styleClass="linktext" />, 
+                                <h:link value="matK" fragment="matk" styleClass="linktext" />, 
+                                <h:link value="rbcL" fragment="rbcl" styleClass="linktext" />, 
+                                <h:link value="ITS" fragment="its" styleClass="linktext" />.
+                            </h:panelGroup>  
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="svenskaryggradsdjur"> 
+                                    <h:outputText value="#{msg.abouttext14}"  /> 
+                                </span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}" > 
+                                Sekvensdatabas innehållande referenssekvenser hämtade från arter som förekommer i Sverige. Viktigt att notera är att sekvenserna i 
+                                denna databas kan vara hämtade från individer/prover som är tagna utanför sveriges gränser. Som exempel, om DNA-prov har saknats 
+                                för en svenskfångad individ av Åkersork, kan sekvensen i databasen härröra från en individ som fångats i Norge. Se 
+                                <h:link value="Databas" fragment="databas" styleClass="linktext"/>. 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}" > 
+                                Sequence database containing reference sequences derived from species that occur in Sweden. Important to note is that the sequences 
+                                in this database can be downloaded from individuals/samples that were collected outside of Sweden. For example, when lacking a DNA sample 
+                                for a Swedish-caught individual of a vole species, the sequence in the database originated from an individual caught in Norway. See 
+                                <h:link value="Database" fragment="databas" styleClass="linktext"/>. 
+                            </h:panelGroup>
+
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="boldsekvid">
+                                    <h:outputText value="#{msg.abouttext15}"  /> 
+                                </span> <br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext16}<h:link value="BOLD" fragment="bold" styleClass="linktext"/>.
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="coi">COI</span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext17}
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="database"> 
+                                    <h:outputText value="#{msg.database}"  /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext18}
+                                <h:link value="#{msg.abouttext2}" fragment="svenskaryggradsdjur" styleClass="linktext" />,
+                                #{msg.abouttext19} 
+                                <h:link value="COI" fragment="coi" styleClass="linktext" /> - #{msg.starttext3} <h:link value="16S" fragment="16s" styleClass="linktext" />#{msg.abouttext20}
+                                <h:link value="GenBank" fragment="genbank" styleClass="linktext" />
+                                #{msg.abouttext21}
+                                <h:link value="COI" fragment="coi" styleClass="linktext" />, 
+                                <h:link value="rbcL" fragment="rbcl" styleClass="linktext"/>, 
+                                <h:link value="matK" fragment="matk" styleClass="linktext" />). #{msg.abouttext22}
+                                <h:link value="#{msg.abouttext23}" fragment="genbankdatabas" styleClass="linktext" />. 
+                                #{msg.abouttext24}
+                                <h:link value="#{msg.abouttext25}" fragment="svenskaorganismer" styleClass="linktext" />.  
+                                #{msg.abouttext26}<h:link value="Dyntaxa" fragment="dyntasa" styleClass="linktext" />). 
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="dyntaxa">Dyntaxa</span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                <h:outputLink  value="http://www.dyntaxa.se/" title="Dyntaxa"  target="_blank" styleClass="linktext">Dyntaxa.se</h:outputLink>, 
+                                #{msg.abouttext27}
+                                <h:link value="#{msg.abouttext28}" fragment="vetenskapligtnamn" styleClass="linktext" />.
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="evalue"> 
+                                    <h:outputText value="#{msg.evalue}"  /> 
+                                </span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                #{msg.abouttext29}
+                                <h:outputLink  value="#{blast.blastdocument}" title="document"  target="_blank" styleClass="linktext" >#{msg.abouttext30}</h:outputLink> 
+                                #{msg.abouttext31}
+                            </h:panelGroup>
+  
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                FASTA format<br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}"> 
+                                A standardized format for gene sequence data. The information about each sequence consists of an information line that begins with ">", followed by the DNA sequence on one or 
+                                more subsequent lines. Currently the DNA key only supports using a DNA sequence as a search criterion. Examples of DNA sequences in FASTA format can be viewed by 
+                                using the auto-paste function for test sequences into the DNA key search field (tab "Testing the System"). See also 
+                                <h:outputLink  value="http://en.wikipedia.org/wiki/FASTA_format" title="Wikipedia"  target="_blank" styleClass="linktext" >Wikipedia link</h:outputLink>. 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}"> 
+                                Standardiserat format för gensekvensdata. Informationen om varje enskild sekvens består av en informationsrad som börjar med ">", 
+                                och följs av själva DNA-sekvensen på en eller fler efterföljande rader. För närvarande tillåter DNA-nyckeln enbart DNA-sekvenser 
+                                att användas som fråga vid sökningen. Exempel på DNA sekvenser i FASTA format kan ses genom att använda automatiskt klistra in 
+                                testsekvenser i DNA-nyckelns sökruta (fliken "Testa systemet"). Se även 
+                                <h:outputLink  value="http://en.wikipedia.org/wiki/FASTA_format" title="Wikipedia"  target="_blank" styleClass="linktext" >Wikipedialänk</h:outputLink> [Eng.]. 
+                            </h:panelGroup>
+
+
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="querysequence">
+                                    <h:outputText value="#{msg.abouttext32}"  /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext33}
+                                <h:link value="#{msg.abouttext34}" fragment="sekvenser" styleClass="linktext" />
+                                #{msg.abouttext35}
+                                <h:link value="#{msg.abouttext11}" fragment="sokmetod" styleClass="linktext" />. 
+                            </h:panelGroup>  
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="genbank">GenBank</span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext36}
+                                (<h:outputLink  value="http://www.ncbi.nlm.nih.gov/" title="NCBI"  target="_blank" styleClass="linktext">NCBI</h:outputLink>).
+                            </h:panelGroup>  
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="genbankacc">GenBank acc.</span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext37}
+                                <h:link value="GenBank" fragment="genbank" styleClass="linktext"/>.
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="its">ITS</span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext38}
+                            </h:panelGroup>
+
+                 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="katalognr">
+                                    <h:outputText value="#{msg.catalognum}"  /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext39}
+                                <h:outputLink  value="https://www.dina-web.net/naturarv/" title="Naturarv"  target="_blank" styleClass="linktext" >Naturarv</h:outputLink>.
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="likhet">
+                                    <h:outputText value="#{msg.abouttext40}"  /> 
+                                </span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext41}
+                                <h:link value="#{msg.abouttext42}" fragment="linjering" styleClass="linktext"/>.  
+                                #{msg.abouttext43}
+                                <h:outputLink  value="#{blast.blastdocument}" title="document"  target="_blank" styleClass="linktext">#{msg.abouttext44}</h:outputLink> 
+                                #{msg.abouttext31}
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" >  
+                                <span id="linjering">
+                                    <h:outputText value="#{msg.abouttext45}"  /> 
+                                </span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                #{msg.abouttext46}
+                                <h:outputLink  value="http://en.wikipedia.org/wiki/Sequence_alignment" title="document"  target="_blank" styleClass="linktext">Alignment</h:outputLink>].
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" >  
+                                <h:outputText value="#{msg.length}"   /> 
+                                <br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block" > 
+                                #{msg.abouttext47}
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="markor">
+                                    <h:outputText value="#{msg.mark}"  /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext48}
+                                <h:link value="COI" fragment="coi" styleClass="linktext"/> #{msg.abouttext49}
+                                <h:link value="rbcL" fragment="rbcl" styleClass="linktext"/> #{msg.abouttext50} <h:link value="matK" fragment="matk" styleClass="linktext"/>  
+                                #{msg.abouttext51} <h:link value="16S" fragment="16s" styleClass="linktext"/> #{msg.abouttext52} 
+                                <h:link value="ITS" fragment="its" styleClass="linktext" /> #{msg.abouttext53} 
+                            </h:panelGroup>
+ 
+
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="matk">matK</span><br />   
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext54} 
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="naturarv">Naturarv</span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                <h:outputLink  value="https://www.dina-web.net/naturarv/" title="Naturarv.se"  target="_blank" styleClass="linktext">
+                                    naturarv
+                                </h:outputLink>. #{msg.abouttext55} 
+                                <h:outputLink  value="http://www.dina-project.net/cgi-bin/view/Main/WebHome" title="DINA"  target="_blank" styleClass="linktext">#{msg.abouttext56}</h:outputLink>.
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="naturforskaren">Naturforskaren</span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  >  
+                                <h:outputLink  value="http://naturforskaren.se" title="Naturforskaren.se"  target="_blank" styleClass="linktext">Naturforskaren.se</h:outputLink>.     
+                                #{msg.abouttext57} 
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="poang">
+                                    <h:outputText value="#{msg.score}"   /> 
+                                </span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext58}
+                                <h:link value="#{msg.abouttext42}" fragment="linjering" styleClass="linktext" />
+                                s#{msg.abouttext59}
+                                <h:outputLink  value="#{blast.blastdocument}" title="document"  target="_blank" styleClass="linktext" >#{msg.abouttext30}</h:outputLink> #{msg.abouttext31} 
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="rbcl">rbcL</span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext60}
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="genbankdatabas">
+                                    <h:outputText value="#{msg.abouttext61}"   /> 
+                                </span><br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext62}
+                                <h:link value="COI" fragment="coi" styleClass="linktext" />,
+                                <h:link value="rbcL" fragment="rbcl" styleClass="linktext" />, #{msg.abouttext50}
+                                <h:link value="matK" fragment="matk" styleClass="linktext" />)  #{msg.abouttext63}
+                                <h:link value="GenBank" fragment="genbank" styleClass="linktext" />, #{msg.abouttext64}
+                                <h:link value="#{msg.abouttext2}" fragment="svenskaryggradsdjur" styleClass="linktext"/>. 
+                                #{msg.abouttext65}
+                                <h:link value="16S" fragment="16s" styleClass="linktext" />. #{msg.abouttext66}
+                                <h:link value="#{msg.database}" fragment="databas" styleClass="linktext" />. 
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="sekvenser">
+                                    <h:outputText value="#{msg.abouttext67}"  /> 
+                                </span> <br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext68}
+                                <h:outputLink  value="http://www.bioinformatics.org/sms/iupac.html" title="IUPAC-symboler"  target="_blank" styleClass="linktext">IUPAC-symboler</h:outputLink>.
+                            </h:panelGroup>  
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="streckkodsgen">
+                                    <h:outputText value="#{msg.abouttext69}" /> 
+                                </span> <br />  
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext70} <h:link value="Markör" fragment="markör" styleClass="linktext"/>.
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <h:outputText value="#{msg.abouttext71}"  /> 
+                                <br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"    > 
+                                #{msg.abouttext72} <h:link value="#{msg.scientificname}" fragment="vetenskapligtnamn" styleClass="linktext"/>.
+                            </h:panelGroup>
+ 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="sokmetod">
+                                    <h:outputText value="#{msg.abouttext11}"   /> 
+                                </span> <br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"  > 
+                                #{msg.abouttext73}
+                                <h:link value="#{msg.abouttext74}" fragment="querysequence" styleClass="linktext" />
+                                #{msg.abouttext75}
+                                <h:link value="#{msg.abouttext76}" fragment="hitsequences" styleClass="linktext" />. #{msg.abouttext77}
+                                <h:link value="BLAST" fragment="blast" styleClass="linktext" /> #{msg.abouttext78}
+                                <h:link value="#{msg.abouttext79}" fragment="poang" styleClass="linktext" /> #{msg.abouttext50} <h:link value="#{msg.evalues}" fragment="evalue" styleClass="linktext" />.  
+                                #{msg.abouttext80}
+                                <h:outputLink  value="#{blast.blastPlus}" title="BLAST+"  target="_blank" styleClass="linktext">BLAST+</h:outputLink>, 
+                                #{msg.abouttext81}
+                                <h:outputLink  value="#{blast.blastdocument}" title="BLAST+"  target="_blank" styleClass="linktext" >#{msg.abouttext30}</h:outputLink> #{msg.abouttext31}
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="hitsequences">
+                                    <h:outputText value="#{msg.abouttext82}"   /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext83} <h:link value="#{msg.abouttext84}" fragment="querysequence" styleClass="linktext"/>.  
+                            </h:panelGroup> 
+                            <br />
+
+                            <h:panelGroup  styleClass="subheader text"  layout="block" > 
+                                <span id="vetenskapligtnamn">
+                                    <h:outputText value="#{msg.scientificname}"   /> 
+                                </span><br /> 
+                            </h:panelGroup>
+
+                            <h:panelGroup  styleClass="text"  layout="block"   > 
+                                #{msg.abouttext85}
+                                "<font style="font-style: italic;">#{msg.abouttext86}</font>". 
+                                #{msg.abouttext87}
+                                <h:outputLink  value="http://www.dyntaxa.se/" title="Dyntaxa"  target="_blank" styleClass="linktext">Dyntaxa.se</h:outputLink>. 
+                            </h:panelGroup>   
+                        </h:panelGroup> 
+                    </h:panelGroup>
+                </h:form> 
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

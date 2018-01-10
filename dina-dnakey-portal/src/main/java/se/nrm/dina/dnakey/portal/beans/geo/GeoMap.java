@@ -34,7 +34,7 @@ public class GeoMap implements Serializable {
     
     @PostConstruct
     public void init() { 
-        log.info("init");
+        log.info("init: {}", geoMap == null);
         if(geoMap == null) {
             geoMap = geo.getGeoMapData(); 
         } 

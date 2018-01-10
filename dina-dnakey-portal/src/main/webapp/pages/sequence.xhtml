@@ -90,73 +90,37 @@
                         
                         <!-- ************************************** main panel ************************************* -->  
                         <h:panelGroup styleClass="main" layout="block" id="mainpanel" >
-                            <!-- ************************************** random images ************************************* --> 
-                            <h:panelGroup  styleClass="mainimage" layout="block" >
-                                <p:graphicImage value="#{imageBeans.image}" styleClass="img"   /> 
-                            </h:panelGroup>
-                
+         
                             <!-- ************************************** start panel ************************************* --> 
                             <h:panelGroup styleClass="columns" layout="block" id="startpanel" rendered="#{blast.section == 0}">
+                                
+                                
                                 
                
                                 <!-- ************************************** blast column ************************************* --> 
                                 <h:panelGroup styleClass="column2" layout="block" id="column2panel"> 
-                                    <h:panelGroup styleClass="text" layout="block" rendered="#{languages.isSwedish}"> 
-                                        I Svenska DNA-nyckeln kan man med en frågesekvens söka efter liknande DNA sekvenser i ett referensbibliotek av kända sekvenser. DNA-nyckeln innehåller 
-                                        <h:commandLink action="#{blast.streckkodsgenDef}"  title="Streckkodsgener"  style="text-decoration: none; color: #8B8786; " >    
-                                            <h:outputText value="streckkodsgener" />   
-                                            <f:ajax render=":sequenceform:mainpanel"/>
+                                    <h:panelGroup styleClass="text" layout="block" > 
+                                        #{msg.starttext1}
+                                        <h:commandLink action="#{navigate.scrollToClientId('streckkodsgen')}"  title="#{msg.starttitle1}"  
+                                                       styleClass="linktext" >    
+                                            <h:outputText value="#{msg.startlink1}" />    
                                         </h:commandLink> 
-                                        och finner man tillräckligt stor likhet mellan sin frågesekvens och en sekvens i DNA-nyckeln så kan man ofta göra en god artbestämning. Om man inte finner 
-                                        någon hög likhet bör man prova andra databaser med ett större urval gener och sekvenser som 
-                                        <h:commandLink action="#{blast.genbankdesc}"  title="Genbank" style="text-decoration: none; color: #8B8786; " >    
-                                            <h:outputText value="Genbank" />    
-                                            <f:ajax render=":sequenceform:mainpanel"/>
-                                        </h:commandLink> och 
-                                        <h:commandLink action="#{blast.bolddesc}"  title="BOLD" style="text-decoration: none; color: #8B8786; " >    
-                                            <h:outputText value="BOLD" />  
-                                            <f:ajax render=":sequenceform:mainpanel"/>
+                                        #{msg.starttext2}
+                                        <h:commandLink action="#{navigate.scrollToClientId('genbank')}"  title="Genbank" styleClass="linktext" >    
+                                            <h:outputText value="Genbank" />     
+                                        </h:commandLink> #{msg.starttext3}
+                                        <h:commandLink action="#{navigate.scrollToClientId('bold')}"  title="BOLD" styleClass="linktext" >    
+                                            <h:outputText value="BOLD" />   
                                         </h:commandLink>.
                                         <br />
                                         <br />
-                                        Observera att referensbiblioteket i Svenska DNA-nyckeln är under uppbyggnad. Svenska arter av fiskar, fåglar och däggdjur är relativt väl representerade 
-                                        men många andra organismgrupper saknas eller har dålig täckning.
-                                        <h:commandLink action="#{blast.dnaidentification}"  title="Vad är DNA streckkodning" style="text-decoration: none; color: #8B8786; ">    
-                                            <h:outputText value="Läs mer om referensbibliotekets betydelse vid DNA baserad artbestämning" />   
-                                            <f:ajax render=":sequenceform:mainpanel"/>
-                                        </h:commandLink>. 
-
+                                        #{msg.starttext4}
+                                        <h:commandLink action="#{navigate.dnakey()}"  title="#{msg.starttitle2}" styleClass="linktext">    
+                                            <h:outputText value="#{msg.startlink2}" />    
+                                        </h:commandLink>.  
                                     </h:panelGroup> 
                                     
-                                    <h:panelGroup styleClass="text" layout="block" rendered="#{!languages.isSwedish}"> 
-                                        In the DNA-key you can input a DNA sequence to query against a reference library of known sequences in a similarity 
-                                        search  
-                                        <h:commandLink action="#{blast.blastDefinition}"  title="BLAST"   style="text-decoration: none; color: #8B8786; ">    
-                                            <h:outputText value="BLAST" />
-                                            <f:ajax render=":sequenceform:mainpanel"/>
-                                        </h:commandLink>.
-                                        The DNA-key contains a selection of genes, so-called "barcode genes", and if you find a significant similarity 
-                                        between the query sequence and a reference sequence, you can often make a good species identification. However, 
-                                        if you do not find any high similarity you should try other databases that provide a greater variety of genes 
-                                        and sequences like 
-                                        <h:commandLink action="#{blast.genbankdesc}"  title="Genbank" style="text-decoration: none; color: #8B8786; ">    
-                                            <h:outputText value="Genbank" />    
-                                            <f:ajax render=":sequenceform:mainpanel"/>
-                                        </h:commandLink> and 
-                                        <h:commandLink action="#{blast.bolddesc}"  title="BOLD" style="text-decoration: none; color: #8B8786; ">    
-                                            <h:outputText value="BOLD" />
-                                            <f:ajax render=":sequenceform:mainpanel"/>
-                                        </h:commandLink>.
-                                        <br />
-                                        <br />
-                                        NOTE: The Swedish DNA-key is in the build-up phase of reference barcode libraries. At present, Swedish 
-                                        species of fishes, birds and mammals are rather well covered, but for many other groups of organisms the 
-                                        coverage is low or sporadic. 
-                                        <h:commandLink action="#{blast.dnaidentification}"  title="What is DNA Barcoding" style="text-decoration: none; color: #8B8786; " >    
-                                            <h:outputText value="Read more about the importance of full organism group coverage in the reference library for DNA-based species identification" />  
-                                            <f:ajax render=":sequenceform:mainpanel"/>
-                                        </h:commandLink>.
-                                    </h:panelGroup> 
+                                     
                                      
                                     <br />
                                     <br />

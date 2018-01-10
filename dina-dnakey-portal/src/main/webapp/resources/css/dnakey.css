@@ -119,6 +119,8 @@
     max-width: 20%;
 }
 
+ 
+
 /*main*/
 
 #main {
@@ -129,9 +131,10 @@
     float: left;
 }
 
-.mainimage{
-    margin-top: -30px;  
+.mainimage {
+    margin-bottom: -5px;   
 } 
+
 .mainimage img {
     width: 960px;
 }
@@ -143,9 +146,11 @@
     font-size: 14px; 
 }
 
+
+
 .column1{
-    width: 22%; 
-    float:left;
+    width: 60%; 
+    margin: auto; 
 }
 
 .column2 {
@@ -209,6 +214,10 @@ a {
     margin-bottom: 10px;
 }
 
+.linktext {
+    text-decoration: none; 
+    color: #8B8786; 
+}
 
 .newstop{
     border: 1px solid #DFE9B8;
@@ -586,4 +595,15 @@ a {
 
 .font10 {
     font-size: 10px;
+}
+
+.contact1 {
+    width: 120px; 
+    float: left;
+    font-weight: bold;
+}
+
+.contact2 {
+    width: 80px; 
+    float: left;
 }

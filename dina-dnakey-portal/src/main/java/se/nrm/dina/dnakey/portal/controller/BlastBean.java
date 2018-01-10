@@ -751,13 +751,13 @@ public class BlastBean implements Serializable {
     
     
 
-    public void dnaidentification() {
-        logger.info("dnyidentification");
-        section = 1; 
-//        setTopMenuStyle(section);
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel");  
-    }
+//    public void dnaidentification() {
+//        logger.info("dnyidentification");
+//        section = 1; 
+////        setTopMenuStyle(section);
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel");  
+//    }
     
     public void about() {
         logger.info("about");
@@ -775,14 +775,14 @@ public class BlastBean implements Serializable {
         requestContext.update("headform:topmenupanel"); 
     }
     
-    public void streckkodsgenDef() {
-        section = 2;
-//        setTopMenuStyle(2);
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel");   
-        
-        requestContext.scrollTo("streckkodsgen");
-    }
+//    public void streckkodsgenDef() {
+//        section = 2;
+////        setTopMenuStyle(2);
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel");   
+//        
+//        requestContext.scrollTo("streckkodsgen");
+//    }
     
     public void blastDefinition() {
         
@@ -796,23 +796,23 @@ public class BlastBean implements Serializable {
     
     
     
-    public void genbankdesc() {
-        section = 2;
-//        setTopMenuStyle(2);
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel"); 
+//    public void genbankdesc() {
+//        section = 2;
+////        setTopMenuStyle(2);
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel"); 
+//        
+//        requestContext.scrollTo("genbank");
+//    }
         
-        requestContext.scrollTo("genbank");
-    }
-        
-    public void bolddesc() {
-        section = 2;
-//        setTopMenuStyle(2);
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel");  
-        
-        requestContext.scrollTo("bold");
-    }
+//    public void bolddesc() {
+//        section = 2;
+////        setTopMenuStyle(2);
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel");  
+//        
+//        requestContext.scrollTo("bold");
+//    }
 
     public boolean isSolrAvailble() {
         return solrAvailble;
@@ -892,7 +892,7 @@ public class BlastBean implements Serializable {
     }
 
     public String getBlastportalUrl() {
-        return "http://www.ncbi.nlm.nih.gov/blast/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome"; 
+        return "https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome"; 
     }
  
     public void onTabChange(TabChangeEvent event) {

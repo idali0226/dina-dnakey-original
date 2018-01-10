@@ -1,0 +1,444 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html"    
+      xmlns:p="http://primefaces.org/ui" >
+
+    <body>
+        <ui:composition  template="/templates/masterLayout.xhtml">    
+            <ui:define name="content"  >  
+                <h:form  id="identifyForm"> 
+                    <p:remoteCommand action="#{navigate.resetTopMenuCSS(1)}"  value="Set topmenu css" autoRun="true" />
+                </h:form>
+                 
+                <!-- ************************************** what is dnakey page ************************************* --> 
+                <h:panelGroup styleClass="columns" layout="block" id="identifypanel"  >
+                    <h:panelGroup styleClass="column1" layout="block" >
+                        <h:panelGroup  styleClass="header"  layout="block" >
+                            <h:outputText value="#{msg.dnatext1}" /> 
+                        </h:panelGroup>
+                    
+                        <h:panelGroup  styleClass="subheader text"  layout="block" >
+                            <h:outputText value="#{msg.dnatext2}" /> 
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}">
+                            Ända sedan metoder för att läsa DNA-sekvenser blev tillgängliga har DNA använts i frågeställningar kring arter, 
+                            släktskap och identifiering. Eftersom DNA samlar på sig förändringar (mutationer) med tiden så blir DNA för 
+                            olika arter mer och mer annorlunda ju längre arter varit skilda från varandra. Det var först 2003 som några 
+                            forskare fick gehör i hela världen för att en specifik standardiserad genregion för djur skulle kunna bli ett 
+                            nytt artidentifieringsverktyg. Detta kom att kallas DNA Barcoding på engelska vilket ibland försvenskas till DNA 
+                            Barkodning eller ersätts med termen DNA streckkodning. Genregionen man bestämde sig för vad gäller djurriket blev 
+                            den mitokondriella genen cytochrome c oxidase subunit I (COI). Då denna gen visat sig inte fungera lika bra på 
+                            alla organismgrupper har man senare valt andra gener för växter (kloroplast generna rbcl och matK) och svampar 
+                            (nukleära genen ITS).  
+                            <br />
+                            <br /> 
+                            Sedan 2003 har forskare över hela världen testat hur bra de valda genregionerna verkligen fungerar för artidentifiering 
+                            i olika organismgrupper och på olika kontinenter. Frågorna man velat ha svar på har varit tex hur stor är variationen 
+                            inom arten i genen, är det alltid stor skillnad mellan arter men liten skillnad inom arter, fungerar det lika bra i 
+                            alla grupper av djur, hur många individer av varje art bör man ha i ett "referensbibliotek" av sekvenser, hur vanligt 
+                            är det med falska gener (s.k. pseudogener), vad händer vid mellanartshybridisering, vilken av flera metoder för att göra 
+                            en identifiering av en okänd sekvens mot ett referensbibliotek ger störst säkerhet i bestämningen och är det någon 
+                            skillnad på att använda ett regionalt referensbibliotek mot ett globalt? 
+                            <br />
+                            <br /> 
+                            Resultaten av forskningsprojekt för att få svar på frågorna har visat flera intressanta saker. För det första så har man 
+                            nu rett ut skillnaden mellan att avgränsa arter (= det vi kallar för taxonomi) och att identifiera prover till artnivå 
+                            (=bestämning). De tidiga åren såg en hel del förväxlingar mellan de två, DNA streckkodning skulle kunna ersätta både 
+                            det ena och det andra och metoder avsedda för det ena användes för det andra mm. Idag har vi en ganska bra uppfattning 
+                            av vad DNA streckkodning är bra på, under vilka förutsättningar, och vilka begränsningar som finns. Tex fungerar COI 
+                            genen inte bra för att identifiera närstående arter av de marina djurstammarna svamp- och nässeldjur. Även i andra växt 
+                            och djurgrupper händer det att relativt nybildade arter inte går att skilja från närstående arter utan kan ibland vara 
+                            mer lika varandra i streckkodgenen än olika individer inom en och samma art.  
+                            <br />
+                            <br /> 
+                            Med denna kunskap i bagaget kan vi nu anpassa metoderna för att identifiera en okänd sekvens mot ett referensbibliotek 
+                            så att säkerheten i artbestämningen blir bättre och bättre. En viktig insikt har varit att ett regionalt geografiskt begränsat 
+                            referensbibliotek som Svenska DNA nyckeln kan utgöra ett väl fungerande artbestämningsverktyg även för grupper där en global 
+                            databas visat sig ha problem. Anledningen är precis densamma som varför en traditionell bestämningsnyckel är enklare att göra 
+                            för axplocket av arter som bara finns i Sverige (eller Fennoskandien: Sverige, Norge, Finland) än till världens alla 
+                            arter – plockar man bort vartannat löv på livets träd så blir skillnaderna större (de genetiska avstånden längre) mellan de 
+                            kvarvarande löven och därmed lättare att identifiera.  
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}">
+                            Since methods for reading DNA sequences became available, DNA has been used in research on species, particularly 
+                            their genetic relationships and identification. Because DNA accumulates changes (mutations) over time, DNA sequences 
+                            between species become more different from each other the longer the species have been distinct from each other. 
+                            It was only in 2003 that researchers brought worldwide attention to the idea that a specific standardized gene region 
+                            for animals could be used, therefore, as a new tool for identifying species. This came to be known as "DNA Barcoding", 
+                            translated to "DNA Barkodning" or "DNA streckkoding" in Swedish. The initial gene selected as a barcode region for the 
+                            animal kingdom was the mitochondrial gene cytochrome c oxidase subunit I (COI). When it was demonstrated that this gene 
+                            did not perform as well as a barcode for all organism groups, additional genes were chosen as additional barcode regions 
+                            for plants (chloroplast genes RbCI and Matk) and fungi (nuclear gene ITS). 
+                            <br />
+                            <br /> 
+                            Since 2003, researchers across the globe have been testing how effectively these gene regions serve as species identification 
+                            tools for different organisms and in different regions of the world. They have investigated questions such as: how large can 
+                            sequence variation be within species, are there always many differences between species but few differences within a species, 
+                            do these genes works equally well in all animal groups, how many individuals of each species should be represented in a "reference 
+                            library" of sequences, how widespread are false genes (called pseudogenes) in these regions, what is the effect of species hybridization, 
+                            which of the several methods developed to match an unknown sequence against a reference library provides the greatest reliability for 
+                            species determinations, and is there any difference between using regional rather than a global reference libraries? 
+                            <br />
+                            <br /> 
+                            These studies have led to several interesting results. First, we are now more aware of the difference between delimiting species 
+                            (= what we call taxonomy) and identifying specimens to species (= determination). The early years involved a lot of confusion between 
+                            these two activities with assertions that DNA barcoding could replace them, methods for one objective could be used for the other, etc. 
+                            Today we also have a rather good perspective concerning what DNA barcoding is good at accomplishing, under what conditions, and its limitations. 
+                            For example, the COI gene does not perform well for distinguishing closely-related species from marine animal populations, fungi or cnidarians. 
+                            In other plant and animal groups, some recently diverged species are indistinguishable from related species and can even be more similar to each 
+                            other in barcode genes than individuals within a single species. 
+                            <br />
+                            <br /> 
+                            Equipped with this knowledge, we are now able to improve methods using a reference library for determining a species with improved reliability 
+                            from an unknown sequence. An important insight has been that a regional, geographically-limited reference library like the “Swedish DNA key” 
+                            can be a well-functioning species identification tool for groups where problems have occured when referencing a global database. The reason is 
+                            exactly the same as why a traditional determination key is easier to make for species found only in Sweden (or Fennoscandia: Sweden, Norway, Finland) 
+                            than to all the world's species - pick out every other leaf on the tree of life and the differences become larger (longer genetic distances) between 
+                            the remaining leaves, which are, therefore, easier to distinguish.  
+                        </h:panelGroup>
+                        
+                        <p:spacer height="20"/> 
+                        
+                        <h:panelGroup  styleClass="subheader text"  layout="block" >
+                            <h:outputText value="#{msg.dnatext3}" />  
+                        </h:panelGroup>
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}">
+                            För att kunna artidentifiera ett okänt prov behöver man först sekvensera den standardiserade genregionen som finns representerad 
+                            i referensbiblioteket Svenska DNA Nyckeln. Har man inte tillgång till ett eget molekylärt laboratorium för att göra detta så får 
+                            man skicka in det till något sådant. Kostnaden för DNA sekvensering har minskat mycket över de senaste åren, särskilt om man kör 
+                            många prover samtidigt. DNA sekvensen man sen får tillbaka som en ren textfil är en textsträng med bokstäverna A, C, T, och G i 
+                            olika kombinationer och upprepningar genom den ca 650 bokstäver långa textsträngen. Bokstäverna representerar de fyra ämnena, s.k. 
+                            kvävebaser (Adenin, Guanin, Cytosin och Tymin), som binder ihop DNA strukturen (den s.k. dubbelhelixen). Textsträngen med bokstäver 
+                            kan man kopiera och klistra in i Svenska DNA nyckeln för att sedan be webportalen jämföra med alla sekvenser i referensbiblioteket. 
+                            Från detta kan en artbestämning levereras, eller en artlista om det var flera, förutsatt att organismgruppen för din okända sekvens 
+                            finns väl representerad i referensdatabasen. 
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}">
+                            To identify species from an unknown sample, we first need to sequence the standardized gene region that is represented in the Swedish DNA key reference 
+                            library. If you do not have your own molecular laboratory, then you can send the sample to a lab that can do so for you. The cost of DNA sequencing has 
+                            decreased greatly during the past few years, especially if you process many samples simultaneously. The DNA sequence that one receives afterwards is a 
+                            plain text file, a text string approximately 650 letters long with the letters A, C, T, and G in various combinations and repetitions. The letters represent 
+                            four elements, the so-called nitrogenous bases (adenine, guanine, cytosine, and thymine), which binds together the DNA structure (the double helix). This text 
+                            string of letters can be copied and pasted into the Swedish DNA key to query the web portal, compared with all sequences in the reference library. From this, 
+                            a species identification is delivered, or a species list if the sample included more than one species, provided that the organism group for your unknown sequence 
+                            is actually represented in the reference database.
+                        </h:panelGroup>
+                        <p:spacer height="20"/>
+
+                        <h:panelGroup  styleClass="subheader text"  layout="block" >
+                            <h:outputText value="#{msg.dnatext4}" /> 
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}"> 
+                            För att en webportal som svenska DNA nyckeln ska fungera väl så krävs det ett välfyllt referensbibliotek med kända DNA sekvenser 
+                            som okända sekvenser kan jämföras med. För det första så krävs att referensbiblioteket innehåller sekvenser av helst alla de arter 
+                            i en organismgrupp som en okänd sekvens kan tänkas komma ifrån. Svenska DNA nyckeln startade som ett   
+                            <h:outputLink value="http://www.formas.se"   title="Forskningsrådet Formas"  target="_blank" styleClass="linktext">  
+                                <h:outputText value="Formas"   /> 
+                            </h:outputLink>  
+                            -finansierat projekt för att bygga upp ett referensbibliotek över Sveriges ryggradsdjur (fåglar, däggdjur, fiskar, groddjur, kräldjur). 
+                            För denna organismgrupp är svenska DNA nyckeln idag relativt heltäckande och har kända referenssekvenser för 75-82% av de i 
+                            Sverige vanligt förekommande arterna. Här får man ofta en korrekt träff om man söker i webportalen. För andra grupper av djur, växter 
+                            och svampar är Svenska DNA nyckeln idag i uppbyggningsfasen och kommer vara det i flera år framöver. 
+                            <br /> 
+                            <br />
+                            För det andra så ställs det höga kvalitetskrav på sekvenser som läggs in i en referensdatabas. Dessa kvalitetskrav har utarbetats i en 
+                            internationell arbetsgrupp tillsatt av det internationella samarbetet inom CBOL (Consortium for the Barcode of Life). Det allra viktigaste 
+                            kvalitetskravet, och det som skiljer en streckkoddatabas från  
+                            <h:outputLink value="http://www.ncbi.nlm.nih.gov/genbank"  title="Genbanken"  target="_blank" styleClass="linktext" >  
+                                <h:outputText value="Genbanken" /> 
+                            </h:outputLink> , 
+                            är att sekvenser ska vara kopplade till en så kallad "voucher" eller referensexemplar. Referensexemplaret är den djur-, växt- eller 
+                            svampindivid som genen sekvenserats ifrån och denna ska sparas, kurateras och tillgängliggöras på någon offentlig institution varifrån 
+                            forskare ska kunna gå tillbaka till individen, låna, studera och verifiera eller bestämma om individen. Sekvenserna i svenska DNA nyckeln 
+                            är därför kopplade till den svenska webportalen för föremål i naturhistoriska samlingar i Sverige, 
+
+                            <h:outputLink value="https://www.dina-web.net/naturarv/"   title="Naturarv"  target="_blank" styleClass="linktext">  
+                                naturarv
+                            </h:outputLink> 
+
+                            När man får en träff och bestämning mot en sekvens vars referensexemplar finns i svenska naturhistoriska samlingar så kan man klicka sig 
+                            fram till denna post på naturarv som förutom insamlingsdata ofta har fotografier på individen. 
+                        </h:panelGroup> 
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}"> 
+                            For a web portal like the Swedish DNA key to function well, a well-stocked reference library of known DNA sequences is needed for comparison to unknown sequences. 
+                            First, the reference library must contain sequences of at least all the species in a group of organisms from which an unknown sequence may have originated. 
+                            The Swedish DNA key started as a  
+                            <h:outputLink value="http://www.formas.se"   title="The Swedish Research Council Formas"  target="_blank" styleClass="linktext">  
+                                <h:outputText value="Formas"   /> 
+                            </h:outputLink>  
+                            -funded project to build a reference library for Swedish vertebrates (birds, mammals, fish, amphibians, and reptiles). For this organism group, the current Swedish 
+                            DNA key is relatively comprehensive and has known reference sequences for 75-82% of those in Sweden commonly occurring species. Here you often get an accurate result 
+                            if you are looking for in the Web Sites. For other groups of animals, plants and fungi, the Swedish DNA key is in an initial development phase and will be improved 
+                            during the upcoming years.
+                            <br /> 
+                            <br />
+                            Second, there are high quality standards for the sequences compiled in a reference database. These quality standards have been developed by an international working 
+                            group of international cooperation in CBOL (Consortium for the Barcode of Life). The most important requirement, and what distinguishes a barcode database from 
+                            <h:outputLink value="http://www.ncbi.nlm.nih.gov/genbank"  title="GenBank"  target="_blank" styleClass="linktext" >  
+                                <h:outputText value="GenBank" /> 
+                            </h:outputLink> , 
+                            is that the sequences are linked to a "voucher" or reference specimen. The reference specimen is the individual animal, plant or fungus from which the gene has been 
+                            sequenced. This specimen is stored, curated and made available at a public institution where researchers can borrow or go study it in order to reassess the determination. 
+                            Swedish DNA key sequences are linked to records presented in the Swedish web portal,
+
+                            <h:outputLink value="https://www.dina-web.net/naturarv/"   title="Naturarv"  target="_blank" styleClass="linktext">  
+                                naturarv
+                            </h:outputLink> ,
+
+                            with detailed information on voucher specimens housed at Swedish natural history collections. When you get a hit and determination from a reference sequence whose voucher 
+                            specimen is stored at a Swedish natural history collection, you can follow the link to this record on naturarv where you can find collecting data for and, often, 
+                            photographs of the individual.
+                        </h:panelGroup>
+
+                        <p:spacer height="20"/>
+                        <h:panelGroup  styleClass="subheader text"  layout="block" >
+                            <h:outputText value="#{msg.dnatext5}" /> 
+                        </h:panelGroup>
+                        <h:panelGroup  styleClass="text"  layout="block" > 
+                            #{msg.dnatext6} 
+                        </h:panelGroup>
+                        <h:panelGroup  styleClass="dnatext"  layout="block" > 
+                            CTAATTTTTGGGGCCTGAGCGGGCATGGTTGGAACCGCCCTCAGCCTGCTCATTCGCGCAGAAC
+                            TCGGTCAACCAGGAACCCTACTAGGAGACGACCAGATCTACAACGTAATCGTCACTGCCCATGC
+                            CTTCGTAATAATCTTCTTTATAGTCATACCAATCATAATCGGGGGCTTTGGAAACTGACTAGTC
+                            CCCCTTATAATCGGCGCCCCAGACATAGCGTTCCCCCGTATAAATAACATAAGCTTCTGACTAC
+                            TCCCCCCATCCTTCCTTCTCCTACTAGCCTCCTCCACCGTAGAAGCTGGTGCTGGTACAGGGTG
+                            AACAGTCTACCCCCCTCTAGCTGGTAATCTGGCCCACGCCGGAGCTTCTGTAGACCTAGCCATC
+                            TTCTCCCTACACCTCGCTGGAGTCTCATCAATCCTAGGTGCAATCAACTTCATCACTACTGCCA
+                            TTAACATAAAGCCCCCGGCCCTATCTCAATACCAAACCCCCCTATTCGTATGATCCGTACTAAT
+                            CACAGCCGTCCTACTATTACTTTCACTGCCCGTCCTCGCTGCCGGCATTACAATGCTCCTCACA
+                            GACCGAAACCTAAACACCACATTCTTTGACCCAGCCGGAGGAGGAGACCCAGTCCTATACCAAC
+                            ACCTATTC
+                        </h:panelGroup>
+                        <br /> 
+                        <h:panelGroup  styleClass="text"  layout="block" > 
+                            #{msg.dnatext7}
+                        </h:panelGroup>
+                        <h:panelGroup  styleClass="dnatext"  layout="block" > 
+                            CTAATCTTCGGTGCATGAGCTGGCATGGTCGGAACCGCCCTCAGCCTGCTTATTCGTGCAGAAC
+                            TAGGCCAACCAGGAACCCTCTTGGGAGATGACCAAATCTACAATGTAATCGTTACTGCTCATGC
+                            ATTCGTAATAATTTTCTTCATAGTTATACCAATCATGATCGGAGGATTTGGAAATTGACTAGTC
+                            CCACTCATAATCGGCGCCCCCGACATAGCATTTCCTCGTATAAACAATATAAGCTTCTGACTAC
+                            TCCCCCCATCATTCCTATTATTACTAGCATCCTCTACAGTAGAAGCTGGAGCTGGCACAGGATG
+                            AACAGTATATCCACCCCTCGCCGGCAACCTAGCCCACGCAGGAGCCTCAGTAGACCTAGCTATT
+                            TTCTCCCTCCATTTAGCAGGTGTCTCCTCCATCCTAGGTGCCATTAACTTTATCACCACTGCCA
+                            TTAACATAAAACCACCAGCCCTGTCCCAATACCAAACACCCCTATTTGTATGATCAGTACTCAT
+                            TACCGCCGTCTTACTGCTACTCTCACTCCCAGTCCTTGCTGCCGGCATCACCATGCTATTAACA
+                            GATCGTAATCTAAACACCACATTCTTTGACCCAGCCGGAGGAGGAGACCCAGTCCTATACCAAC
+                            ATCTCTTC
+                        </h:panelGroup>
+                        <br />
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}"> 
+                            Man kan visualisera en DNA sekvens på ett sätt som blir mer överskådligt om man låter linjer i fyra olika färger representera 
+                            ordningen av kvävebaserna A, C, T och G i genen. Då åskådliggörs också analogin med vanliga streckkoder för tex produkter och 
+                            varför det kallas "DNA streckkodning".
+                            <br />
+                            <br />
+                            Blåkråka överst, morkulla nederst: samma sekvenser som ovan. Ser du skillnad? (tips titta t ex alldeles i början av streckkoden)
+                            <br />
+                            <br /> 
+                        </h:panelGroup>
+                        
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}"> 
+                            One can represent the four nitrogen bases A, C, T and G of a gene's DNA sequence with four differently colored lines, which provides 
+                            a more effective visual overview. This visualization clearly emphasizes the analogy with product barcodes and why this method has been 
+                            called "DNA barcoding".
+                            <br />
+                            <br />
+                            European Roller top, bottom Woodcock: the same sequences as above. Do you see the differences? (hint: look, for example, at the very beginning of the barcode)
+                            <br />
+                            <br /> 
+                        </h:panelGroup>
+                        <p:graphicImage value="/resources/images/barplot_blakraka.png"  alt="barplot_blakraka"  
+                                    title="barplot_blakraka" styleClass="images" style="padding-left: 12px;"  /> 
+                        
+                        <br />
+                        <br /> 
+                        <p:graphicImage value="/resources/images/barplot_morkulla.png"  alt="barplot_morkulla" 
+                                        title="barplot_morkulla" styleClass="images" style="padding-left: 12px;"   /> 
+                        <br />
+                        <br /> 
+                        <p:graphicImage value="/resources/images/referensexemplar.jpg"  alt="referensexemplar" 
+                                        title="referensexemplar" styleClass="images"   /> 
+                        
+                        <h:panelGroup  styleClass="imgtext text"  layout="block" > 
+                            #{msg.dnatext8} 
+                            <h:outputLink value="https://www.dina-web.net/naturarv/?#{blast.urlEncode}20106015"  
+                                          title="Naturarv"  target="_blank" styleClass="linktext" >  
+                                <h:outputText  value="(Cat. id. NRM 20106015)"  styleClass="#{metadata.textColor}"  />    
+                            </h:outputLink>   
+                            #{msg.dnatext9}  
+                            <h:outputLink  value="https://www.dina-web.net/naturarv/?#{blast.urlEncode}20046331"  
+                                           title="Naturarv"  target="_blank" styleClass="linktext">  
+                                <h:outputText  value="(Cat. id. NRM 20046331)"  styleClass="#{metadata.textColor}"  />    
+                            </h:outputLink>  
+                            #{msg.dnatext10} 
+                            <br /> 
+                            <br /> 
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="subheader text"  layout="block" >
+                            <h:outputText value="#{msg.dnatext11}" /> 
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}"> 
+                            Vad kan DNA streckkodning då användas till? Det finns en rad användningsområden för DNA streckkodning i 
+                            samhället. Den stora fördelen med DNA-baserad artidentifiering är att den fungerar lika bra oavsett om man 
+                            har ägg, larver, nymfer, yngel, juveniler, puppor, eller prover av vuxna individer. Kriminaltekniker kan t ex 
+                            behöva artidentifiera olika insekter i ägg eller larvstadiet på en kropp som legat i skogen för att kunna 
+                            avgöra när offret dog.
+                            <br /> 
+                            <br /> 
+                            Miljöövervakningsprover kan i många fall utgöras av organismer i larvstadier som är svåra att identifiera till 
+                            artnivå. 
+                            <br /> 
+                            <br />
+
+                            DNA-baserad artidentifiering fungerar lika bra oavsett om man har hela eller bara delar av en organism t ex ett blad, 
+                            en fjäder, ett frö, ett blodprov, en filé, en biff, eller ett svampmycel utan fruktkropp. Flygplatssäkerhetsansvariga 
+                            kan behöva identifiera vilken fågelart som lett till ett tillbud där en motor skadats baserat på blod eller fjäderrester. 
+                            I både Nordamerika och i Europa så har DNA identifiering av fiskfiléer gjort att ett utbrett fuskande har upptäckts på 
+                            både restauranger och marknader. 
+                            <br />
+                            <br/>
+
+                            DNA-baserad artidentifiering fungerar även på delvis processade produkter som en halvfärdiglagad lasagne, frysta 
+                            fiskfiléer, en skinnväska, pälsar, ett avföringsprov, eller maginnehåll. Livsmedelskontroll är ett exempel där man kan 
+                            identifiera råvaran som använts även efter det att produkten inte längre går att identifiera med blotta ögat - 
+                            hästlasagneskandalen är ett exempel. Likaså kan tullen ha behov av att verifiera om skinn- eller pälsprodukter som kläder, 
+                            väskor eller skor, som förs över gränsen är olagliga om de misstänks vara gjorda av CITES skyddade arter. 
+                            <br /> 
+                            <br />
+                            Att även innehållet i avföringsprov eller maginnehåll kan artbestämmas öppnar upp helt nya dörrar för dietanalys, viltförvaltning, 
+                            ekosystemforskning, rekonstruera födovävar, biologisk kontroll mm. I ett EU-finansierat projekt har tex gråsälens diet i 
+                            Östersjön analyserats med hjälp av DNA sekvensering av maginnehållet. Det går att avgöra vilka växter djur äter genom att 
+                            sekvensera maginnehållet om det finns ett referensbibliotek för relevanta växter att jämföra med. Med ett referensbibliotek av 
+                            blomväxter kan man ta reda på vilka arter av bin, humlor och flugor som pollinerar vilka grödor och fruktodlingar genom att 
+                            sekvensera pollen på deras ben.
+                            <br /> 
+                            <br />
+
+                            DNA-baserad artidentifiering har börjat användas av myndigheter i USA och Kanada för att analysera miljöövervakningsprover, tex i 
+                            vattenmiljöer. Det ger en högre taxonomisk upplösning då ofta en större andel av provet kan identifieras till art. Även i Sverige 
+                            testas nu DNA baserad identifiering av fjädermyggslarver i miljöövervakningsprover från bottenhugg i Östersjön och Bottenhavet, och 
+                            andelen som kan artidentifieras ökar från 10-15% till 90 % vilket leder till en långt mer exakt miljötillståndsbeskrivning. 
+                            Man kan tänka sig att DNA baserad identifiering kan öppna upp för miljöövervakning av en bredare representation av Sveriges 
+                            mångfald, även för grupper som tidigare ansetts för svåra att identifiera.
+                            <br /> 
+                            <br />
+
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}"> 
+                            Now then, for what purposes can DNA barcoding be used? There is a wide range of applications for DNA barcoding in our society. The major advantage of DNA-based 
+                            species identification is that it works equally well for all forms or life stages of an organism - whether you have samples from eggs, larvae, nymphs, larvae, 
+                            juveniles, pupae, or adults. Forensic detectives, for example, need to identify different insects as eggs or larvae in a body that has been in the woods in order 
+                            to determine the time of death.
+                            <br /> 
+                            <br /> 
+                            Samples from environmental monitoring can, in many cases, consist of organisms in larval stages that are difficult to identify to species level.
+                            <br /> 
+                            <br />
+
+                            DNA-based species identification works equally well whether you have the whole or only part of an organism, for example, a leaf, a feather, a seed, a blood 
+                            sample, a fillet, a steak, or a non-fruiting fungal mycelium. Airport security officers may need to identify which species of bird which led to an incident 
+                            involving a damaged motor based on blood or feather residues. In North America and Europe, DNA identification of fish fillets has revealed widespread consumer 
+                            deception at both restaurants and markets.
+                            <br />
+                            <br/>
+
+                            DNA-based species identification also works on partially processed products as half-cooked lasagna, frozen fish fillets, leather bags, fur coats, feces, or stomach 
+                            contents. Food inspection is an example of where one can identify the raw material used even after the product is no longer possible to identify with the naked eye – 
+                            the horse lasagna scandal is one example. Similarly, customs officers have to verify whether leather or fur products such as clothes, bags or shoes crossing the border 
+                            are illegal when they are suspected of having been made from a CITES protected species.
+                            <br /> 
+                            <br />
+                            That even feces or gut content samples can be used in obtaining species determinations opens up new doors in diet analysis, wildlife management, ecosystem research, 
+                            food web reconstruction, and biological control. In an EU-funded project, gray seal diet in the Baltic Sea was analyzed by DNA sequencing of stomach contents. It is 
+                            also possible to determine which plants are eaten by animals by sequencing stomach contents when there is a reference library of relevant plant species for the 
+                            comparisons. With a reference library of angiosperms can find out which species of bees, bumble bees and flies that pollinate crops and orchards by sequencing pollen 
+                            on their legs.
+                            <br /> 
+                            <br />
+
+                            DNA-based species identification has begun to be used by government agencies in the US and Canada for the analysis of environmental monitoring samples, such as in 
+                            aquatic environments. This provides a higher taxonomic resolution because often a greater proportion of the sample can be identified to species. Even in Sweden DNA-based 
+                            identification is now being tested. In environmental monitoring of Baltic Sea and Gulf of Bothnia bottom sediment, the percentage of spring mosquito larvae that can be 
+                            identified at species increases from 10-15% to 90%, leading to a far more accurate environmental description. One can imagine that the DNA-based identification can open 
+                            up for environmental monitoring of a wider representation of Sweden's diversity, even for groups that were previously considered too difficult to identify.
+                            <br /> 
+                            <br /> 
+                        </h:panelGroup>
+                        
+                        <p:graphicImage value="/resources/images/miljoovervakning.jpg"  alt="#{msg.dnatext12}"  title="referensexemplar" styleClass="images"   /> 
+
+                        <h:panelGroup  styleClass="imgtext text"  layout="block" > 
+                            #{msg.dnatext13}<br /><br />
+                        </h:panelGroup>
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{languages.isSwedish}"> 
+                            Att organismer avger DNA till sin omgivning, tex i vatten eller jord, gör att man till och med kan upptäcka arters existens utan 
+                            att ens ha sett dem, bara genom att ta ett vattenprov eller jordprov. Detta har börjat användas i program för tidig upptäckt av 
+                            invasiva arter, kontroll av fartygs ballastvatten, inventering av rödlistade arter mm.  
+                            <br /> 
+                            <br />
+
+                            Det finns en lång rad ytterligare tillämpningar som skulle kunna nämnas. I flera länder har man samarbetat med skolor och här 
+                            finns stora möjligheter till inspirerande naturvetenskapliga laborationer med DNA baserad artidentifiering av egeninsamlade prover.
+                            <br /> 
+                            <br />
+
+                            DNA-streckkodning har nu kommit så långt att den är ett tillgängligt instrument för alla slags myndigheter och organisationer. Det är 
+                            numera ofta varken svårare eller dyrare att använda DNA för att identifiera arter eller individer än klassiska studier av arternas 
+                            utseende.  Dessutom kan DNA-analyser ge information om arter där andra klassiska metoder inte räcker till. 
+                            <br /> 
+                            <br />
+
+                            Det kritiska för att verktyget ska vara användbart för alla dessa tillämpningar är dock att det måste finnas heltäckande referensbibliotek 
+                            för de organismgrupper man är intresserad av för olika tillämpningar. Referensbiblioteket i Svenska DNA nyckeln är idag i uppbyggnadsfasen 
+                            och har relativt bra täckning för en del grupper, tex svenska ryggradsdjur, men mindre bra för andra grupper tex växter. Det pågår 
+                            intensivt arbete för att få finansiering till att bygga upp referensbibliotek för flera andra organismgrupper som är viktiga för 
+                            tillämpningar i samhället.
+                            <br /> 
+                            <br />
+                        </h:panelGroup> 
+                        
+                        <h:panelGroup  styleClass="text"  layout="block" rendered="#{!languages.isSwedish}"> 
+                            Because organisms emit DNA into the environment, one can even detect species' presence without seeing any of the organisms just by taking, for example, a sample of water or 
+                            soil. This technique is starting to be used in programs for early detection of invasive species, ballast water inspection on ships, field inventories for endangered species, 
+                            and more.
+                            <br /> 
+                            <br />
+
+                            There is a long list of additional applications that could be mentioned. Several countries have collaborative programs at schools, where there are many possibilities to 
+                            conduct engaging science lab experiments that can apply DNA-based species identification to samples collected by the students themselves.
+                            <br /> 
+                            <br />
+
+                            DNA barcoding has come so far that it is an available tool for all kinds of agencies and organizations. It is now often neither more difficult or expensive to use DNA 
+                            to identify species or individuals than classical studies of the species' appearance. In addition, DNA analyzes provide information on species in situations when classical 
+                            methods are insufficient.
+                            <br /> 
+                            <br />
+
+                            What is critical for the tool to be useful is that there must be a comprehensive reference library for the organism groups of interest for all these different applications. 
+                            The reference library in the current Swedish DNA key is in the construction phase, and we have relatively good coverage for some groups, such as Swedish vertebrates, but 
+                            limited coverage for other groups such as plants. Intense efforts are ongoing to secure funding for build a reference library for several other groups of organisms that are 
+                            important for applications in society.
+                            <br /> 
+                            <br />
+                        </h:panelGroup>   
+                    </h:panelGroup> 
+                </h:panelGroup>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

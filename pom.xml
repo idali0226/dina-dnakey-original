@@ -52,8 +52,7 @@
         </dependencies>
     </dependencyManagement>
  
-    <modules>
-        <!--<module>dina-common</module>-->
+    <modules> 
         <module>dina-dnakey-logic</module>
         <module>dina-dnakey-portal</module> 
     </modules>
@@ -96,8 +95,7 @@
     </dependencies>
      
     <build>
-        <plugins>
-
+        <plugins> 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

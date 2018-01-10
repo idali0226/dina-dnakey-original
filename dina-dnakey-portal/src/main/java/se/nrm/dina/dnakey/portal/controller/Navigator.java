@@ -80,29 +80,28 @@ public class Navigator implements Serializable  {
         redirectPage(CONTACT_PATH);
     }
     
-//    public void scrollToSection() {
-//        log.info("scrollToSection : {}", clientId);
-// 
-//        requestContext = RequestContext.getCurrentInstance();
-// 
-//        if (clientId != null) {
-//            requestContext.scrollTo(clientId);
-//            clientId = null;
-//        }
-//    }
-//    
-//    public void scrollToClientId(String id) {
-//        style.resetTabStyle(2);
-//        requestContext = RequestContext.getCurrentInstance();   
-//        requestContext.update("topMenuForm:topmenupanel");  
-//        clientId = id; 
-//        redirectPage(ABOUT_PATH);
-//    }
-//    
-//    public void resetTopMenuCSS(int tabIndex) {
-//        style.resetTabStyle(tabIndex);
-//        requestContext = RequestContext.getCurrentInstance();   
-//        requestContext.update("topMenuForm:topmenupanel");  
-//    }
+    public void scrollToSection() {
+        log.info("scrollToSection : {}", clientId);
+ 
+        requestContext = RequestContext.getCurrentInstance();
+ 
+        if (clientId != null) {
+            requestContext.scrollTo(clientId);
+            clientId = null;
+        }
+    }
     
+    public void scrollToClientId(String id) {
+        style.resetTabStyle(2);
+        requestContext = RequestContext.getCurrentInstance();   
+        requestContext.update("topMenuForm:topmenupanel");  
+        clientId = id; 
+        redirectPage(ABOUT_PATH);
+    }
+    
+    public void resetTopMenuCSS(int tabIndex) {
+        style.resetTabStyle(tabIndex);
+        requestContext = RequestContext.getCurrentInstance();   
+        requestContext.update("topMenuForm:topmenupanel");  
+    } 
 }
