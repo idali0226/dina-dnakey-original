@@ -31,8 +31,9 @@ public class Navigator implements Serializable  {
     private static final String HOME_PATH = "/faces/pages/sequence.xhtml";
     private static final String DNAKEY_PATH = "/faces/pages/dnakey.xhtml";
     private static final String ABOUT_PATH = "/faces/pages/about.xhtml";
-    private static final String EXTERNAL_LINK_PATH = "/faces/pages/externalLink.xhtml";
+    private static final String EXTERNAL_LINK_PATH = "/faces/pages/externalLinks.xhtml";
     private static final String CONTACT_PATH = "/faces/pages/contact.xhtml";
+    private static final String RESULT_PATH = "/faces/pages/result.xhtml";
     
     private String clientId;
     
@@ -78,6 +79,11 @@ public class Navigator implements Serializable  {
     public void contact() { 
         style.resetTabStyle(4);
         redirectPage(CONTACT_PATH);
+    }
+    
+    public void result() {
+        style.resetTabStyle(0);
+        redirectPage(RESULT_PATH);
     }
     
     public void scrollToSection() {

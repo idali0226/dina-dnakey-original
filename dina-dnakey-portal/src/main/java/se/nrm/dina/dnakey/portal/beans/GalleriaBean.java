@@ -14,10 +14,7 @@ import se.nrm.dina.dnakey.logic.vo.MorphyBankImage;
  * @author idali
  */
 @Named("galleriaBean")
-@SessionScoped
-
-//@ManagedBean(name="galleriaBean")
-//@SessionScoped
+@SessionScoped 
 public class GalleriaBean implements Serializable {
     
     private final Logger logger = LoggerFactory.getLogger(this.getClass()); 

@@ -12,20 +12,20 @@
                             <h:panelGroup>
                                 <ul>
                                     <li>
-                                        <p:commandLink actionListener="#{navigate.home()}" value="#{msg.start}" styleClass="#{styleBean.tab1}" 
-                                                       process="@this" global="false" update="@all" />    
+                                        <p:commandLink actionListener="#{navigate.home()}" value="#{msg.start}" 
+                                                       styleClass="#{styleBean.tab1}" process="@this" global="false"  />    
                                     </li> 
                                     <li> 
-                                        <p:commandLink actionListener="#{navigate.dnakey()}" value="#{msg.whatisdnakey}" styleClass="#{styleBean.tab2}" 
-                                                       process="@this" global="false" update="@all"   />         
+                                        <p:commandLink actionListener="#{navigate.dnakey()}" value="#{msg.whatisdnakey}" 
+                                                       styleClass="#{styleBean.tab2}" process="@this" global="false"  />         
                                     </li> 
                                     <li>
-                                        <p:commandLink actionListener="#{navigate.about()}" value="#{msg.aboutdnakey}" styleClass="#{styleBean.tab3}" 
-                                                       process="@this" global="false" update="@all"   />     
+                                        <p:commandLink actionListener="#{navigate.about()}" value="#{msg.aboutdnakey}" 
+                                                       styleClass="#{styleBean.tab3}" process="@this" global="false"  />     
                                     </li> 
                                     <li>
-                                        <p:commandLink actionListener="#{navigate.externalLinks()}" value="#{msg.links}" styleClass="#{styleBean.tab4}"
-                                                       process="@this" global="false" update="@all"   />     
+                                        <p:commandLink actionListener="#{navigate.externalLinks()}" value="#{msg.links}" 
+                                                       styleClass="#{styleBean.tab4}" process="@this" global="false" />     
                                     </li> 
                                 </ul>   
                             </h:panelGroup>
@@ -33,11 +33,11 @@
 
                         <h:panelGrid style="text-align: right; " columns="2"  cellpadding="0" cellspacing="0"  >   
                             <h:panelGrid columns="2"  rendered="#{languages.isSwedish}" cellpadding="0" cellspacing="0"  >
-                                <p:graphicImage value="/resources/images/icons/icons_en.png" styleClass="img" title="#{msg.language}" /> 
-                                <h:commandLink action="#{languages.changelanguage('en')}" value="#{languages.language}"  style="border: none; " />   
+                                <p:graphicImage value="/resources/images/icons/icons_en.png" styleClass="img" title="#{msg.languageen}" /> 
+                                <h:commandLink action="#{languages.changelanguage('en')}" value="#{languages.language}" style="border: none; " />   
                             </h:panelGrid>
                             <h:panelGrid columns="2" rendered="#{!languages.isSwedish}" cellpadding="0" cellspacing="0"  >
-                                <p:graphicImage value="/resources/images/icons/icons_sv.png" styleClass="img" title="#{msg.language}" /> 
+                                <p:graphicImage value="/resources/images/icons/icons_sv.png" styleClass="img" title="#{msg.languagesv}" /> 
                                 <h:commandLink action="#{languages.changelanguage('sv')}" value="#{languages.language}"  style="border: none; " />   
                             </h:panelGrid> 
                         </h:panelGrid> 

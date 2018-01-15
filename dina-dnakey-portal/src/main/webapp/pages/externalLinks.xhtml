@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition  template="/templates/masterLayout.xhtml">    
+            <ui:define name="content"  >   
+                
+                <h:form  id="linkForm"> 
+                    <p:remoteCommand 
+                        action="#{navigate.resetTopMenuCSS(3)}" 
+                            value="Set topmenu css" autoRun="true" />
+                </h:form>
+                 
+                <!-- ************************************** external links page ************************************* --> 
+                <h:panelGroup styleClass="columns" layout="block" id="linkpanel" >
+
+                <h:panelGroup styleClass="column1 lonecolumn" layout="block"  >
+                    <h:panelGroup  styleClass="header"  layout="block" >
+                        <h:outputText value="#{msg.links}"  />  
+                    </h:panelGroup>
+
+                    <h:panelGroup  styleClass="subheader text"  layout="block" >
+                        <h:outputText value="#{msg.financialsupport}" />  
+                    </h:panelGroup>  
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="#{msg.formasurl}"   title="{msg.formas}"  target="_blank" >  
+                            <h:outputText value="#{msg.formas}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="#{msg.nvvurl}"   title="#{msg.nv}"  target="_blank" >  
+                            <h:outputText value="#{msg.nv}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="#{msg.hovurl}"   title="#{msg.hovs}"  target="_blank" >  
+                            <h:outputText value="#{msg.hovs}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <p:spacer height="30"/>
+
+                    <h:panelGroup  styleClass="subheader text"  layout="block" >
+                        <h:outputText value="#{msg.collaborators}" />  
+                    </h:panelGroup>  
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="#{msg.guurl}"   title="#{msg.gothenburgsuniversity}"  target="_blank" >  
+                            <h:outputText value="#{msg.gothenburgsuniversity}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="#{msg.gnmurl}"   title="#{msg.gmn}"  target="_blank" >  
+                            <h:outputText value="#{msg.gmn}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="#{msg.sluurl}"   
+                                      title="#{msg.dyntaxa}"  target="_blank" >  
+                            <h:outputText value="#{msg.dyntaxa}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <p:spacer height="30"/>
+                    <h:panelGroup styleClass="text subheader" layout="block" >
+                        <h:outputText value="#{msg.globalinitiative}"  />  
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="text" layout="block" >
+                        #{msg.linktext1}
+                    </h:panelGroup>
+
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="http://www.boldsystems.org/"   title="#{msg.linktext2}"  target="_blank" >  
+                            <h:outputText value="#{msg.linktext2}"   />  <br /> 
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink  value="http://ibol.org/" title="#{msg.linktext3}"  target="_blank" >  
+                            <h:outputText value="#{msg.linktext3}"   /><br />    
+                        </h:outputLink> 
+                    </h:panelGroup>
+
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink  value="http://www.barcodeoflife.org/content/about/what-cbol" title="#{msg.linktext4}"  target="_blank" >  
+                            <h:outputText value="#{msg.linktext4}"   /><br />    
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="http://www.barcodeoflife.org/"  title="#{msg.linktext5}" target="_blank" >  
+                            <h:outputText value="#{msg.linktext5}"   /><br />    
+                        </h:outputLink>  
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink id="dinaspecieslink" value="http://connect.barcodeoflife.net/"  title="#{msg.linktext6}" target="_blank" >  
+                            <h:outputText value="#{msg.linktext6}"   />   <br />  
+                        </h:outputLink>   
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="http://www.fungalbarcoding.org/"  title="#{msg.linktext7}" target="_blank" >  
+                            <h:outputText value="#{msg.linktext7}"   /><br />    
+                        </h:outputLink>  
+                    </h:panelGroup> 
+                    <p:spacer height="30"/> 
+                    <h:panelGroup styleClass="text subheader" layout="block" >
+                        <h:outputText value="#{msg.linktext8}"  />  
+                    </h:panelGroup>
+
+                    <h:panelGroup styleClass="text" layout="block" > 
+                        <h:outputText value="#{msg.linktext9} "  />  
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="http://www.finbol.org/"  title="#{msg.linktext10}"   target="_blank" >  
+                            <h:outputText value="#{msg.linktext10}"   />   
+                        </h:outputLink>   <br />
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="http://www.norbol.org/" title="#{msg.linktext11}"  target="_blank" >  
+                            <h:outputText value="#{msg.linktext11}"   />   
+                        </h:outputLink>   <br />
+                    </h:panelGroup> 
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="http://www.bolnet.ca" title="#{msg.linktext12}"  target="_blank" >  
+                            <h:outputText value="#{msg.linktext12}"   />   
+                        </h:outputLink>  <br />
+                    </h:panelGroup>
+
+                    <h:panelGroup   layout="block">
+                        <h:outputLink value="https://www.bolgermany.de/" title="#{msg.linktext13}"  target="_blank" >  
+                            <h:outputText value="#{msg.linktext13}"   />   
+                        </h:outputLink>  <br />
+                    </h:panelGroup> 
+                </h:panelGroup> 
+            </h:panelGroup>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

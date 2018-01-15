@@ -17,7 +17,7 @@
 /*back*/
 .background{
     background-color:#ebede8;
-    background-image:url(/images/18.67f7c5a013d827ecb4c32f/1367827613667/bg.gif);
+    /*background-image:url(/images/18.67f7c5a013d827ecb4c32f/1367827613667/bg.gif);*/
     background-repeat:no-repeat;
     margin:0 0 0 0;
 }
@@ -349,6 +349,7 @@ a {
     overflow:hidden; 
     float: left
 }
+
 #map_canvas svg {
     margin-left: -200px;
     margin-right: 350px;   
@@ -362,8 +363,8 @@ a {
  
 .ui-tabs .ui-tabs-panel {
     border: none !important;
-      padding: 0px 0px 0px 0px; 
-      font-size: 11px;
+    padding: 0px 0px 0px 0px; 
+    font-size: 11px;
 } 
 
 .ui-widget-content { 
@@ -562,7 +563,7 @@ a {
 
 .sequence {
     height:300px;
-    width: 480px;
+    width: 530px;
     margin:0; 
     padding:0;
     vertical-align: top;

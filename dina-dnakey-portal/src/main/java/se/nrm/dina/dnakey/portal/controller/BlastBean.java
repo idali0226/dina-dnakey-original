@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;   
 import java.util.Map;
 import javax.annotation.PostConstruct; 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage; 
+import javax.enterprise.context.SessionScoped; 
 import org.primefaces.event.FileUploadEvent; 
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -36,8 +35,8 @@ import se.nrm.dina.dnakey.logic.metadata.BlastSubjectHsp;
 import se.nrm.dina.dnakey.logic.metadata.BlastSubjectMetadata; 
 import se.nrm.dina.dnakey.logic.util.HelpClass;
 import se.nrm.dina.dnakey.logic.vo.MorphyBankImage;
-import se.nrm.dina.dnakey.portal.beans.ResultBean;
-import se.nrm.dina.dnakey.portal.beans.StyleBean;
+import se.nrm.dina.dnakey.portal.beans.MessageBean;
+import se.nrm.dina.dnakey.portal.beans.ResultBean; 
 import se.nrm.dina.dnakey.portal.util.BlastHelper;
 import se.nrm.dina.dnakey.portal.util.ConstantString;
 import se.nrm.dina.dnakey.portal.logic.SequenceValidation;
@@ -50,9 +49,7 @@ import se.nrm.dina.dnakey.portal.util.FileHandler;
  *
  * @author idali
  */
-@SessionScoped
-//@RequestScoped
-//@ApplicationScoped
+@SessionScoped 
 @Named("blast")
 public class BlastBean implements Serializable {
     
@@ -61,8 +58,7 @@ public class BlastBean implements Serializable {
     private static final String MAP_MARK_PATH = "http://maps.google.com/mapfiles/ms/micons/blue-dot.png";
     private static final String URL_ENCODE = "param=dnakey&catalogNumber=";
     private static final String DEFAULT_BLASTDB = "nrm";
-   
-    private int section = 0;                    // default section when start page loaded
+    
  
     private String genbankUrl;
     
@@ -101,8 +97,7 @@ public class BlastBean implements Serializable {
     private double centLnt = 0;
     private String coordinates = "";
     private int zoom = 6;
-      
-    private int feedCount = 2; 
+ 
     private int numOfTestSeqs = 0;  
     
     private List<String> filelist = new ArrayList<>();  
@@ -116,9 +111,7 @@ public class BlastBean implements Serializable {
     private Map<String, SolrRecord> map = new HashMap<>();
     private List<MorphyBankImage> images = new ArrayList<>();
     
-    private String servername;
-//    private int serverport;
-    
+    private String servername; 
     private SolrRecord record;
     private boolean solrAvailble = true;
      
@@ -141,12 +134,15 @@ public class BlastBean implements Serializable {
     
     @Inject
     private SequenceValidation validation;
+     
+    @Inject
+    private SolrClient solr; 
     
     @Inject
-    private StyleBean style;
+    private Navigator navigator;
     
     @Inject
-    private SolrClient solr;
+    private MessageBean msg;
      
     
     public BlastBean() {
@@ -162,8 +158,7 @@ public class BlastBean implements Serializable {
         urlEncode =  URL_ENCODE;
         centLat = 0;
         centLnt = 0;
-        coordinates = ""; 
-        feedCount = 2;
+        coordinates = "";  
         totalSequences = 0;
       activeTab = 1;
     }
@@ -196,11 +191,9 @@ public class BlastBean implements Serializable {
             coordinates = "";
             centLat = 0;
             centLnt = 0;
-             
-            section = 0;
+              
             totalSequences = 0;
-
-            feedCount = 2;
+ 
             clear(); 
 
             nrmTotalSequence = blaster.getBlastDbInfo("nrm");
@@ -227,13 +220,13 @@ public class BlastBean implements Serializable {
         boolean isSequenceValid = validation.validate(sequences);
         if (isSequenceValid) {
             blast();
-            section = 11;
+            navigator.result();
 //            setTopMenuStyle(4);
         } else {
             if (sequences != null && sequences.size() > 1) {
-                createErrorMsgs(ConstantString.getInstance().getText("validationfailed_" + languages.getLocale()), validation.getErrorMsgs());
+                msg.createErrorMsgs(ConstantString.getInstance().getText("validationfailed_" + languages.getLocale()), validation.getErrorMsgs());
             }
-            addError(ConstantString.getInstance().getText("validationfailed_" + languages.getLocale()), validation.getErrorMsg());
+            msg.addError(ConstantString.getInstance().getText("validationfailed_" + languages.getLocale()), validation.getErrorMsg());
         }
     }
 
@@ -243,7 +236,7 @@ public class BlastBean implements Serializable {
         resultBeans = new ArrayList<>(); 
         sequences = new ArrayList<>(); 
         if(StringUtils.isEmpty(sequence)) {
-            addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
+            msg.addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
         } else {  
             sequences = BlastHelper.prepareSequenceList(sequence);
             run();
@@ -257,7 +250,7 @@ public class BlastBean implements Serializable {
         resultBeans = new ArrayList<>();
         sequences = new ArrayList<>();
         if (sequencesMap == null || sequencesMap.isEmpty()) {
-            addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
+            msg.addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
         } else {
             sequencesMap.entrySet().stream().forEach((entry) -> {
                 sequences.addAll(entry.getValue()); 
@@ -281,7 +274,7 @@ public class BlastBean implements Serializable {
         resultBeans = new ArrayList<>(); 
         sequences = new ArrayList<>(); 
         if(StringUtils.isEmpty(testSequences)) {
-            addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
+            msg.addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
         } else {
             sequences = BlastHelper.prepareSequenceList(testSequences);
             run();
@@ -720,8 +713,7 @@ public class BlastBean implements Serializable {
     public void newblast() {
         logger.info("newblast");
          
-        totalSequences = 0;
-        section = 0;
+        totalSequences = 0; 
         map.clear();
         
         ridMap.clear();
@@ -759,21 +751,21 @@ public class BlastBean implements Serializable {
 //        requestContext.update("headform:topmenupanel");  
 //    }
     
-    public void about() {
-        logger.info("about");
-        section = 2; 
-//        setTopMenuStyle(section);  
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel");  
-    }
+//    public void about() {
+//        logger.info("about");
+//        section = 2; 
+////        setTopMenuStyle(section);  
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel");  
+//    }
     
-    public void contact() {
-        section = 6;
-//        setTopMenuStyle(4); 
-         
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel"); 
-    }
+//    public void contact() {
+//        section = 6;
+////        setTopMenuStyle(4); 
+//         
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel"); 
+//    }
     
 //    public void streckkodsgenDef() {
 //        section = 2;
@@ -784,15 +776,15 @@ public class BlastBean implements Serializable {
 //        requestContext.scrollTo("streckkodsgen");
 //    }
     
-    public void blastDefinition() {
-        
-        section = 2;
-//        setTopMenuStyle(2);
-        requestContext = RequestContext.getCurrentInstance();  
-        requestContext.update("headform:topmenupanel");   
-        
-        requestContext.scrollTo("blast");
-    }
+//    public void blastDefinition() {
+//        
+//        section = 2;
+////        setTopMenuStyle(2);
+//        requestContext = RequestContext.getCurrentInstance();  
+//        requestContext.update("headform:topmenupanel");   
+//        
+//        requestContext.scrollTo("blast");
+//    }
     
     
     
@@ -820,43 +812,29 @@ public class BlastBean implements Serializable {
  
 
     
-    public void links() {
-        logger.info("links");
-        section = 3;
-//        setTopMenuStyle(section);
-    }
+//    public void links() {
+//        logger.info("links");
+//        section = 3;
+////        setTopMenuStyle(section);
+//    }
  
-    public void pastesequence() {
-        logger.info("pastesequence");
-        section = 9;
-    }
+//    public void pastesequence() {
+//        logger.info("pastesequence");
+//        section = 9;
+//    }
     
-    public void uploadfile() {
-        logger.info("uploadfile");
-        section = 10;
-    }
+//    public void uploadfile() {
+//        logger.info("uploadfile");
+//        section = 10;
+//    }
+//
+//    public int getSection() {
+//        return section;
+//    }
 
-    public int getSection() {
-        return section;
-    }
 
-    private void createErrorMsgs(String errorTitle, List<String> errors) {
-        errors.stream().forEach((error) -> {
-            addError(errorTitle, error);
-        });
-    }
 
-    private void addError(String errorTitle, String errorMsg) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, errorTitle, errorMsg));
-    }
-
-    private void addInfo(String infoTitle, String infoMsg) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, infoTitle, infoMsg));
-    }
     
-    private void addWarning(String warnTitle, String warnMsg) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, warnTitle, warnMsg));
-    }
 
         
     public String getSequence() {
@@ -1045,30 +1023,5 @@ public class BlastBean implements Serializable {
             default:
                 return languages.isIsSwedish() ? "Barkodsekvenser från Genbank (COI, matK, rbcL, 16S*)" : "Barcode sequences from Genbank (COI, matK, rbcL, 16S*)";
         }
-    }
-    
-//    private void setTopMenuStyle(int tab) {
-//        
-//        String current = CSSName.getInstance().getCurrentTab();
-//        style.setMenu1("");
-//        style.setMenu2("");
-//        style.setMenu3("");
-//        style.setMenu4("");
-//        
-//        
-//        switch (tab) {
-//            case 0:  style.setMenu1(current);
-//                     break;
-//            case 1:  style.setMenu2(current);
-//                     break;
-//            case 2:  style.setMenu3(current);
-//                     break;
-//            case 3:  style.setMenu4(current);
-//                     break;  
-//            case 4:  break;
-//            default: style.setMenu1(current);
-//                     break;
-//        } 
-//    }
-    
+    } 
 }

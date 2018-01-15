@@ -5,13 +5,13 @@
     
     <body>
         <ui:composition>        
-            <h:panelGrid styleClass="back" cellpadding="0" cellspacing="0"> 
+            <h:panelGrid styleClass="back" cellpadding="0" cellspacing="0">  
                 <h:panelGrid columns="2" width="100%" styleClass="top roundedtop " cellpadding="0" cellspacing="0" >
                     <h:panelGrid width="800" rendered="#{languages.isSwedish}">
-                        <p:graphicImage value="/resources/images/headerimages/logo_dna_key.png"  styleClass="noborder " /> 
+                        <p:graphicImage value="/resources/images/headerimages/logo_dna_key.png"  styleClass="noborder"   /> 
                     </h:panelGrid> 
                     <h:panelGrid width="800" rendered="#{!languages.isSwedish}">
-                        <p:graphicImage value="/resources/images/headerimages/logo_dna_key_en.png"  styleClass="noborder " /> 
+                        <p:graphicImage value="/resources/images/headerimages/logo_dna_key_en.png"  styleClass="noborder"  /> 
                     </h:panelGrid> 
                     <h:outputLink value="#{msg.nrmurl}"  target="_blank" > 
                         <p:graphicImage value="/resources/images/headerimages/logoNRM.png" styleClass="noborder" title="#{msg.nrm}" /> 

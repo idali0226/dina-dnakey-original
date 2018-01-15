@@ -3,28 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:f="http://java.sun.com/jsf/core"  >
+      xmlns:f="http://java.sun.com/jsf/core"   >
 
     <h:head >
         <link rel="shortcut icon" href="//www.dina-web.net/dnakey/resources/images/favicon.ico" type="image/x-icon" />
-        
+
         <title>
             #{msg.headername} 
         </title>   
-          
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCa1olBKzqZdr4KaHHaC-2njZOWOinIDq8" type="text/javascript"></script> 
     </h:head> 
 
-    <f:view locale="#{languages.locale}"  >
-        
-        <ui:remove>
-            <f:metadata> 
-                <f:event listener="#{blast.init()}"  type="preRenderView"  /> 
-            </f:metadata>
-        </ui:remove> 
-        
+    <f:view locale="#{languages.locale}"  > 
         <h:body styleClass="background"> 	     
             <h:outputStylesheet library="css" name="dnakey.css"  />
-
+             
             <div style="width: 960px; margin: auto;"> 
                 <div id="header" style="width: 960px; ">
                     <ui:insert name="header" >
