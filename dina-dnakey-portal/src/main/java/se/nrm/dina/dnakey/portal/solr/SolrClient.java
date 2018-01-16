@@ -1,59 +1,70 @@
 package se.nrm.dina.dnakey.portal.solr;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
-import javax.ejb.Stateless;
+import java.io.IOException;
+import java.io.Serializable; 
+import java.util.List; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lombok.extern.slf4j.Slf4j;  
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
-import se.nrm.dina.dnakey.logic.exception.DinaException;
-import se.nrm.dina.dnakey.portal.util.BlastHelper;
+//import org.apache.solr.client.solrj.SolrQuery;
+//import org.apache.solr.client.solrj.SolrServer;
+//import org.apache.solr.client.solrj.SolrServerException;
+//import org.apache.solr.client.solrj.impl.HttpSolrServer;
+//import org.apache.solr.client.solrj.response.QueryResponse;
+//import org.apache.solr.common.SolrDocumentList;  
+import se.nrm.dina.dnakey.logic.exception.DinaException; 
 
 /**
  *
  * @author idali
  */
-@Stateless
+@Slf4j
 public class SolrClient implements Serializable {
+     
     
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+//    private SolrQuery solrQuery;
+//    private final SolrServer solrServer;  
     
-    private SolrQuery solrQuery;
-    private final SolrServer solrServer;  
+    private final HttpSolrClient solr;
+    private SolrQuery query;
     
     public SolrClient() { 
+         
         
-        String solrUrl = "http://localhost:8983/solr";
-        InetAddress inetAddress;
-        try {
-            inetAddress = InetAddress.getLocalHost(); 
-            solrUrl = BlastHelper.isLocal(inetAddress.getHostName());  
-            
-            logger.info("solr url : {}", solrUrl);
-        } catch (UnknownHostException ex) {
-            logger.error(ex.getMessage());
-        }    
-        solrServer = new HttpSolrServer(solrUrl);
+        String urlString = "http://localhost:8983/solr";
+        solr = new HttpSolrClient.Builder(urlString).build();
+        query = new SolrQuery();
+         
+//        InetAddress inetAddress;
+//        try {
+//            inetAddress = InetAddress.getLocalHost(); 
+//            solrUrl = BlastHelper.isLocal(inetAddress.getHostName());  
+//            
+//            logger.info("solr url : {}", solrUrl);
+//        } catch (UnknownHostException ex) {
+//            logger.error(ex.getMessage());
+//        }    
+//        solrServer = new HttpSolrServer(solrUrl);
     }
 
     public SolrRecord getRecordByCollectionObjectCatalognumber(String catalognumber) {
         
-        logger.info("getRecordByCollectionObjectCatalognumber : {}", catalognumber);
+        log.info("getRecordByCollectionObjectCatalognumber : {}", catalognumber);
 
-        try {
-            solrQuery = new SolrQuery();
-            solrQuery.setQuery("cn:" + catalognumber);
+        try { 
+            query = new SolrQuery();
+            query.setQuery("cn:" + catalognumber);
     
-            QueryResponse queryResponse = solrServer.query(solrQuery); 
+            QueryResponse queryResponse = solr.query(query);
+           
             SolrDocumentList documents = queryResponse.getResults();
             long numFound = documents.getNumFound();
+            log.info("num found : {}", numFound);
 
             if(numFound > 0) {  
                 List<SolrRecord> resultList = queryResponse.getBeans(SolrRecord.class); 
@@ -61,9 +72,8 @@ public class SolrClient implements Serializable {
             } else {
                 return null;
             }
-        } catch (SolrServerException ex) { 
-            throw new DinaException(ex);
+         } catch (IOException | SolrServerException ex) {
+             throw new DinaException(ex);
         }
-    }
-    
+    } 
 }

@@ -64,18 +64,16 @@ public class BlastBean implements Serializable {
     private int activeIndex = 0;                                        // active tab in sequence page
     
     private List<UploadedFile> uploadedFiles = new ArrayList<>(); 
-    private List<String> filelist = new ArrayList<>();                  // store uploaded file name
+//    private List<String> filelist = new ArrayList<>();                  // store uploaded file name
     
     
     private Map<BlastMetadata, String> ridMap = new HashMap<>();
-    private Map<String, List<String>> sequencesMap;
-    
-    
+    private Map<String, List<String>> sequencesMap = new HashMap();
+     
     private String database;   
-    
-    
+     
     private List<String> sequences;
-    private List<ResultBean> resultBeans = new ArrayList<>(); 
+    private List<ResultBean> resultBeans; 
     
     
     
@@ -292,9 +290,8 @@ public class BlastBean implements Serializable {
         log.info("handleFileUpload" ); 
         UploadedFile uploadedFile = event.getFile(); 
         if (uploadedFile != null) { 
-            if(!filelist.contains(uploadedFile.getFileName())) {
-                uploadedFiles.add(uploadedFile);
-                filelist.add(uploadedFile.getFileName()); 
+            if(!sequencesMap.containsKey(uploadedFile.getFileName())) {
+                uploadedFiles.add(uploadedFile); 
                 convertUploadFile(uploadedFile);
             } else {
                 msg.addWarning(ConstantString.getInstance().getText("file_uploaded_" + languages.getLocale()), ConstantString.getInstance().getText("file_uploaded_" + languages.getLocale()));
@@ -321,11 +318,23 @@ public class BlastBean implements Serializable {
      */
     public void removefile(UploadedFile file) { 
         log.info("removefile : {}", file.getFileName()); 
-        uploadedFiles.remove(file); 
-        filelist.remove(file.getFileName());
+        uploadedFiles.remove(file);  
         sequencesMap.remove(file.getFileName());
     }    
-    
+     
+    /**
+     * changeTestNumber -- event when number of test sequences changed
+     */
+    public void changeTestNumber() {
+        log.info("changeTestNumber : {}", numOfTestSeqs); 
+        
+        StringBuilder sb = new StringBuilder();
+        for(int i = 1; i <= numOfTestSeqs; i++) { 
+            sb.append(FastaFiles.getInstance().getSequence(i)); 
+        } 
+        testSequences = sb.toString();
+    }    
+     
         
     /**
      * submit sequences to blast 
@@ -380,10 +389,20 @@ public class BlastBean implements Serializable {
             run();
         }
     }
-
     
+    private void submitTestSequence() {
+        log.info("submitTestSequence : {}", database ); 
+        resultBeans = new ArrayList<>(); 
+        sequences = new ArrayList<>(); 
+        if(StringUtils.isEmpty(testSequences.trim())) {
+            msg.addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
+        } else {
+            sequences = sequenceBuilder.prepareSequenceList(testSequences);
+            run();
+        }
+    }
     
-    
+ 
     /**
      * run blast
      */ 
@@ -402,6 +421,28 @@ public class BlastBean implements Serializable {
             }
         }
     }
+    
+        
+    public String getBoldTotalSequence() {
+        return boldTotalSequence == null ? blaster.getBlastDbInfo("bold") : boldTotalSequence;
+    }
+ 
+    public String getGenBankTotalSequence() {
+        return genBankTotalSequence == null ? blaster.getBlastDbInfo("genbank") : genBankTotalSequence; 
+    }
+  
+    public String getNrmTotalSequence() {
+        return nrmTotalSequence == null ? blaster.getBlastDbInfo("nrm") : nrmTotalSequence;  
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -433,8 +474,8 @@ public class BlastBean implements Serializable {
         
         ridMap.clear();
         
-//        sequencesMap.clear();
-        filelist.clear();
+        sequencesMap.clear();
+//        filelist.clear();
         uploadedFiles.clear();
         
         navigator.home();
@@ -498,17 +539,7 @@ public class BlastBean implements Serializable {
 
 
     
-    private void submitTestSequence() {
-        log.info("submitTestSequence : {}", database ); 
-        resultBeans = new ArrayList<>(); 
-        sequences = new ArrayList<>(); 
-        if(StringUtils.isEmpty(testSequences.trim())) {
-            msg.addError(ConstantString.getInstance().getText("blastfailed_" + languages.getLocale()), ConstantString.getInstance().getText("inputdata_" + languages.getLocale()));
-        } else {
-            sequences = sequenceBuilder.prepareSequenceList(testSequences);
-            run();
-        }
-    }
+
  
 
 
@@ -697,18 +728,7 @@ public class BlastBean implements Serializable {
         ridMap.put(metadata, rid);
     }
     
-    /**
-     * changeTestNumber -- event when number of test sequences changed
-     */
-    public void changeTestNumber() {
-        log.info("changeTestNumber : {}", numOfTestSeqs); 
-        
-        StringBuilder sb = new StringBuilder();
-        for(int i = 1; i <= numOfTestSeqs; i++) { 
-            sb.append(FastaFiles.getInstance().getSequence(i)); 
-        } 
-        testSequences = sb.toString();
-    }    
+
     
     public void getSingleMap(BlastSubjectMetadata subMeta) {
         
@@ -873,68 +893,20 @@ public class BlastBean implements Serializable {
 
   
     
-    
-    
-//    public void genbankdesc() {
-//        section = 2;
-////        setTopMenuStyle(2);
-//        requestContext = RequestContext.getCurrentInstance();  
-//        requestContext.update("headform:topmenupanel"); 
-//        
-//        requestContext.scrollTo("genbank");
-//    }
-        
-//    public void bolddesc() {
-//        section = 2;
-////        setTopMenuStyle(2);
-//        requestContext = RequestContext.getCurrentInstance();  
-//        requestContext.update("headform:topmenupanel");  
-//        
-//        requestContext.scrollTo("bold");
-//    }
+ 
 
     public boolean isSolrAvailble() {
         return solrAvailble;
     }
  
-
-    
-//    public void links() {
-//        logger.info("links");
-//        section = 3;
-////        setTopMenuStyle(section);
-//    }
  
-//    public void pastesequence() {
-//        logger.info("pastesequence");
-//        section = 9;
-//    }
-    
-//    public void uploadfile() {
-//        logger.info("uploadfile");
-//        section = 10;
-//    }
-//
- 
-
-
 
 
 
     
 
          
-    public String getBoldTotalSequence() {
-        return boldTotalSequence == null ? blaster.getBlastDbInfo("bold") : boldTotalSequence;
-    }
- 
-    public String getGenBankTotalSequence() {
-        return genBankTotalSequence == null ? blaster.getBlastDbInfo("genbank") : genBankTotalSequence; 
-    }
-  
-    public String getNrmTotalSequence() {
-        return nrmTotalSequence == null ? blaster.getBlastDbInfo("nrm") : nrmTotalSequence;  
-    }
+
 
     public List<BlastMetadata> getListMetadata() {
         return listMetadata;
@@ -962,13 +934,13 @@ public class BlastBean implements Serializable {
     }
  
 
-    public List<String> getFilelist() {
-        return filelist;
-    }
-
-    public void setFilelist(List<String> filelist) {
-        this.filelist = filelist;
-    }
+//    public List<String> getFilelist() {
+//        return filelist;
+//    }
+//
+//    public void setFilelist(List<String> filelist) {
+//        this.filelist = filelist;
+//    }
 
     public List<UploadedFile> getUploadedFiles() {
         return uploadedFiles;

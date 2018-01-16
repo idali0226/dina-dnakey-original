@@ -7,11 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;  
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
+import java.util.concurrent.atomic.AtomicInteger; 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils; 
-import org.apache.solr.common.util.ContentStreamBase.StringStream;
+import org.apache.commons.lang.StringUtils;  
 import org.biojava3.core.exceptions.CompoundNotFoundError;
 import org.biojava3.core.sequence.io.FastaReaderHelper; 
 import se.nrm.dina.dnakey.portal.util.ConstantString;
@@ -112,9 +110,7 @@ public class SequenceValidation implements Serializable {
             int count = atomicInteger.getAndIncrement(); 
                 
             if(!isSequenceValid(s)) { 
-                errorMsgs.add(buildErrorMessage(count));
-                
-                log.info("error msg : {}", errorMsgs);
+                errorMsgs.add(buildErrorMessage(count));  
             }
         }); 
         return errorMsgs.isEmpty();

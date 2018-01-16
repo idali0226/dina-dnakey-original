@@ -218,63 +218,7 @@ a {
     text-decoration: none; 
     color: #8B8786; 
 }
-
-/*.newstop{
-    border: 1px solid #DFE9B8;
-    background-color: #86AD16;
-}*/
-
-
-
-/*.news {
-    color: #FFFFFF;
-    font-family: "Arial",sans-serif;
-    font-size: 20px;
-    margin-bottom: 15px;
-    margin-left: 20px;
-    margin-top: 15px;
-    text-shadow: 1px 2px 1px #436B16;
-}*/
-
-
-
-/*.newsbox {
-    background-color: #F2F2F2;
-    border-bottom-style:solid;
-    border-bottom-width:1px;
-    border-bottom-color:#d9d9d9;
-    padding:  20px;
-}*/
-
-
-/*.newsheader{
-    font-family: "Arial",sans-serif;
-    color: #5e5e5e;
-    font-size: 18px;
-    margin-bottom:15px;
-}
-
-.newstext{
-    font-family: "Arial",sans-serif;
-    color: #424242;
-    font-size:12px;
-    margin-right: 20px;
-}
-
-.newsdate{
-    font-family: "Arial",sans-serif;
-    color: #424242;
-    font-size:12px;
-}
-
-.morenews{
-    font-family: "Arial",sans-serif;
-    color: #424242;
-    font-size:12px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}*/
-
+ 
 
 .subheader2{
     font-style: italic;
@@ -364,6 +308,13 @@ a {
 .tabpading10 {
     padding: 10px 10px 10px 10px;
 }
+
+
+.tab3panel {
+    float: left; 
+    padding-top: 5px;
+}
+
 
 .ui-tabs-nav {
     font-size: 11px !important; 
@@ -555,7 +506,10 @@ a {
     background-position: -83px -146px !important;
 }
 
-
+.sublabel {
+    font-size: 13px;
+    font-weight: bold;
+}
 
 .inprocess {
     font-size: 16px; 
@@ -616,4 +570,10 @@ a {
 .contact2 {
     width: 80px; 
     float: left;
+}
+
+.tooltip {
+    font-size: 12px; 
+    white-space: normal; 
+    width: 250px; 
 }

@@ -150,7 +150,7 @@
                                                 <h:panelGrid id="testSequencPanel"  cellpadding="0" cellspacing="0"> 
 
                                                     <h:panelGrid columns="4" id="testSequencesDropdwonPanel"
-                                                                 style="float: left; padding-top: 5px; " 
+                                                                 styleClass="tab3panel"
                                                                  cellpadding="0" cellspacing="0">  
                                                         <h:outputLabel value="#{msg.generate}" style="padding-right: 5px;" />   
                                                         <h:selectOneMenu id="numOfTestSeqs" value="#{blast.numOfTestSeqs}">
@@ -164,12 +164,12 @@
 
                                                             <p:ajax listener="#{blast.changeTestNumber}" update="testSequencesAreaPanel" /> 
 
-                                                        </h:selectOneMenu>
-
+                                                        </h:selectOneMenu> 
                                                         <h:outputLabel value="#{msg.exemplesequences}"  style="padding-left: 5px; "/>   
                                                     </h:panelGrid>  
                                                     <h:panelGrid  cellpadding="0" cellspacing="0" id="testSequencesAreaPanel">  
-                                                        <p:inputTextarea  id="testSequencesArea"  value="#{blast.testSequences}" rows="15"  cols="92" styleClass="sequence" />
+                                                        <p:inputTextarea  id="testSequencesArea"  value="#{blast.testSequences}" 
+                                                                          rows="15"  cols="92" styleClass="sequence" />
                                                     </h:panelGrid>  
                                                 </h:panelGrid> 
                                             </p:tab>    
@@ -177,7 +177,7 @@
 
                                         <h:panelGroup layout="block"  >
                                             <p:spacer width="5" />
-                                            <h:outputLabel value="#{msg.searchindatabase}"  id="dbradioLabel" style="font-size: 13px;  font-weight:  bold;" />  
+                                            <h:outputLabel value="#{msg.searchindatabase}"  id="dbradioLabel" styleClass="sublabel"  />  
  
                                             <p:outputPanel id="customPanel" style="font-size: 11px; ">
                                                 <p:selectOneRadio id="customRadio" value="#{blast.database}" layout="custom">  
@@ -191,17 +191,17 @@
                                                     <p:radioButton id="opt1" for="customRadio" itemIndex="0"  />  
                                                     <h:outputLabel for="opt1" id="opt1label" value="#{msg.dinadatabase} [#{blast.nrmTotalSequence} #{msg.seqv}]" />   
                                                     <p:tooltip for="opt1label" value="#{msg.nrmdbradio}" 
-                                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/>  
+                                                               showEffect="fade" hideEffect="fade" styleClass="tooltip" />  
 
                                                     <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
                                                     <h:outputLabel for="opt2" id="opt2label" value="#{msg.bolddatabase} [#{blast.boldTotalSequence} #{msg.seqv}]" />  
                                                     <p:tooltip for="opt2label" value="#{msg.bolddbradio}" 
-                                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/>  
+                                                               showEffect="fade" hideEffect="fade" styleClass="tooltip" />  
  
                                                     <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
                                                     <h:outputLabel for="opt3" id="opt3label" value="#{msg.genbankdatabase} [#{blast.genBankTotalSequence} #{msg.seqv}]" />  
                                                     <p:tooltip for="opt3label" value="#{msg.genbankdbradio}" 
-                                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/>   
+                                                               showEffect="fade" hideEffect="fade" styleClass="tooltip" />   
                                                 </h:panelGrid>  
                                             </p:outputPanel>
                                             <br /> 

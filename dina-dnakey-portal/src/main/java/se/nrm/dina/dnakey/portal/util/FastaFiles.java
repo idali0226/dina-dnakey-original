@@ -81,13 +81,20 @@ public class FastaFiles {
     public String getSequence(int count) {
         
          switch (count) {
-            case 1:     return FASTA_FILE_1; 
-            case 2:     return FASTA_FILE_2; 
-            case 3:     return FASTA_FILE_3; 
-            case 4:     return FASTA_FILE_4; 
-            case 5:     return FASTA_FILE_5; 
-            case 6:     return FASTA_FILE_6;  
-            default:    return FASTA_FILE_1; 
+            case 1:     
+                return FASTA_FILE_1; 
+            case 2:     
+                return FASTA_FILE_2; 
+            case 3:     
+                return FASTA_FILE_3; 
+            case 4:     
+                return FASTA_FILE_4; 
+            case 5:     
+                return FASTA_FILE_5; 
+            case 6:     
+                return FASTA_FILE_6;  
+            default:    
+                return null; 
          }
     }
 }
