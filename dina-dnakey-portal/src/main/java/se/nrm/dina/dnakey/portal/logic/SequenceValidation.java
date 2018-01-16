@@ -6,23 +6,23 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer; 
-import javax.ejb.Stateless;
+import java.util.StringTokenizer;  
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils; 
+import org.apache.solr.common.util.ContentStreamBase.StringStream;
 import org.biojava3.core.exceptions.CompoundNotFoundError;
-import org.biojava3.core.sequence.io.FastaReaderHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.biojava3.core.sequence.io.FastaReaderHelper; 
+import se.nrm.dina.dnakey.portal.util.ConstantString;
 
 /**
  *
  * @author idali
  */ 
-@Stateless
+@Slf4j
 public class SequenceValidation implements Serializable {
-    
-    private final Logger logger = LoggerFactory.getLogger(SequenceValidation.class);
-    
+     
     private String errorMsg;
     private List<String> errorMsgs = new ArrayList<>();
     
@@ -34,7 +34,7 @@ public class SequenceValidation implements Serializable {
         InputStream stream = null;
         try {
             sequence = StringUtils.replaceChars(sequence, "UuRrYySsWwKkMmBbDdHhVv", "n");
-            stream = new ByteArrayInputStream(sequence.getBytes("UTF-8"));
+            stream = new ByteArrayInputStream(sequence.getBytes(ConstantString.getInstance().getUtf8()));
             FastaReaderHelper.readFastaDNASequence(stream);  
             return true;
         } catch (Exception ex) { 
@@ -45,7 +45,7 @@ public class SequenceValidation implements Serializable {
                     stream.close();
                 } 
             } catch (IOException ex) {
-                logger.error(ex.getMessage());
+                log.error(ex.getMessage());
             }
         } 
     }
@@ -63,7 +63,7 @@ public class SequenceValidation implements Serializable {
         return false;
     }
     
-        /**
+     /**
      * Validates sequence
      * 
      * @param singleSeq - a single fasta sequence
@@ -73,7 +73,7 @@ public class SequenceValidation implements Serializable {
     private boolean isSequenceValid(String singleSeq) {
          
         errorMsg = null;
-        if (singleSeq == null) {
+        if (singleSeq == null || singleSeq.trim().isEmpty()) {
             errorMsg = "Invalid fasta sequence!";   
         } else {
             try {
@@ -86,32 +86,38 @@ public class SequenceValidation implements Serializable {
     }
     
     
-        /**
+    private String buildErrorMessage(int index) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("The sequence number ");
+        sb.append(index);
+        sb.append(" is invalid. ");
+        sb.append(errorMsg);
+        sb.append("\n");
+
+        return sb.toString();
+    }
+
+    /**
      * Validates multiple fasta sequences 
      *  
      * @return true is all the fasta sequences are valid
      */
     private boolean isMultipleSequencesValid(List<String> seqs) {
-        
-        errorMsgs = new ArrayList<>();
 
-        boolean isValid = true; 
-        int count = 0; 
-        for (String seq : seqs) {
-            StringBuilder sb = new StringBuilder();
-            count++; 
-            
-            if (!isSequenceValid(seq)) {
-                sb.append("The sequence number ");
-                sb.append(count);
-                sb.append(" is invalid. ");
-                sb.append(errorMsg);
-                sb.append("\n");
-                isValid = false;
-                errorMsgs.add(sb.toString());
-            }  
-        } 
-        return isValid;
+        errorMsgs = new ArrayList<>();
+        
+        AtomicInteger atomicInteger = new AtomicInteger(1);
+ 
+        seqs.stream().forEach(s -> {
+            int count = atomicInteger.getAndIncrement(); 
+                
+            if(!isSequenceValid(s)) { 
+                errorMsgs.add(buildErrorMessage(count));
+                
+                log.info("error msg : {}", errorMsgs);
+            }
+        }); 
+        return errorMsgs.isEmpty();
     }
     
     public List<String> getErrorMsgs() {

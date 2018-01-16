@@ -13,10 +13,20 @@ public class ConstantString {
      
     private static Map<String, String> map;
     
+    private final String MAP_MARK_PATH = "http://maps.google.com/mapfiles/ms/micons/blue-dot.png";
+    private final String NATURARV_URL_ENCODE = "param=dnakey&catalogNumber=";
+    private final String DEFAULT_BLASTDB = "nrm";
+    private final String UTF_8 = "UTF-8";
+
     /**
      * white space chars - " \t\r\n\f"
      */
-    public final String WHITE_SPACE_CHARS = " \t\r\n\f";
+    private final String WHITE_SPACE_CHARS = "[ \t\r\n\f]";
+    
+    
+    
+    
+    
     public final String XML_OUTPUT = "xml";
     public final String TABULAR_OUTPUT = "tabular";
      
@@ -25,7 +35,7 @@ public class ConstantString {
             instance = new ConstantString();
         }
         
-        map = new HashMap<String, String>();
+        map = new HashMap<>();
         map.put("feedback_en", "Feedback");
         map.put("feedback_sv", "Återkoppling");
         map.put("catalognum_en", "Catalog #");
@@ -70,10 +80,10 @@ public class ConstantString {
         map.put("blastnoresult_en", "Unable to match any records in the selected database");
         map.put("blastnoresult_sv", "Det går inte att matcha några poster i den valda databasen");
         map.put("searchanothdb_en", "Search in ");
-        map.put("searchanothdb_sv", "Sök i ");
-        
-        
-        
+        map.put("searchanothdb_sv", "Sök i "); 
+ 
+        map.put("file_uploaded_en", "File is uploaded");
+        map.put("file_uploaded_sv", "Filen är uppladdad");
         
         map.put("query_sv", "Fråga");
         map.put("query_en", "Query");
@@ -90,4 +100,26 @@ public class ConstantString {
         }
         return text;
     }
+    
+        
+    public String getMapMarkPath() {
+        return MAP_MARK_PATH;
+    }
+    
+    public String getNaturarvUrlEncode() {
+        return NATURARV_URL_ENCODE;
+    }
+    
+    public String getDefaultBlastDb() {
+        return DEFAULT_BLASTDB;
+    }
+    
+    public String getWhiteSpaceChars() {
+        return WHITE_SPACE_CHARS;
+    }
+    
+    public String getUtf8() {
+        return UTF_8;
+    }
+    
 }

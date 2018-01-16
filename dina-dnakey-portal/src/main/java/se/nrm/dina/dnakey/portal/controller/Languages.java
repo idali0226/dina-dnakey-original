@@ -3,19 +3,15 @@ package se.nrm.dina.dnakey.portal.controller;
 import java.io.Serializable;  
 import javax.enterprise.context.SessionScoped;    
 import javax.inject.Named; 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;      
-
+import lombok.extern.slf4j.Slf4j; 
 /**
  *
  * @author idali
  */
 @SessionScoped
 @Named
-public class Languages implements Serializable {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-  
+@Slf4j
+public class Languages implements Serializable { 
     
     private String locale = "sv";  
 
@@ -30,9 +26,8 @@ public class Languages implements Serializable {
         this.locale = locale;
     }
       
-    public void changelanguage(String locale) {
-        
-        logger.info("changelanguage - locale: {}", locale);
+    public void changelanguage(String locale) { 
+        log.info("changelanguage - locale: {}", locale);
          
         setLocale(locale);
     }

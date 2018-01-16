@@ -94,32 +94,40 @@
                                         </h:commandLink>.  
                                     </h:panelGroup> 
                                      
+                                    
+                                    
                                     <br />
                                     <br /> 
+                                    <!-- ************************************** sequence tab panel ************************************* --> 
                                     <h:panelGroup layout="block" style="font-size: 12px;">
                                         <h:outputText value="#{msg.testsequencesdesc}" />
                                     </h:panelGroup>
                                      
-                                    <h:panelGroup style="border: 1px solid #A8A8A8; float: left;"  layout="block">
-                                        <p:tabView id="tabView" >  
+                                    <h:panelGroup styleClass="tabpanel" layout="block">
+                                        <p:tabView id="tabView" activeIndex="#{blast.activeIndex}" >  
 
-                                            <p:ajax event="tabChange" listener="#{blast.onTabChange}" update="testSequencPanel" global="false" />  
-
-                                            <p:tab id="tab1" title="#{msg.tab1title}" >   
+                                            <p:ajax event="tabChange" listener="#{blast.onTabChange}" update="tabView" global="false" />  
+                                            <!-- ********************************* tab 1 copy paste fasta files ************************************* --> 
+                                            <p:tab id="tab1" title="#{msg.tab1title}"  >   
                                                 <h:panelGrid id="sequencepanel"  cellpadding="0" cellspacing="0"> 
                                                     <h:panelGrid id="wrap" cellpadding="0" cellspacing="0">  
-                                                        <p:inputTextarea  id="sequence"  value="#{blast.sequence}" rows="15"  cols="92" styleClass="sequence" />
+                                                        <p:inputTextarea  id="sequence"  value="#{blast.sequenceList}" 
+                                                                          rows="15"  cols="92" styleClass="sequence" /> 
                                                     </h:panelGrid>  
                                                 </h:panelGrid>  
                                             </p:tab>   
+                                            <!-- ****************************** tab 2 upload fasta files ************************************* --> 
                                             <p:tab id="tab2" title="#{msg.tab2title}" >   
-                                                <h:panelGrid width="530px" style="padding: 10px 10px 10px 10px;"  > 
+                                                
+                                                <h:panelGrid width="530px" styleClass="tabpading10" id="uploadFilePanel" >  
                                                     <p:fileUpload fileUploadListener="#{blast.handleFileUpload}"  
-                                                                  mode="advanced" update=":sequenceform:tabView:uploadFileList" 
+                                                                  mode="advanced" 
+                                                                  update=":sequenceform:tabView:uploadFileList :sequenceform:tabView:uploadFilePanel" 
                                                                   label="#{msg.uploadfastafile}" 
                                                                   multiple="true" 
-                                                                  auto="true"
-                                                                  dragDropSupport="true" />     
+                                                                  auto="true"   
+                                                                  disabled="#{blast.isMax}"
+                                                                  dragDropSupport="true"  />     
                                                 </h:panelGrid>
                                                 <h:panelGrid  id="uploadFileList" >
                                                     <p:panel style="border: none;" > 
@@ -127,7 +135,8 @@
                                                             <h:panelGrid columns="2" columnClasses="uploadfilecol1,uploadfilecol2" style="width: 400px;">
                                                                 <h:outputText value="#{file.fileName}" />    
                                                                 <p:commandLink actionListener="#{blast.removefile(file)}"  global="false"
-                                                                               title="#{msg.btnremovefile}"  update=":sequenceform:tabView:uploadFileList"   > 
+                                                                               title="#{msg.btnremovefile}"  
+                                                                               update=":sequenceform:tabView:uploadFileList :sequenceform:tabView:uploadFilePanel"   > 
                                                                     <h:graphicImage name="images/button_remove.gif" /> 
                                                                 </p:commandLink> 
                                                             </h:panelGrid> 

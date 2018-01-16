@@ -10,19 +10,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer; 
-import org.apache.commons.lang.StringUtils; 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;  
 import se.nrm.dina.dnakey.logic.exception.DnaKeyException;
 
 /**
  *
  * @author idali
  */
+@Slf4j
 public class BlastHelper { 
-    
-    private final static Logger logger = LoggerFactory.getLogger(BlastHelper.class);
-    
+      
     private static Timestamp timestamp;
     
     public BlastHelper() { 
@@ -36,7 +34,7 @@ public class BlastHelper {
 //        }
 //    }
  
-    public static List<String> prepareSequenceList(String sequence) {
+    public static List<String> prepareSequenceList1(String sequence) {
         List<String> sequences = new ArrayList<>();
 
         int count = 1;
@@ -80,23 +78,7 @@ public class BlastHelper {
         return sequences;
     }
     
-    public static String converInputStreamIntoString(InputStream is) {
-        
-        logger.info("converInputStreamIntoString");
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            for (String line = br.readLine(); line != null; line = br.readLine()) {  
-                sb.append(line);
-                sb.append("\n");
-            } 
-            return sb.toString().trim();
-        } catch (IOException ex) {
-            logger.error(ex.getMessage());
-        }
-        return null;
-    }
+    
      
     private static String addSequenceHeader(String string) {
         timestamp = new Timestamp(System.currentTimeMillis());
@@ -143,7 +125,7 @@ public class BlastHelper {
 
         int start = 0;
         while (start < line.length()) {
-            if (ConstantString.getInstance().WHITE_SPACE_CHARS.indexOf(line.charAt(start)) == -1) {
+            if (ConstantString.getInstance().getWhiteSpaceChars().indexOf(line.charAt(start)) == -1) {
                 break;
             }
             start++;
@@ -154,7 +136,7 @@ public class BlastHelper {
     
     public static String isLocal(String hostname) {
         
-        logger.info("hostname : {}", hostname);
+        log.info("hostname : {}", hostname);
         return hostname.toLowerCase().contains("ida") ? "http://localhost:8983/solr/" : "http://dina-db:8983/solr/";
     }
  }

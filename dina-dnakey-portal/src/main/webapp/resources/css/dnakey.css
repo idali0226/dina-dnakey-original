@@ -219,14 +219,14 @@ a {
     color: #8B8786; 
 }
 
-.newstop{
+/*.newstop{
     border: 1px solid #DFE9B8;
     background-color: #86AD16;
-}
+}*/
 
 
 
-.news {
+/*.news {
     color: #FFFFFF;
     font-family: "Arial",sans-serif;
     font-size: 20px;
@@ -234,20 +234,20 @@ a {
     margin-left: 20px;
     margin-top: 15px;
     text-shadow: 1px 2px 1px #436B16;
-}
+}*/
 
 
 
-.newsbox {
+/*.newsbox {
     background-color: #F2F2F2;
     border-bottom-style:solid;
     border-bottom-width:1px;
     border-bottom-color:#d9d9d9;
     padding:  20px;
-}
+}*/
 
 
-.newsheader{
+/*.newsheader{
     font-family: "Arial",sans-serif;
     color: #5e5e5e;
     font-size: 18px;
@@ -273,7 +273,7 @@ a {
     font-size:12px;
     font-weight: bold;
     margin-bottom: 10px;
-}
+}*/
 
 
 .subheader2{
@@ -355,6 +355,15 @@ a {
     margin-right: 350px;   
     overflow: hidden;
 } 
+
+.tabpanel {
+    border: 1px solid #A8A8A8; 
+    float: left;
+} 
+
+.tabpading10 {
+    padding: 10px 10px 10px 10px;
+}
 
 .ui-tabs-nav {
     font-size: 11px !important; 
