@@ -21,17 +21,19 @@ import se.nrm.dina.dnakey.portal.util.ConstantString;
 @Slf4j
 public class SequenceValidation implements Serializable {
      
+    private final String REPLACE_CHARS = "UuRrYySsWwKkMmBbDdHhVv";
+    private final String REPLACE_CHAR = "n";
     private String errorMsg;
     private List<String> errorMsgs = new ArrayList<>();
     
     public SequenceValidation() {
-        
+        log.info("SequenceValidation");
     }
     
     public boolean validate(String sequence) {
         InputStream stream = null;
         try {
-            sequence = StringUtils.replaceChars(sequence, "UuRrYySsWwKkMmBbDdHhVv", "n");
+            sequence = StringUtils.replaceChars(sequence, REPLACE_CHARS, REPLACE_CHAR);
             stream = new ByteArrayInputStream(sequence.getBytes(ConstantString.getInstance().getUtf8()));
             FastaReaderHelper.readFastaDNASequence(stream);  
             return true;

@@ -5,10 +5,7 @@
  */
 package se.nrm.dina.dnakey.portal.logic;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.BufferedReader; 
 import java.io.Serializable;
 import java.io.StringReader;
 import java.time.LocalDateTime;
@@ -33,6 +30,7 @@ public class SequenceBuilder implements Serializable {
     private final String NEW_LINE = "\n";
 
     public SequenceBuilder() { 
+        log.info("SequenceBuilder");
     }
 
     private int getMaxCount(String... strings) {
@@ -96,7 +94,7 @@ public class SequenceBuilder implements Serializable {
     }
 
     private List<String> buildStringList(String string) {
-        log.info("buildStringList : {}", string);
+//        log.info("buildStringList : {}", string);
 
         List<String> strings = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -131,23 +129,5 @@ public class SequenceBuilder implements Serializable {
         }
         line = line.substring(start);
         return line.length() == 0;
-    }
-    
-//    public static String converInputStreamIntoString(InputStream is) {
-//        
-//        log.info("converInputStreamIntoString");
-//        try {
-//            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//            StringBuilder sb = new StringBuilder();
-//
-//            for (String line = br.readLine(); line != null; line = br.readLine()) {  
-//                sb.append(line);
-//                sb.append("\n");
-//            } 
-//            return sb.toString().trim();
-//        } catch (IOException ex) {
-//            log.error(ex.getMessage());
-//        }
-//        return null;
-//    }
+    } 
 }

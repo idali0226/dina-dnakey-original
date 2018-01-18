@@ -1,4 +1,4 @@
-package se.nrm.dina.dnakey.portal.solr;
+package se.nrm.dina.dnakey.portal.vo;
   
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,8 +12,7 @@ import se.nrm.dina.dnakey.logic.vo.MorphyBankImage;
  * @author idali
  */ 
 public class SolrRecord  {
-      
-    
+       
     @Field("id")
     String id;
     
@@ -157,9 +156,6 @@ public class SolrRecord  {
     public void setLnt1(Double lnt1) {
         this.lnt1 = lnt1;
     }
-    
-    
-    
      
     public String getType() {
         return type;
@@ -168,8 +164,7 @@ public class SolrRecord  {
     public void setType(String type) {
         this.type = type;
     }
- 
-
+  
     public String getCollectionName() {
         return collectionName;
     }

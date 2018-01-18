@@ -3,6 +3,7 @@ package se.nrm.dina.dnakey.portal.beans;
 import java.io.Serializable; 
 import javax.enterprise.context.SessionScoped; 
 import javax.inject.Named; 
+import lombok.extern.slf4j.Slf4j;
 import se.nrm.dina.dnakey.portal.util.CSSName;
 
 /**
@@ -11,6 +12,7 @@ import se.nrm.dina.dnakey.portal.util.CSSName;
  */
 @SessionScoped
 @Named
+@Slf4j
 public class StyleBean implements Serializable {
     
     private String tab1 = CSSName.getInstance().getCurrentTab();
@@ -19,14 +21,10 @@ public class StyleBean implements Serializable {
     private String tab4;
       
     private String svbtn;
-    private String enbtn;
-      
-//    private String menu1 = CSSName.getInstance().getCurrentTab();
-//    private String menu2;
-//    private String menu3;
-//    private String menu4; 
+    private String enbtn; 
       
     public StyleBean() { 
+        log.info("StyleBean");
     }
  
 

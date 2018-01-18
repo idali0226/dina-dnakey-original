@@ -6,53 +6,47 @@
 
 package se.nrm.dina.dnakey.logic;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.Serializable; 
 import java.util.ArrayList; 
 import java.util.List; 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future; 
-import javax.annotation.Resource;
-import javax.ejb.Stateless;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource; 
 import javax.enterprise.concurrent.ManagedExecutorService; 
-import org.slf4j.LoggerFactory;
+import javax.inject.Inject;
+import lombok.extern.slf4j.Slf4j; 
+import se.nrm.dina.dnakey.logic.config.ConfigProperties;
 import se.nrm.dina.dnakey.logic.metadata.BlastMetadata; 
 
 /**
  * BlastQueue uses a ManagedExecutorService to submit task in queue 
  * 
  * @author idali
- */
-@Stateless
-public class BlastQueue {
+ */ 
+@Slf4j
+public class BlastQueue implements Serializable { 
     
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass()); 
- 
-    private boolean isLocal = false;
+    @Inject
+    private ConfigProperties config;
      
-//    @Resource(lookup = "concurrent/__highPriority")                               // glassfish
-    @Resource(lookup="java:jboss/ee/concurrency/executor/default")                  // wildfly
+    private String blastPath;
+    private String blastDbPath;
+ 
+    @Resource(lookup = "java:jboss/ee/concurrency/executor/default")                  // wildfly
     ManagedExecutorService highPriority;
 
     public BlastQueue() { 
-        InetAddress inetAddress;
-        try {
-            inetAddress = InetAddress.getLocalHost(); 
-            isLocal = inetAddress.getHostName().toLowerCase().contains("ida");  
-        } catch (UnknownHostException ex) {
-            logger.error(ex.getMessage());
-        }
     }
 
-    public BlastQueue(ManagedExecutorService highPriority) {
-        InetAddress inetAddress;
-        try {
-            inetAddress = InetAddress.getLocalHost();
-            isLocal = inetAddress.getHostName().toLowerCase().contains("ida");
-        } catch (UnknownHostException ex) {
-            logger.error(ex.getMessage());
-        }
+    public BlastQueue(ManagedExecutorService highPriority) { 
         this.highPriority = highPriority;
+    }
+    
+    @PostConstruct
+    public void init() {
+        blastPath = config.getBlastnPath();
+        blastDbPath = config.getDbPath();
     }
 
     /**
@@ -63,7 +57,7 @@ public class BlastQueue {
      */
     public List<BlastMetadata> run(List<String> filePathList, String dbname) {
         
-        logger.info("run");
+        log.info("run");
         
         List<BlastMetadata> resultList = new ArrayList<>();
         
@@ -71,14 +65,10 @@ public class BlastQueue {
         filePathList
                 .parallelStream()
                 .forEachOrdered(x -> {  
-                    list.add(highPriority.submit(new BlastCallableTask(x, dbname, isLocal)));
+             
+                    list.add(highPriority.submit(new BlastCallableTask(x, dbname, blastPath, blastDbPath)));
                 });
-         
-//        for (String filePath : filePathList) {
-//            result = highPriority.submit(new BlastCallableTask(filePath, dbname, isLocal));   
-//            list.add(result);
-//        } 
-        
+ 
         boolean finished = false;
         while(!finished) {  
             finished = isDone(list); 
@@ -88,7 +78,7 @@ public class BlastQueue {
             try {
                 resultList.add((BlastMetadata) future.get());
             } catch (InterruptedException | ExecutionException ex) {
-                logger.error(ex.getMessage());
+                log.error(ex.getMessage());
             }
         });
         return resultList;  

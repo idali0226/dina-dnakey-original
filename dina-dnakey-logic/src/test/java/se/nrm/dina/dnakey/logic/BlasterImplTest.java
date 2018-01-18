@@ -37,18 +37,18 @@ public class BlasterImplTest {
      * Test of getBlastDbInfo method, of class BlasterImpl.
      * @throws java.lang.Exception
      */
-    @Test
-    public void testGetBlastDbInfo() throws Exception {
-        System.out.println("getBlastDbInfo");
-          
-        Blaster testInstance = Mockito.mock(BlasterImpl.class); 
-        when(testInstance.getBlastDbInfo("nrm")).thenReturn("12345");
-        
-        String result = testInstance.getBlastDbInfo("nrm"); 
-         
-        Mockito.verify(testInstance).getBlastDbInfo("nrm");  
-        assertEquals("12345", result);
-    }
+//    @Test
+//    public void testGetBlastDbInfo() throws Exception {
+//        System.out.println("getBlastDbInfo");
+//          
+//        Blaster testInstance = Mockito.mock(BlasterImpl.class); 
+//        when(testInstance.getBlastDbInfo("nrm")).thenReturn("12345");
+//        
+//        String result = testInstance.getBlastDbInfo("nrm"); 
+//         
+//        Mockito.verify(testInstance).getBlastDbInfo("nrm");  
+//        assertEquals("12345", result);
+//    }
 
     /**
      * Test of remoteGenbankBlast method, of class BlasterImpl.

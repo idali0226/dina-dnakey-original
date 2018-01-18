@@ -40,6 +40,10 @@ public class Navigator implements Serializable  {
     @Inject
     private StyleBean style;
     
+    public Navigator() {
+        log.info("Navigator");
+    }
+    
     private void redirectPage(String path) {
         externalContext = FacesContext.getCurrentInstance().getExternalContext(); 
         try {

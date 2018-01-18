@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named; 
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -12,6 +13,7 @@ import javax.inject.Named;
  */
 @Named("imageBeans")
 @SessionScoped
+@Slf4j
 public class ImageBeans implements Serializable {
       
     private final static List<String> IMAGES;   
@@ -34,6 +36,7 @@ public class ImageBeans implements Serializable {
     }
     
     public ImageBeans() { 
+        log.info("ImageBeans");
     }
 
     public String getImage() {

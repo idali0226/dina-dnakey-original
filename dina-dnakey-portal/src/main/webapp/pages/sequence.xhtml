@@ -162,7 +162,8 @@
                                                             <f:selectItem itemLabel="5" itemValue="5" />  
                                                             <f:selectItem itemLabel="6" itemValue="6" /> 
 
-                                                            <p:ajax listener="#{blast.changeTestNumber}" update="testSequencesAreaPanel" /> 
+                                                            <p:ajax listener="#{blast.changeTestNumber}" global="false" process="@this"
+                                                                    update="testSequencesAreaPanel" /> 
 
                                                         </h:selectOneMenu> 
                                                         <h:outputLabel value="#{msg.exemplesequences}"  style="padding-left: 5px; "/>   
@@ -181,25 +182,25 @@
  
                                             <p:outputPanel id="customPanel" style="font-size: 11px; ">
                                                 <p:selectOneRadio id="customRadio" value="#{blast.database}" layout="custom">  
-                                                    <f:selectItem itemLabel="#{msg.dinadatabase} [#{blast.nrmTotalSequence} #{msg.seqv}]" itemValue="nrm" />  
-                                                    <f:selectItem itemLabel="#{msg.bolddatabase} [#{blast.boldTotalSequence} #{msg.seqv}]"  itemValue="bold" />  
-                                                    <f:selectItem itemLabel="#{msg.genbankdatabase} [#{blast.genBankTotalSequence} #{msg.seqv}]" itemValue="genbank" />  
+                                                    <f:selectItem itemLabel="#{msg.dinadatabase} [#{dbInfo.nrmTotalSequence} #{msg.seqv}]" itemValue="nrm" />  
+                                                    <f:selectItem itemLabel="#{msg.bolddatabase} [#{dbInfo.boldTotalSequence} #{msg.seqv}]"  itemValue="bold" />  
+                                                    <f:selectItem itemLabel="#{msg.genbankdatabase} [#{dbInfo.genBankTotalSequence} #{msg.seqv}]" itemValue="genbank" />  
                                                     <f:ajax listener="#{blast.databaseChanged}" event="change" execute="@this"  />  
                                                 </p:selectOneRadio>  
 
                                                 <h:panelGrid columns="3">  
                                                     <p:radioButton id="opt1" for="customRadio" itemIndex="0"  />  
-                                                    <h:outputLabel for="opt1" id="opt1label" value="#{msg.dinadatabase} [#{blast.nrmTotalSequence} #{msg.seqv}]" />   
+                                                    <h:outputLabel for="opt1" id="opt1label" value="#{msg.dinadatabase} [#{dbInfo.nrmTotalSequence} #{msg.seqv}]" />   
                                                     <p:tooltip for="opt1label" value="#{msg.nrmdbradio}" 
                                                                showEffect="fade" hideEffect="fade" styleClass="tooltip" />  
 
                                                     <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>  
-                                                    <h:outputLabel for="opt2" id="opt2label" value="#{msg.bolddatabase} [#{blast.boldTotalSequence} #{msg.seqv}]" />  
+                                                    <h:outputLabel for="opt2" id="opt2label" value="#{msg.bolddatabase} [#{dbInfo.boldTotalSequence} #{msg.seqv}]" />  
                                                     <p:tooltip for="opt2label" value="#{msg.bolddbradio}" 
                                                                showEffect="fade" hideEffect="fade" styleClass="tooltip" />  
  
                                                     <p:radioButton id="opt3" for="customRadio" itemIndex="2"/>  
-                                                    <h:outputLabel for="opt3" id="opt3label" value="#{msg.genbankdatabase} [#{blast.genBankTotalSequence} #{msg.seqv}]" />  
+                                                    <h:outputLabel for="opt3" id="opt3label" value="#{msg.genbankdatabase} [#{dbInfo.genBankTotalSequence} #{msg.seqv}]" />  
                                                     <p:tooltip for="opt3label" value="#{msg.genbankdbradio}" 
                                                                showEffect="fade" hideEffect="fade" styleClass="tooltip" />   
                                                 </h:panelGrid>  

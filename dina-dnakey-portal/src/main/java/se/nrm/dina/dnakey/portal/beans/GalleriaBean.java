@@ -5,50 +5,36 @@ import java.util.ArrayList;
 import java.util.List; 
 import javax.enterprise.context.SessionScoped;   
 import javax.inject.Named; 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;    
+import lombok.extern.slf4j.Slf4j;    
 import se.nrm.dina.dnakey.logic.metadata.BlastSubjectMetadata;
 import se.nrm.dina.dnakey.logic.vo.MorphyBankImage;
+
 /**
  *
  * @author idali
  */
 @Named("galleriaBean")
 @SessionScoped 
+@Slf4j
 public class GalleriaBean implements Serializable {
-    
-    private final Logger logger = LoggerFactory.getLogger(this.getClass()); 
-        
+     
     private List<MorphyBankImage> groupImages;
     private String mbid;
     private String catalogNumber;
     private String scientificName;
     
     public GalleriaBean() {   
-        groupImages = new ArrayList<>();
+        log.info("GalleriaBean");
     }
       
-    public void imageSwitch(BlastSubjectMetadata metadata) {
-        
-        logger.info("imageSwitch : {}", metadata);
+    public void imageSwitch(BlastSubjectMetadata metadata) { 
+        log.info("imageSwitch : {}", metadata);
           
-        groupImages = metadata.getMbImages();
-        groupImages.stream().forEach((image) -> {
-            logger.info("image : {}", image);
-        });
-        
-        
-        
-        mbid = metadata.getMbid();
-        logger.info("mbid : {}", mbid);
-        
-        
-        catalogNumber = metadata.getCatalogNumber();
-        logger.info("catalogNumber : {}", catalogNumber);
-        
-        
-        scientificName = metadata.getScientificName();
-        logger.info("scientificName : {}", scientificName);
+        groupImages = new ArrayList<>();
+        groupImages = metadata.getMbImages(); 
+        mbid = metadata.getMbid();  
+        catalogNumber = metadata.getCatalogNumber();  
+        scientificName = metadata.getScientificName(); 
     }
 
     public List<MorphyBankImage> getGroupImages() { 

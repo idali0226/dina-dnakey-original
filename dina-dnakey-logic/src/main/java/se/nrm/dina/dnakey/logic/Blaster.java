@@ -20,7 +20,7 @@ public interface Blaster {
      * @param db
      * @return String
      */
-    public String getBlastDbInfo(String db);
+//    public String getBlastDbInfo(String db);
     
 //    public BlastMetadata remoteBlast(String fastaSequence);
     

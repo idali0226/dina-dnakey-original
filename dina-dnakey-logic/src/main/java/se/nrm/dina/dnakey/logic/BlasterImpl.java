@@ -55,37 +55,37 @@ public class BlasterImpl implements Blaster, Serializable {
         }
     }
 
-    @Override
-    public String getBlastDbInfo(String db) {
-        logger.info("getBlastDbInfo - db: {} dbpath : {}", db, BLAST_PATH);
-
-        InputStream is = null;
-        String command = HelpClass.getBlastDBInfo(BLAST_PATH, BLAST_DB_PATH, db);
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            is = process.getInputStream();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(is));
-
-            String line;
-            while ((line = in.readLine()) != null) {
-                if (line.contains("sequences")) {
-                    return StringUtils.substringBefore(line, " sequences").trim();
-                }
-            }
-        } catch (IOException ex) {
-            logger.error(ex.getMessage());
-        } finally {
-            try {
-                if (is != null) {
-                    is.close();
-                }
-            } catch (IOException ex) {
-                logger.info(ex.getMessage());
-            }
-        }
-        return null;
-    }
+//    @Override
+//    public String getBlastDbInfo(String db) {
+//        logger.info("getBlastDbInfo - db: {} dbpath : {}", db, BLAST_PATH);
+//
+//        InputStream is = null;
+//        String command = HelpClass.getBlastDBInfo(BLAST_PATH, BLAST_DB_PATH, db);
+//        try {
+//            Process process = Runtime.getRuntime().exec(command);
+//            is = process.getInputStream();
+//
+//            BufferedReader in = new BufferedReader(new InputStreamReader(is));
+//
+//            String line;
+//            while ((line = in.readLine()) != null) {
+//                if (line.contains("sequences")) {
+//                    return StringUtils.substringBefore(line, " sequences").trim();
+//                }
+//            }
+//        } catch (IOException ex) {
+//            logger.error(ex.getMessage());
+//        } finally {
+//            try {
+//                if (is != null) {
+//                    is.close();
+//                }
+//            } catch (IOException ex) {
+//                logger.info(ex.getMessage());
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public String remoteGenbankBlast(String fastSequence) {

@@ -1,11 +1,13 @@
-package se.nrm.dina.dnakey.portal.beans;
+package se.nrm.dina.dnakey.portal.vo;
 
 import java.io.Serializable;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
  * @author idali
  */
+@Slf4j
 public class ResultBean implements Serializable {
     
     private final String query;
@@ -29,6 +31,7 @@ public class ResultBean implements Serializable {
                       final String mark, final String score, final String evalue, final String collection,
                       final String swedishName, final String locality, final String coordinates, 
                       final String date, final String collector) {
+        log.info("ResultBean");
         this.query = query;
         this.catalogNumber = catalogNumber;
         this.scientificName = scientificName;

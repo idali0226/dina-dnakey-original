@@ -1,0 +1,23 @@
+## YAML Template.
+---
+swarm:
+  geodata: /Users/idali/git-idali/data/dnakey/geo_coords.tsv 
+  blast:
+    base:
+      path: /usr/local/blast/
+      db: /usr/local/blast/db/
+      bin: 
+        path: /usr/local/blast/bin/
+        dbinfo: /usr/local/blast/bin/blastdbcmd
+        blastn: /usr/local/blast/bin/blastn
+    tempfile:
+      path: /Users/idali/git-idali/data/dnakey/tempfastafiles
+  solr:
+    path: http://localhost:8983/solr
+  http:
+    port: 8181
+  management:
+    http:
+      port: 9191
+        
+        

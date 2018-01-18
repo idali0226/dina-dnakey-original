@@ -1,21 +1,19 @@
 package se.nrm.dina.dnakey.portal.controller;
-  
-import java.io.File;
+   
 import java.io.IOException; 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList; 
 import java.util.HashMap;
 import java.util.List;   
-import java.util.Map; 
+import java.util.Map;  
 import javax.annotation.PostConstruct; 
 import javax.enterprise.context.SessionScoped; 
 import org.primefaces.event.FileUploadEvent; 
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
-import javax.inject.Named; 
-import javax.servlet.http.HttpServletRequest;
+import javax.inject.Named;  
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils; 
@@ -36,14 +34,13 @@ import se.nrm.dina.dnakey.logic.metadata.BlastSubjectMetadata;
 import se.nrm.dina.dnakey.logic.util.HelpClass;
 import se.nrm.dina.dnakey.logic.vo.MorphyBankImage;
 import se.nrm.dina.dnakey.portal.beans.MessageBean;
-import se.nrm.dina.dnakey.portal.beans.ResultBean; 
+import se.nrm.dina.dnakey.portal.vo.ResultBean; 
 import se.nrm.dina.dnakey.portal.logic.SequenceBuilder; 
 import se.nrm.dina.dnakey.portal.util.ConstantString;
 import se.nrm.dina.dnakey.portal.logic.SequenceValidation;
 import se.nrm.dina.dnakey.portal.solr.SolrClient;
-import se.nrm.dina.dnakey.portal.solr.SolrRecord; 
+import se.nrm.dina.dnakey.portal.vo.SolrRecord; 
 import se.nrm.dina.dnakey.portal.util.FastaFiles;
-import se.nrm.dina.dnakey.portal.util.FileHandler; 
 
 /** 
  *
@@ -56,25 +53,24 @@ public class BlastBean implements Serializable {
       
     private String sequenceList;                                        // sequence or sequences are listed in tab1
     private String testSequences;                                       // list of sequences in tab3 
- 
-    private int numOfTestSeqs = 0;  
-    private final int MAX_UPLOADED_FILES = 5;
- 
-     
-    private int activeIndex = 0;                                        // active tab in sequence page
-    
-    private List<UploadedFile> uploadedFiles = new ArrayList<>(); 
-//    private List<String> filelist = new ArrayList<>();                  // store uploaded file name
     
     
-    private Map<BlastMetadata, String> ridMap = new HashMap<>();
+    private List<UploadedFile> uploadedFiles = new ArrayList<>();       // upload fasta files in tab2
     private Map<String, List<String>> sequencesMap = new HashMap();
-     
-    private String database;   
-     
-    private List<String> sequences;
-    private List<ResultBean> resultBeans; 
     
+    private List<String> sequences;
+    
+    private int numOfTestSeqs = 0;  
+    private final int MAX_UPLOADED_FILES = 5; 
+    private int activeIndex = 0;                                        // active tab in sequence page
+     
+    private Map<BlastMetadata, String> ridMap = new HashMap<>(); 
+    private String database;    
+    
+    // Result
+    private List<ResultBean> resultBeans; 
+    private int totalSequences = 0;
+    // End of result
     
     
     @Inject
@@ -89,15 +85,17 @@ public class BlastBean implements Serializable {
     @Inject
     private SequenceBuilder sequenceBuilder;
     
+    @Inject
+    private FileHandler fileHandler;
+      
+    @Inject
+    private SequenceValidation validation;
+     
+    @Inject
+    private SolrClient solr; 
     
-    
-    
-    
-    
-    
-    
-    
-    
+    @Inject
+    private BlastQueue serviceQueue;
     
     
     
@@ -130,14 +128,9 @@ public class BlastBean implements Serializable {
     private String dbVersion;
     private String statisticDbNumber;
     private String statisticDbLength;
+     
     
-    
-    
-
-
-//    private Map<String, List<String>> sequencesMap;
-    
-    private int totalSequences = 0;
+   
      
 
      
@@ -164,19 +157,12 @@ public class BlastBean implements Serializable {
     private int zoom = 6;
  
     
-    
-    
-    
-
-    
-    private String boldTotalSequence;
-    private String genBankTotalSequence;
-    private String nrmTotalSequence; 
+     
     private SolrRecord selectedRecord;
     private Map<String, SolrRecord> map = new HashMap<>();
     private List<MorphyBankImage> images = new ArrayList<>();
     
-    private String servername; 
+//    private String servername; 
     private SolrRecord record;
     private boolean solrAvailble = true;
      
@@ -190,17 +176,12 @@ public class BlastBean implements Serializable {
     @Inject
     private Blaster blaster;
     
-    @Inject
-    private BlastQueue serviceQueue;
+
      
     
 
     
-    @Inject
-    private SequenceValidation validation;
-     
-    @Inject
-    private SolrClient solr; 
+
     
 
      
@@ -226,20 +207,12 @@ public class BlastBean implements Serializable {
     @PostConstruct
     public void init() {
         log.info("init");
-        
-        
-        
+         
         context = FacesContext.getCurrentInstance();  
         boolean isPostBack = context.isPostback();        // false if page is start up or reloaded by browser  
               
         requestContext = RequestContext.getCurrentInstance();  
-        
-        if(servername == null) {
-            servername = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getServerName();
-        }
-        
-//        serverport  = ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getServerPort();
-        
+ 
         log.info("isPostBack : {}", isPostBack);
       
         if(!isPostBack) {     
@@ -257,14 +230,7 @@ public class BlastBean implements Serializable {
               
             totalSequences = 0;
  
-            clear(); 
-
-            nrmTotalSequence = blaster.getBlastDbInfo("nrm");
-            boldTotalSequence = blaster.getBlastDbInfo("bold");
-            genBankTotalSequence = blaster.getBlastDbInfo("genbank");
-             
-            
-            requestContext.update("sequenceform:mainpanel"); 
+            clear();  
         }  
     }
     
@@ -422,163 +388,56 @@ public class BlastBean implements Serializable {
         }
     }
     
-        
-    public String getBoldTotalSequence() {
-        return boldTotalSequence == null ? blaster.getBlastDbInfo("bold") : boldTotalSequence;
-    }
- 
-    public String getGenBankTotalSequence() {
-        return genBankTotalSequence == null ? blaster.getBlastDbInfo("genbank") : genBankTotalSequence; 
-    }
-  
-    public String getNrmTotalSequence() {
-        return nrmTotalSequence == null ? blaster.getBlastDbInfo("nrm") : nrmTotalSequence;  
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    private List<String> buildFastaFilePath() {
+        List<String> fastaFilesPath = new ArrayList<>();
+        sequences.stream()
+                .forEach(seq -> {
+                    fastaFilesPath.add(fileHandler.createFastaFile(seq));
 
-    /**
-     * Clear all the sequences in tabs
-     */
-    public void clear() {
-        sequenceList = null;
-        uploadedFiles = new ArrayList<>();
-        testSequences = null;
-        
-        numOfTestSeqs = 0; 
-        database = ConstantString.getInstance().getDefaultBlastDb(); 
-        ridMap.clear(); 
+                });
+        return fastaFilesPath;
     }
     
     /**
-     * newblast
-     */
-    public void newblast() {
-        log.info("newblast : {}", activeIndex);
-         
-//        numOfTestSeqs = 0;
-//        testSequences = null;
-         
-        totalSequences = 0; 
-        map.clear();
-        
-        ridMap.clear();
-        
-        sequencesMap.clear();
-//        filelist.clear();
-        uploadedFiles.clear();
-        
-        navigator.home();
- 
-    }
-
-    public int getActiveIndex() {
-        return activeIndex;
-    }
-
-    public void setActiveIndex(int activeIndex) {
-        this.activeIndex = activeIndex;
-    }
- 
-    public String getSequenceList() {
-        return sequenceList;
-    }
-
-    public void setSequenceList(String sequenceList) {
-        this.sequenceList = sequenceList;
-    }
-
-    public boolean isIsMax() {
-        return uploadedFiles.size() >= MAX_UPLOADED_FILES;
-    }
-
-//    public void setIsMax(boolean isMax) {
-//        this.isMax = isMax;
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-    
-
- 
-
-
-
-    /**
-     * Blasts a single sequence
-     * 
-     * @param seq
-     * 
-     * @param output 
+     * Blasts a single sequence 
      */
     private void blast() {
         log.info("blast : {}", sequences.size());
         
         ridMap = new HashMap<>();
         
-        totalSequences = sequences.size();
+        totalSequences = sequences.size();                                      // display in result page
         map = new HashMap<>();
         listMetadata = new ArrayList<>();
-        
-        List<String> fastaFilesPath = new ArrayList<>();
-        
-        try { 
-            for (String seq : sequences) {
-                fastaFilesPath.add(FileHandler.createFastaFile(seq, servername));
-            }
 
-            listMetadata = serviceQueue.run(fastaFilesPath, database);
-            
+        List<String> fastaFilesPath = buildFastaFilePath(); 
+        listMetadata = serviceQueue.run(fastaFilesPath, database);
+        
+        fileHandler.deleteTempFiles(fastaFilesPath);                            // remove temp fasta files
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
 //            listMetadata = blaster.multipleBlast(fastaFilesPath, database);
-            
-            BlastMetadata metadata = listMetadata.get(0);
-            dbVersion = metadata.getVersion();
-            statisticDbLength = metadata.getStatisticDbLength();
-            statisticDbNumber = metadata.getStatisticDbNumber();
-   
-            String query;
-            String catalogNumber;
-            String scientificName;
+        BlastMetadata metadata = listMetadata.get(0);
+        dbVersion = metadata.getVersion();
+        statisticDbLength = metadata.getStatisticDbLength();
+        statisticDbNumber = metadata.getStatisticDbNumber();
+
+        String query;
+        String catalogNumber;
+        String scientificName;
             String genbankAcc;
             String boldId;
             String identity;
@@ -699,20 +558,101 @@ public class BlastBean implements Serializable {
                 count++;
             }
  
-        } catch (IOException ex) {
-            log.error(ex.getMessage());
-        } finally {
-            if(!fastaFilesPath.isEmpty()) {
-                File f;
-                for(String path : fastaFilesPath) {
-                    f = new File(path);
-                    if(f.exists()) {
-                        f.delete();
-                    }
-                }
-            }
-        }  
+  
+         
     }
+    
+        
+  
+    /**
+     * Clear all the sequences in tabs
+     */
+    public void clear() {
+        sequenceList = null;
+        uploadedFiles = new ArrayList<>();
+        testSequences = null;
+        
+        sequencesMap.clear();
+        
+        numOfTestSeqs = 0; 
+        database = ConstantString.getInstance().getDefaultBlastDb(); 
+        ridMap.clear(); 
+    }
+    
+    /**
+     * newblast
+     */
+    public void newblast() {
+        log.info("newblast : {}", activeIndex);
+          
+        totalSequences = 0; 
+        map.clear();
+        
+        ridMap.clear();
+        
+        sequencesMap.clear(); 
+        uploadedFiles.clear();
+        
+        navigator.home();
+ 
+    }
+
+    public int getActiveIndex() {
+        return activeIndex;
+    }
+
+    public void setActiveIndex(int activeIndex) {
+        this.activeIndex = activeIndex;
+    }
+ 
+    public String getSequenceList() {
+        return sequenceList;
+    }
+
+    public void setSequenceList(String sequenceList) {
+        this.sequenceList = sequenceList;
+    }
+
+    public boolean isIsMax() {
+        return uploadedFiles.size() >= MAX_UPLOADED_FILES;
+    }
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+    
+
+ 
+
+
+
+
     
     public void openLowMatchList(BlastMetadata metadata) {
         log.info("openLowMatchList : {}", metadata);
@@ -933,15 +873,6 @@ public class BlastBean implements Serializable {
         this.numOfTestSeqs = numOfTestSeqs;
     }
  
-
-//    public List<String> getFilelist() {
-//        return filelist;
-//    }
-//
-//    public void setFilelist(List<String> filelist) {
-//        this.filelist = filelist;
-//    }
-
     public List<UploadedFile> getUploadedFiles() {
         return uploadedFiles;
     }
@@ -954,10 +885,6 @@ public class BlastBean implements Serializable {
         return record;
     }
  
-//    public String getGenbankUrl() {
-//        return genbankUrl;
-//    }
-
     public SolrRecord getSelectedRecord() {
         return selectedRecord;
     }

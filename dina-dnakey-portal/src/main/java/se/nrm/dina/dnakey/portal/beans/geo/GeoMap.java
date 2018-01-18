@@ -30,6 +30,7 @@ public class GeoMap implements Serializable {
     private GeoMapDataSource geo;
     
     public GeoMap() { 
+        log.info("GeoMap");
     }
     
     @PostConstruct
