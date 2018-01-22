@@ -127,7 +127,34 @@
 
     <build>
         <plugins>
-<!--             <plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId> 
+                <version>3.2.0</version> 
+                <!--<version>3.1.0</version>-->
+            </plugin> 
+            
+<!--            <plugin>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>wildfly-swarm-plugin</artifactId> 
+                <version>${version.wildfly.swarm}</version> 
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>  
+                </executions>
+                <configuration> 
+                    <jvmArguments>
+                        <jvmArgument>-Xmx2048m</jvmArgument>
+                    </jvmArguments> 
+                    <properties> 
+                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack> 
+                    </properties> 
+                </configuration>  
+            </plugin> -->
+            <!--             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly.swarm}</version>

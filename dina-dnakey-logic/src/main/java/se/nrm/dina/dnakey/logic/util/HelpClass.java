@@ -11,11 +11,8 @@ import org.apache.commons.lang.math.NumberUtils;
  * @author idali
  */
 public class HelpClass {
-    
-    private static final String BLAST_DB_INFO_PATH = "bin/blastdbcmd -db  ";
-    private static final String BLASTN = "bin/blastn";
-
-    private static final String MB_BASE_URL = "http://morphbank.nrm.se/";
+     
+//    private static final String MB_BASE_URL = "http://morphbank.nrm.se/";
     private static final String MB_THUMB_URL = "http://images.morphbank.nrm.se";
     private static final String MB_IMAGE_URL = "http://morphbank.nrm.se/Browse/ByImage/";
     private static final String QUERY_THUMB = "&imgType=thumb";
@@ -23,51 +20,7 @@ public class HelpClass {
 
     private static final DateFormat DFT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSS'Z'");
     private static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-
-    public static String getBlastDBInfo(String basepath, String blastdbpath, String dbname) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(basepath);
-        sb.append(BLAST_DB_INFO_PATH);
-        sb.append(blastdbpath);
-        sb.append(dbname);
-        sb.append(" -info");
-        return sb.toString().trim();
-    }
-
-    /**
-     * Build blastn command
-     * 
-     * @param fastfilepath
-     * @param dbname
-     * @param outputOption - blast result output option
-     * @param basepath
-     * @param dbpath
-     * 
-     * @return blastn command
-     */
-    public static String buildBlastCommand(String fastfilepath, String dbname, 
-                                    String outputOption, String basepath, String dbpath) {
-        StringBuilder command = new StringBuilder();
-        command.append(getBlastnPath(basepath));
-        command.append(" -query ");
-        command.append(fastfilepath);
-        command.append(" -db "); 
-        command.append(dbpath); 
-        command.append(dbname); 
-        command.append(outputOption);
-
-        System.out.println(command.toString());
-        return command.toString();
-    }
-    
-    public static String getBlastnPath(String basepath) {
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append(basepath);
-        sb.append(BLASTN);
-        return sb.toString().trim();
-    }
-
+  
     public static String getMorphybankImageURLById(String imageid) {
         StringBuilder sb = new StringBuilder();
         sb.append(MB_IMAGE_URL);

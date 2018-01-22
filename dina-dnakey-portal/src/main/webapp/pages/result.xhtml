@@ -13,70 +13,68 @@
                     <h:panelGroup styleClass="columns"  id="singleResultPanel" layout="block">
                         
                         
-                    <!-- ************************************** image switch div ************************************* -->    
-                    <p:dialog id="imgswitchdialog" closable="true"  widgetVar="imgswitchdlg"   
-                              draggable="false" header="#{msg.imageswitcher} (#{msg.imgmouseover})" >
- 
-                        <p:panel id="imageSwitch">
-                            <p:galleria id="images" widgetVar="gallery" value="#{galleriaBean.groupImages}" 
-                                        panelWidth="420" panelHeight="500"   autoPlay="false"
-                                        var="mbimg"  showCaption="true" >    
-                                <p:graphicImage value="#{mbimg.thumb}" alt="#{mbimg.catalogNumber}" 
-                                                title="#{mbimg.name}"  styleClass="imageswithpedding" />     
+                        <!-- ************************************** image switch div ************************************* -->    
+                        <p:dialog id="imgswitchdialog" closable="true"  widgetVar="imgswitchdlg"   
+                                  draggable="false" header="#{msg.imageswitcher} (#{msg.imgmouseover})" >
 
-                            </p:galleria>    
+                            <p:panel id="imageSwitch">
+                                <p:galleria id="images" widgetVar="gallery" value="#{galleriaBean.groupImages}" 
+                                            panelWidth="420" panelHeight="500"   autoPlay="false"
+                                            var="mbimg"  showCaption="true" >    
+                                    <p:graphicImage value="#{mbimg.thumb}" alt="#{mbimg.catalogNumber}" 
+                                                    title="#{mbimg.name}"  styleClass="imageswithpedding" />    
+                                </p:galleria>    
 
-                            <p:contextMenu for="images" style="z-index:50; font-size: 10px;">  
-                                <p:menuitem value="Morphbank" url="http://morphbank.nrm.se/Browse/ByImage/?specimenId=#{galleriaBean.mbid}"   
-                                            target="_blank"   icon="ui-icon-extlink"/>    
-                                <p:menuitem value="Naturav" url="http://naturarv.se/?#{blast.urlEncode}#{galleriaBean.catalogNumber}" 
-                                            target="_blank"   icon="ui-icon-extlink"/>   
-                                <p:menuitem value="Naturforskaren" url="http://naturforskaren.se/search/#{galleriaBean.scientificName}"    
-                                            target="_blank"   icon="ui-icon-extlink"/>   
-                                <ui:remove>
-                                    <p:menuitem value="GIBF.se" url="http://old.gbif.se/search/#{galleriaBean.scientificName}"    
-                                            target="_blank"   icon="ui-icon-extlink"/>  
-                                </ui:remove> 
-                                <p:menuitem value="GIBF" url="http://data.gbif.org/search/#{galleriaBean.scientificName}"    
-                                            target="_blank"   icon="ui-icon-extlink"/>  
-                                <p:menuitem value="#{msg.btnclose}" url="javascript:void(0)" onclick="PF('imgswitchdlg').hide();" icon="ui-icon-close"/>    
-                            </p:contextMenu> 
-                        </p:panel>
-
-                    </p:dialog>
+                                <p:contextMenu for="images" style="z-index:50; font-size: 10px;">  
+                                    <p:menuitem value="Morphbank" url="http://morphbank.nrm.se/Browse/ByImage/?specimenId=#{galleriaBean.mbid}"   
+                                                target="_blank"   icon="ui-icon-extlink"/>    
+                                    <p:menuitem value="Naturav" url="http://naturarv.se/?#{blast.urlEncode}#{galleriaBean.catalogNumber}" 
+                                                target="_blank"   icon="ui-icon-extlink"/>   
+                                    <p:menuitem value="Naturforskaren" url="http://naturforskaren.se/search/#{galleriaBean.scientificName}"    
+                                                target="_blank"   icon="ui-icon-extlink"/>   
+                                    <ui:remove>
+                                        <p:menuitem value="GIBF.se" url="http://old.gbif.se/search/#{galleriaBean.scientificName}"    
+                                                target="_blank"   icon="ui-icon-extlink"/>  
+                                    </ui:remove> 
+                                    <p:menuitem value="GIBF" url="http://data.gbif.org/search/#{galleriaBean.scientificName}"    
+                                                target="_blank"   icon="ui-icon-extlink"/>  
+                                    <p:menuitem value="#{msg.btnclose}" url="javascript:void(0)" onclick="PF('imgswitchdlg').hide();" icon="ui-icon-close"/>    
+                                </p:contextMenu> 
+                            </p:panel> 
+                        </p:dialog>
 
 
 
-                    <h:panelGroup layout="block" style="float: left; width: 100%; "> 
-                        <h:panelGroup layout="block" styleClass="header" style="padding-left: 30px;">
-                            <h:outputText value="#{msg.searchresult}"   />    
-                        </h:panelGroup> 
+                        <h:panelGroup layout="block" styleClass="resultheader"> 
+                            <h:panelGroup layout="block" styleClass="header paddingleft30"  >
+                                <h:outputText value="#{msg.searchresult}"   />    
+                            </h:panelGroup> 
 
-                        <h:panelGroup layout="block" styleClass="text" style="padding-left: 30px; padding-right: 30px;">
-                            <h:outputText value="#{msg.resultdesc}"   />    
-                        </h:panelGroup> 
-                        <p:spacer width="40" /> 
-                    </h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="text padding30" >
+                                <h:outputText value="#{msg.resultdesc}"   />    
+                            </h:panelGroup> 
+                            <p:spacer width="40" /> 
+                        </h:panelGroup>
 
-                    <h:panelGroup layout="block" style="float: left; width: 560px; padding-left: 30px;">  
-                        <h:panelGroup layout="block" style="float: left; width: 560px;"> 
-                            <h:outputText value="#{msg.searchcontains}" style="padding-right: 5px;"  />   
-                            <h:outputText value="#{blast.totalSequences}"  style="padding-right: 5px;"  />   
-                            <h:outputText value="#{msg.queriesandalgorithm}" style="padding-right: 5px;"  />  
-                            <h:outputText value="#{blast.dbVersion}"   /> 
-                        </h:panelGroup> 
-                        <h:panelGroup layout="block" style="float: left; width: 560px;"> 
-                            <p:spacer width="10" />
-                        </h:panelGroup> 
-                        <h:panelGroup layout="block"  style="float: left; width: 560px;"> 
-                            <h:outputText value="#{msg.searchmade}" style="padding-right: 5px;"  />   
-                                <h:outputText value="#{blast.dbFullName} [#{blast.statisticDbNumber} #{msg.sequences}; 
-                                              #{blast.statisticDbLength} #{msg.totalletters}]"    /> 
+                        <h:panelGroup layout="block" style="float: left; width: 560px; padding-left: 30px;">  
+                            <h:panelGroup layout="block" style="float: left; width: 560px;"> 
+                                <h:outputText value="#{msg.searchcontains}" style="padding-right: 5px;"  />   
+                                <h:outputText value="#{blast.totalSequences}"  style="padding-right: 5px;"  />   
+                                <h:outputText value="#{msg.queriesandalgorithm}" style="padding-right: 5px;"  />  
+                                <h:outputText value="#{blast.metadata.version}"   /> 
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block" style="float: left; width: 560px;"> 
+                                <p:spacer width="10" />
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block"  style="float: left; width: 560px;"> 
+                                <h:outputText value="#{msg.searchmade}" style="padding-right: 5px;"  />   
+                                <h:outputText value="#{blast.dbFullName} [#{blast.metadata.statisticDbNumber} #{msg.sequences}; 
+                                                        #{blast.metadata.statisticDbLength} #{msg.totalletters}]"    /> 
                             </h:panelGroup>
                         </h:panelGroup>
 
-                        <h:panelGroup layout="block" style="float: right; font-size: 10px;   padding-right: 20px; "> 
-                            <h:commandLink style="text-decoration: none; padding-right: 10px;"   >      
+                        <h:panelGroup layout="block" styleClass="resultbtns"> 
+                            <h:commandLink styleClass="csvbtn"   >      
                                 <p:commandButton value="#{msg.saveresult} (csv)" global="false" />  
                                 <p:dataExporter type="csv" target="exportDataTable"  fileName="blast_data"  />  
                             </h:commandLink>  
@@ -84,68 +82,69 @@
                                              title="#{msg.btnewsequence}" value="#{msg.btnewsequence}" global="false"
                                              oncomplete="drawVisualization();"   />
                         </h:panelGroup>  
-                        <h:panelGroup  style="float: left; width: 100%; padding-bottom: 10px;">
+                        <h:panelGroup  styleClass="resultseparator">
                             <hr />
                         </h:panelGroup>
+ 
 
-
-
-
-                        <h:panelGroup layout="block" style="width: 100%; float: left; font-size: 11px;" id="resultpanel">
+                        <h:panelGroup layout="block" styleClass="resultpanel" id="resultpanel">
                             <ui:repeat var="blastMetada" value="#{blast.listMetadata}" varStatus="qryStatus" >
 
-                                <h:panelGroup layout="block" style="width: 90%; float: left; font-size: 12px; font-weight: bold; ">
-                                    <h:panelGroup layout="block" style="padding-left: 30px; float: left; width: 50px;">
+                                <h:panelGroup layout="block" styleClass="resultqryheader">
+                                    <h:panelGroup layout="block" styleClass="resultqryheader1">
                                         <h:outputText value="#{msg.query1} #{qryStatus.index + 1}"   />  
                                     </h:panelGroup>
-                                    <h:panelGroup layout="block" style="padding-left: 30px; float: left; width: 5px;">
+                                    <h:panelGroup layout="block" styleClass="resultqryheader2">
                                         <h:outputText value=" : " /> 
                                     </h:panelGroup>    
-                                    <h:panelGroup layout="block" style="padding-left: 30px; float: left; width: 400px;">   
+                                    <h:panelGroup layout="block" styleClass="resultqryheader3">   
                                         <h:outputText value="#{blastMetada.query}"  /> 
                                     </h:panelGroup>
                                 </h:panelGroup>   
 
-                                <h:panelGroup layout="block" style="width: 90%; float: left; font-size: 12px; font-weight: bold; ">
-                                    <h:panelGroup layout="block" style="padding-left: 30px; float: left; width: 50px;">
+                                <h:panelGroup layout="block" styleClass="resultqryheader">
+                                    <h:panelGroup layout="block" styleClass="resultqryheader1">
                                         <h:outputText value="#{msg.length}"  />   
                                     </h:panelGroup>
-                                    <h:panelGroup layout="block" style="padding-left: 30px; float: left; width: 5px;">
+                                    <h:panelGroup layout="block" styleClass="resultqryheader2">
                                         <h:outputText value=" : " /> 
                                     </h:panelGroup>    
-                                    <h:panelGroup layout="block" style="padding-left: 30px; float: left; width: 400px;">   
+                                    <h:panelGroup layout="block" styleClass="resultqryheader3">   
                                         <h:outputText value="#{blastMetada.queryLen}"   /> 
                                     </h:panelGroup>
                                 </h:panelGroup>   
 
-                                <h:panelGroup layout="block" style="width: 90%; float: left;">
+                                <h:panelGroup layout="block" styleClass="resultspacer">
                                     <p:spacer width="10" />
                                 </h:panelGroup>   
 
-                                <h:panelGroup layout="black" style="float: left; width: 90%; padding-left: 30px; font-size: 14px;"  rendered="#{blastMetada.hasResult}">
+                                <h:panelGroup layout="black" styleClass="highmatch"  rendered="#{blastMetada.hasHit}">
                                     <h:outputText value="#{msg.sequencealignment}:" />  
                                 </h:panelGroup>
-                                <h:panelGroup layout="black" style="float: left; width: 90%; padding-left: 30px;">
+                                <h:panelGroup layout="black" styleClass="resultspacer">
                                     <p:spacer width="10" /> 
                                 </h:panelGroup>
-
-                                <h:panelGroup  layout="black" rendered="#{!blastMetada.hasResult}" 
+                                
+                               <!-- ************************************** no hits ************************************* -->
+                                <h:panelGroup  layout="black" rendered="#{!blastMetada.hasHit}" 
                                                style="float: left; width: 100%; padding-left: 30px; color: #D00000; ">
                                     <h:panelGroup  layout="black" style="width:  100%; float: left;" rendered="#{blast.ridByMetadata(blastMetada) == null}">
                                         <h:outputText value="#{msg.noresult}" style=" font-size: 16px;"  />
                                         <p:spacer width="5" />  
                                         <p:commandLink actionListener="#{blast.remotBlast(blastMetada)}"  
                                                        title="#{msg.searchingenbank}"   
-                                                       update=":resultform:resultpanel"  global="true" >
+                                                       update="genbankRidPanel"  global="true" >
                                             <h:outputText value="#{msg.searchingenbank}" style="color: #D00000; font-size: 16px;" />
                                         </p:commandLink>   
                                     </h:panelGroup>
-
-                                    <h:panelGroup id="genbankRidPanel" layout="black" rendered="#{blast.ridByMetadata(blastMetada) != null}">
-                                        <h:outputLink value="#{blast.genbankRidUrl}#{blast.ridByMetadata(blastMetada)}"  target="_blank" >
-                                            <h:outputText value="#{msg.genbankrid} #{blast.ridByMetadata(blastMetada)} #{msg.genbankridsearch}" style="color: #D00000; font-size: 16px;" />
-                                        </h:outputLink> 
+                                    <h:panelGroup id="genbankRidPanel"  layout="black" >
+                                        <h:panelGroup  layout="black" rendered="#{blast.ridByMetadata(blastMetada) != null}">
+                                            <h:outputLink value="#{blast.genbankRidUrl}#{blast.ridByMetadata(blastMetada)}"  target="_blank" >
+                                                <h:outputText value="#{msg.genbankrid} #{blast.ridByMetadata(blastMetada)} #{msg.genbankridsearch}" style="color: #D00000; font-size: 16px;" />
+                                            </h:outputLink> 
+                                        </h:panelGroup>
                                     </h:panelGroup>
+                                    
 
 
                                     <h:panelGroup  layout="black" style="width:  100%; float: left;"   >
@@ -161,12 +160,14 @@
                                         <p:spacer width="20" />
                                     </h:panelGroup> 
                                 </h:panelGroup>
-                                <h:panelGroup style="width:  100%; float: left; padding-bottom: 10px;"  rendered="#{!blastMetada.hasResult}" >
+                                <h:panelGroup styleClass="resultseparator"  rendered="#{!blastMetada.hasHit}" >
                                     <hr />
                                 </h:panelGroup>
 
-
-                                <h:panelGroup style="width: 960px; float: left; "  rendered="#{blastMetada.hasResult}" >
+                                <!-- ************************************** has hits ************************************* -->
+                                <h:panelGroup style="width: 960px; float: left; "  rendered="#{blastMetada.hasHit}" >
+                                    
+                                    <!-- ************************************** no high match ************************************* -->
                                     <h:panelGroup style="width:  100%; float: left; padding-bottom: 10px; padding-left: 30px; "  rendered="#{!blastMetada.hasHighMatach}" >
                                         <h:panelGroup  layout="black" style="width:  100%; float: left;" rendered="#{blast.ridByMetadata(blastMetada) == null}">
                                             <h:outputText value="#{msg.nohighmatch}" style=" font-size: 16px; color: #D00000; "  />
@@ -200,23 +201,23 @@
 
 
                                     <p:tooltip for="colScientificname" value="#{msg.keywordscientificname}" 
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/>  
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip250"/>  
                                     <p:tooltip for="colMark" value="#{msg.keymark}"
                                                showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 300px; "/> 
                                     <p:tooltip for="colGenbankacc" value="#{msg.keygenbankacc}"
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 150px; "/> 
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip150"/> 
                                     <p:tooltip for="colBoldId" value="#{msg.keywordboldid}"
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 150px; "/> 
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip150"/> 
                                     <p:tooltip for="colCat" value="#{msg.keywordcatalognum}"
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 150px; "/> 
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip150"/> 
                                     <p:tooltip for="colScore" value="#{msg.keywordscore}"
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 300px; "/> 
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip300"/> 
                                     <p:tooltip for="colEvalue" value="#{msg.keywordevalue}"
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/> 
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip250"/> 
                                     <p:tooltip for="colIdentity" value="#{msg.keywordidentity}"
-                                               showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal;  width: 300px; "/> 
+                                               showEffect="fade" hideEffect="fade" styleClass="resulttabletip300"/> 
 
-                                    <h:panelGroup layout="block" style="width: 930px; height: 20px; float: left;   font-size: 12px; background-color: #d9d9d9; font-weight: bold; " >
+                                    <h:panelGroup layout="block" styleClass="resulttableheader" >
                                         <h:panelGroup layout="block" style="min-width: 25px;  float: left; text-align:  center; padding-top: 5px; " >
                                             <p:spacer width="10" />
                                         </h:panelGroup>
@@ -311,10 +312,8 @@
 
 
                                         <p:rowExpansion>
-                                            <h:panelGroup layout="block" style="width: 960px; float: left; font-size: 10px; padding-left: 30px;  width: 920px;  
-                                                          background-color: #DFE9B8; " rendered="#{blast.solrAvailble}">
-
-
+                                            <h:panelGroup layout="block" styleClass="rowexpansion" rendered="#{blast.solrAvailble}">
+ 
                                                 <h:panelGrid columns="2">
                                                     <h:panelGroup layout="block" style="width: 550px; float: left; padding-left: 10px; margin-left: 10px; border: 1px solid; " >
                                                         <h:panelGroup layout="block"  rendered="#{blast.record.collectionName != null}">
@@ -450,23 +449,23 @@
                                         <h:panelGroup layout="block" style="width: 960px;" rendered="#{blastMetada.openLowMatch}" >
 
                                             <p:tooltip for="colCat1" value="#{msg.keywordcatalognum}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 150px; "/>  
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip150"/>  
                                             <p:tooltip for="colScientificname1" value="#{msg.keywordscientificname}" 
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/>  
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip250"/>  
                                             <p:tooltip for="colMark1" value="#{msg.keymark}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 300px; "/> 
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip300"/> 
                                             <p:tooltip for="colGenbankacc1" value="#{msg.keygenbankacc}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 150px; "/> 
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip150"/> 
                                             <p:tooltip for="colBoldId1" value="#{msg.keywordboldid}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 150px; "/> 
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip150"/> 
                                             <p:tooltip for="colIdentity1" value="#{msg.keywordidentity}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 300px; "/> 
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip300"/> 
                                             <p:tooltip for="colScore1" value="#{msg.keywordscore}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 300px; "/> 
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip300"/> 
                                             <p:tooltip for="colEvalue1" value="#{msg.keywordevalue}"
-                                                       showEffect="fade" hideEffect="fade" style="font-size: 12px; white-space: normal; width: 250px; "/>
+                                                       showEffect="fade" hideEffect="fade" styleClass="resulttabletip250"/>
 
-                                            <h:panelGroup layout="block" style="width: 100%; height: 20px; float: left;   font-size: 12px; background-color: #d9d9d9; font-weight: bold; width: 930px;" >
+                                            <h:panelGroup layout="block" styleClass="resulttableheader" >
                                                 <h:panelGroup layout="block" style="width: 25px;  float: left; text-align:  center; padding-top: 5px; " >
                                                     <p:spacer width="10" />
                                                 </h:panelGroup> 
@@ -497,7 +496,8 @@
                                             </h:panelGroup> 
 
                                             <p:dataTable value="#{blastMetada.lowMatchsubjectMetadataList}" rowIndexVar="indexCount" 
-                                                         var="metadatalow"   styleClass="resulttbl" rendered="#{blastMetada.hasResult}"  style="padding-left: 5px; padding-right: 5px; width: 920px;" > 
+                                                         var="metadatalow"   styleClass="resulttbl" rendered="#{blastMetada.hasHit}"  
+                                                            style="padding-left: 5px; padding-right: 5px; width: 920px;" > 
                                                 <p:ajax event="rowToggle" listener="#{blast.onRowToggleSingle}"  global="true"   /> 
 
                                                 <p:column   style="min-width: 25px;" >   
@@ -552,7 +552,7 @@
 
 
                                                 <p:rowExpansion  > 
-                                                    <h:panelGroup layout="block" style="width: 100%; float: left; font-size: 10px; background-color: #DFE9B8; width: 920px;   " rendered="#{blast.solrAvailble}">    
+                                                    <h:panelGroup layout="block" styleClass="rowexpansion" rendered="#{blast.solrAvailble}">    
                                                         <h:panelGroup layout="block" style="width: 550px; float: left; padding-left: 10px;   margin-left: 10px;">
 
                                                             <h:panelGroup layout="block"  rendered="#{blast.record.collectionName != null}">
@@ -601,7 +601,7 @@
                                                                     </h:outputText> 
                                                                 </h:panelGroup>
                                                             </h:panelGroup>
-
+ 
                                                             <h:panelGroup layout="block"  rendered="#{blast.record.collectors != null}">
                                                                 <h:panelGroup layout="block" style="width: 80px; float: left;">
                                                                     <h:outputText value="#{msg.collector}: " />  
@@ -681,7 +681,7 @@
                                             </p:dataTable> 
                                         </h:panelGroup> 
                                     </h:panelGroup>
-                                    <h:panelGroup  style="width: 930px; float: left; padding-bottom: 10px;"  rendered="#{blastMetada.hasResult}">
+                                    <h:panelGroup  style="width: 930px; float: left; padding-bottom: 10px;"  rendered="#{blastMetada.hasHit}">
                                         <hr />
                                     </h:panelGroup> 
                                 </h:panelGroup>
@@ -791,8 +791,8 @@
                             </p:dataTable>  
                         </h:panelGroup>
 
-                        <h:panelGroup layout="block" style="float: right; font-size: 10px;   padding-right: 20px; "> 
-                            <h:commandLink style="text-decoration: none; padding-right: 10px;"   >      
+                        <h:panelGroup layout="block" styleClass="resultbtns"> 
+                            <h:commandLink styleClass="csvbtn"   >      
                                 <p:commandButton value="#{msg.saveresult} (csv)"  global="false"  />  
                                 <p:dataExporter type="csv" target="exportDataTable"  fileName="blast_data"   />  
                             </h:commandLink> 
@@ -800,13 +800,35 @@
                             <p:commandButton actionListener="#{blast.newblast()}"   
                                              title="#{msg.btnewsequence}" value="#{msg.btnewsequence}" 
                                              oncomplete="drawVisualization();"  global="false"  />
-                        </h:panelGroup>
-                        
-                        
-                        
+                        </h:panelGroup> 
                     </h:panelGroup>
 
-
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <!-- ########################### alignment ###################### -->
                     <p:dialog  header="#{msg.btnalignment}" widgetVar="alignmentdlg"  width="750" height="650" 
                                modal="true" id="alignment" position="center, 200" draggable="false">    
                         <p:scrollPanel styleClass="alignmentPanel" id="alignmentPanel">  
@@ -843,19 +865,19 @@
                         </p:scrollPanel>     
                     </p:dialog>
 
-
+                    <!-- ########################### map ###################### -->
                     <p:dialog id="singleMapdlgId"  header="#{msg.btnmap}" widgetVar="singleMap"  
                               width="820" height="410" modal="true"  draggable="false" position="center, 200">    
                 
                         <f:view contentType="text/html">
                             <p:gmap center="#{blast.centLat},  #{blast.centLnt}" 
                                     zoom="#{blast.zoom}" type="HYBRID" model="#{blast.advancedModel}"
-                                    style="width:800px;height:400px" fitBounds="false" >  
+                                    style="width:800px; height:400px" fitBounds="false" >  
 
                                 <p:ajax event="overlaySelect" listener="#{blast.onMarkerSelect}" />  
 
                                 <p:gmapInfoWindow  rendered="#{blast.selectedRecord != null}">  
-                                    <p:outputPanel  style="text-align:center; display:block; margin:auto; height: 80px;" >  
+                                    <p:outputPanel  styleClass="gmapinfowindow" >  
 
                                         <h:panelGroup layout="black" style="width: 80px; padding-right: 20px;">
                                             <h:graphicImage library="images" name="pin_1.png" alt="pin"  />

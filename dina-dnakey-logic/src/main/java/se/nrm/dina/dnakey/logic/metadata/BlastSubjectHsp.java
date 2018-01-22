@@ -2,31 +2,26 @@ package se.nrm.dina.dnakey.logic.metadata;
 
 import java.util.ArrayList;
 import java.util.List; 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;  
-//import se.nrm.dina.dnakey.common.util.HelpClass;
+import org.apache.commons.lang.StringUtils; 
 
 /**
  *
  * @author idali
  */
 public final class BlastSubjectHsp implements Comparable {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+  
     public static final String TEXT_BLACK = "blacktext";
     public static final String TEXT_GRAY = "graytext";
     
-    private final String hspScore;
-    private final String hspBitScore;
-    private final String hspEvalue;
+    private final double hspScore;
+    private final double hspBitScore;
+    private final double hspEvalue;
     private final int hspQueryFrom;
     private final int hspQueryTo;
     private final int hspHitFrom;
     private final int hspHitTo;
     private final int hspIdentity;
-    private final String hspPositive;
+    private final int hspPositive;
     private final int hspGaps;
     private final int hspAlignLen; 
     private final String hspQseq;
@@ -38,9 +33,9 @@ public final class BlastSubjectHsp implements Comparable {
      
     private static final String NUMBER_FORMAT_ERROR = "Not available.";
  
-    public BlastSubjectHsp(final String hspScore, final String hspBitScore, final String hspEvalue, 
+    public BlastSubjectHsp(final double hspScore, final double hspBitScore, final double hspEvalue, 
                            final int hspQueryFrom, final int hspQueryTo, final int hspHitFrom, 
-                           final int hspHitTo, final int hspIdentity, final String hspPositive, 
+                           final int hspHitTo, final int hspIdentity, final int hspPositive, 
                            final int hspGaps, final int hspAlignLen, final long percentage, 
                            final String hspQseq, final String hspHseq, final String hspMidline, 
                            final int hspQueryFrame, final int hspHitFrame) {
@@ -71,11 +66,11 @@ public final class BlastSubjectHsp implements Comparable {
         return hspAlignLen;
     }
 
-    public String getHspBitScore() {
+    public double getHspBitScore() {
         return hspBitScore;
     }
 
-    public String getHspEvalue() {
+    public double getHspEvalue() {
         return hspEvalue;
     }
 
@@ -107,7 +102,7 @@ public final class BlastSubjectHsp implements Comparable {
         return hspMidline;
     }
 
-    public String getHspPositive() {
+    public int getHspPositive() {
         return hspPositive;
     }
 
@@ -127,25 +122,21 @@ public final class BlastSubjectHsp implements Comparable {
         return hspQueryTo;
     }
 
-    public String getHspScore() {
+    public double getHspScore() {
         return hspScore;
     }
-
-    public Logger getLogger() {
-        return logger;
-    }
-
+ 
    
     public String getTextColor() {   
         return percentage >= 99 ? TEXT_BLACK : TEXT_GRAY;
     }
  
     
-    public void setPercentage() {
-        double identities = Double.valueOf(hspIdentity);
-        double alignLength = Double.valueOf(hspAlignLen); 
-        this.percentage = (long) Math.floor((identities / alignLength) * 100 + 0.5d);
-    }
+//    public void setPercentage() {
+//        double identities = Double.valueOf(hspIdentity);
+//        double alignLength = Double.valueOf(hspAlignLen); 
+//        this.percentage = (long) Math.floor((identities / alignLength) * 100 + 0.5d);
+//    }
     
     
     public Long getPercentage() {
@@ -157,8 +148,7 @@ public final class BlastSubjectHsp implements Comparable {
         String identitiesPercentage = "";
         try { 
             identitiesPercentage = String.valueOf(percentage) + "%";
-        } catch (NumberFormatException e) {
-            logger.error(e.getMessage());
+        } catch (NumberFormatException e) { 
         }
         return identitiesPercentage;
     }
@@ -170,8 +160,7 @@ public final class BlastSubjectHsp implements Comparable {
             double gaps = Double.valueOf(hspGaps);
             double alignLength = Double.valueOf(hspAlignLen);
             gapsPercentage = String.valueOf((long) Math.floor((gaps / alignLength) * 100)) + "%";
-        } catch (NumberFormatException e) {
-            logger.error(e.getMessage());
+        } catch (NumberFormatException e) { 
         }
         return gapsPercentage;
     }
@@ -182,8 +171,7 @@ public final class BlastSubjectHsp implements Comparable {
         try {
             qFrame = hspQueryFrame >= 0 ? "Plus" : "Minus";
             hFrame = hspHitFrame >= 0 ? "Plus" : "Minus";
-        } catch (NumberFormatException e) {
-            logger.error(e.getMessage());
+        } catch (NumberFormatException e) { 
         }
         return "Strand = " + qFrame + "/" + hFrame;
     }

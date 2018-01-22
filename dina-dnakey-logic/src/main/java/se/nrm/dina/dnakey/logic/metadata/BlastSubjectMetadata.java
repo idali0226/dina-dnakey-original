@@ -21,7 +21,7 @@ public final class BlastSubjectMetadata {
     private final String coordinates;
     private final String catalogNumber;
     private final String scientificName; 
-    private final String hitLen;  
+    private final int hitLen;  
     private final boolean nrm;
     
     public static final String TEXT_BLACK = "blacktext";
@@ -36,7 +36,7 @@ public final class BlastSubjectMetadata {
                                 final String genbankAccession, final String boldId, 
                                 final String targetMarker, final String coordinates, 
                                 final String catalogNumber, final String scientificName, 
-                                final String hitLen, final List<BlastSubjectHsp> subjectHspList, 
+                                final int hitLen, final List<BlastSubjectHsp> subjectHspList, 
                                 final boolean nrm) {
         this.hitNumber = hitNumber;
         this.genbankId = genbankId;
@@ -87,7 +87,7 @@ public final class BlastSubjectMetadata {
         return targetMarker;
     } 
     
-    public String getHitLen() {
+    public int getHitLen() {
         return hitLen; 
     }
 
@@ -114,11 +114,7 @@ public final class BlastSubjectMetadata {
     public void setMbid(String mbid) {
         this.mbid = mbid;
     }
-
  
-    
-    
-    
     public String getTextColor() {
         String color = TEXT_GRAY;
         

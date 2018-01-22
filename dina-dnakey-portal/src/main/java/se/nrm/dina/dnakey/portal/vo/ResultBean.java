@@ -17,8 +17,8 @@ public class ResultBean implements Serializable {
     private final String boldId;
     private final String identity;
     private final String mark;
-    private final String score;
-    private final String evalue;
+    private final double score;
+    private final double evalue;
     private final String collection;
     private final String swedishName;
     private final String locality;
@@ -28,10 +28,10 @@ public class ResultBean implements Serializable {
     
     public ResultBean(final String query, final String catalogNumber, final String scientificName, 
                       final String genbankAcc, final String boldId, final String identity, 
-                      final String mark, final String score, final String evalue, final String collection,
+                      final String mark, final double score, final double evalue, final String collection,
                       final String swedishName, final String locality, final String coordinates, 
                       final String date, final String collector) {
-        log.info("ResultBean");
+  
         this.query = query;
         this.catalogNumber = catalogNumber;
         this.scientificName = scientificName;
@@ -73,7 +73,7 @@ public class ResultBean implements Serializable {
         return date;
     }
 
-    public String getEvalue() {
+    public double getEvalue() {
         return evalue;
     }
 
@@ -97,7 +97,7 @@ public class ResultBean implements Serializable {
         return scientificName;
     }
 
-    public String getScore() {
+    public double getScore() {
         return score;
     }
 

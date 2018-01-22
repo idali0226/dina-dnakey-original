@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:f="http://java.sun.com/jsf/core"   >
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head >
         <link rel="shortcut icon" href="//www.dina-web.net/dnakey/resources/images/favicon.ico" type="image/x-icon" />
@@ -16,6 +17,15 @@
 
     <f:view locale="#{languages.locale}"  > 
         <h:body styleClass="background"> 	     
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">   
+                <h:panelGrid columns="3"  >  
+                    <p:graphicImage value="/resources/images/loaderA32.gif"   alt="#{msg.progress}" title="#{msg.progress}" styleClass="images" /> 
+                    <p:spacer width="10" />
+                    <p:outputLabel value="#{msg.wait}" styleClass="inprocess" /> 
+                </h:panelGrid>  
+            </p:dialog>
+
             <h:outputStylesheet library="css" name="dnakey.css"  />
              
             <div style="width: 960px; margin: auto;"> 

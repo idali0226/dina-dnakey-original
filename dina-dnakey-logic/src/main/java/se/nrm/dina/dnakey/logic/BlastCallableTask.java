@@ -52,7 +52,7 @@ public class BlastCallableTask implements Callable<BlastMetadata> {
             Process process = Runtime.getRuntime().exec(blastCommand);
             is = process.getInputStream(); 
             String s = IOUtils.toString(is, "UTF-8"); 
-       
+              
             return MetadataDataFactory.getInstance().buildBlastMetadataByJson(s); 
         } catch (IOException ex) { 
             log.error(ex.getMessage());

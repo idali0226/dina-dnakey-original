@@ -10,8 +10,9 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicInteger; 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;  
-import org.biojava3.core.exceptions.CompoundNotFoundError;
-import org.biojava3.core.sequence.io.FastaReaderHelper; 
+import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
+//import org.biojava3.core.exceptions.CompoundNotFoundError;
+//import org.biojava3.core.sequence.io.FastaReaderHelper; 
 import se.nrm.dina.dnakey.portal.util.ConstantString;
 
 /**
@@ -37,7 +38,7 @@ public class SequenceValidation implements Serializable {
             stream = new ByteArrayInputStream(sequence.getBytes(ConstantString.getInstance().getUtf8()));
             FastaReaderHelper.readFastaDNASequence(stream);  
             return true;
-        } catch (Exception ex) { 
+        } catch (IOException ex) { 
             return false;
         } finally {
             try {
@@ -76,11 +77,11 @@ public class SequenceValidation implements Serializable {
         if (singleSeq == null || singleSeq.trim().isEmpty()) {
             errorMsg = "Invalid fasta sequence!";   
         } else {
-            try {
+//            try {
                 validate(singleSeq.trim()); 
-            } catch (CompoundNotFoundError ex) {
-                errorMsg = ex.getMessage(); 
-            } 
+//            } catch (CompoundNotFoundError ex) {
+//                errorMsg = ex.getMessage(); 
+//            } 
         } 
         return errorMsg == null;
     }

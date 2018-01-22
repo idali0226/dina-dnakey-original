@@ -368,6 +368,25 @@ a {
     display: none !important; 
 }
 
+.padding30 {
+    padding-left: 30px; 
+    padding-right: 30px;
+}
+
+.paddingleft30 {
+    padding-left: 30px;  
+}
+
+
+
+
+/* result */
+.resultheader {
+    float: left; 
+    width: 100%; 
+}
+
+
 
 
 /* datatable*/
@@ -475,7 +494,107 @@ a {
     font-size: 10px !important;  
 }
 
+.resulttableheader {
+    width: 930px; 
+    height: 20px; 
+    float: left;   
+    font-size: 12px; 
+    background-color: #d9d9d9; 
+    font-weight: bold; 
+}
 
+.rowexpansion {
+    float: left; 
+    font-size: 10px; 
+    background-color: #DFE9B8; 
+    width: 920px;  
+}
+
+.resulttabletip250 {
+    font-size: 12px; 
+    white-space: normal; 
+    width: 250px; 
+}
+
+.resulttabletip150 {
+    font-size: 12px; 
+    white-space: normal; 
+    width: 150px; 
+}
+
+.resulttabletip300 {
+    font-size: 12px; 
+    white-space: normal; 
+    width: 300px; 
+}
+
+.resultbtns {
+    float: right; 
+    font-size: 10px;   
+    padding-right: 20px; 
+}
+
+.csvbtn {
+    text-decoration: none; 
+    padding-right: 10px;
+}
+
+.resultseparator {
+    float: left; 
+    width: 100%; 
+    padding-bottom: 10px;
+}
+
+.resultpanel {
+    width: 100%; 
+    float: left; 
+    font-size: 11px;
+}
+
+.resultqryheader {
+    width: 90%; 
+    float: left; 
+    font-size: 12px; 
+    font-weight: bold; 
+}
+
+.resultqryheader1 { 
+    padding-left: 30px; 
+    float: left; 
+    width: 50px;
+}
+
+.resultqryheader2 { 
+    padding-left: 30px; 
+    float: left; 
+    width: 5px;
+}
+
+.resultqryheader3 { 
+    padding-left: 30px; 
+    float: left; 
+    width: 400px;
+}
+
+.highmatch {
+    float: left; 
+    width: 90%; 
+    padding-left: 30px; 
+    font-size: 14px;
+}
+
+.resultspacer {
+    float: left; 
+    width: 90%;
+    padding-left: 30px;
+}
+
+.gmapinfowindow {
+    text-align:center; 
+    display:block; 
+    margin:auto; 
+    height: 80px;
+}
 
 .ui-button-text {
     background-color: #86AD16;

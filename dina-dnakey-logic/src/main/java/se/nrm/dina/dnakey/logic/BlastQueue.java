@@ -64,8 +64,7 @@ public class BlastQueue implements Serializable {
         List<Future> list = new ArrayList<>(); 
         filePathList
                 .parallelStream()
-                .forEachOrdered(x -> {  
-             
+                .forEachOrdered(x -> {   
                     list.add(highPriority.submit(new BlastCallableTask(x, dbname, blastPath, blastDbPath)));
                 });
  

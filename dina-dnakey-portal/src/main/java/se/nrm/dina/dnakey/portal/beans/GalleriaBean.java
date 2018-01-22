@@ -23,8 +23,7 @@ public class GalleriaBean implements Serializable {
     private String catalogNumber;
     private String scientificName;
     
-    public GalleriaBean() {   
-        log.info("GalleriaBean");
+    public GalleriaBean() {    
     }
       
     public void imageSwitch(BlastSubjectMetadata metadata) { 

@@ -49,14 +49,7 @@
                 </p:idleMonitor>  
                 <p:growl id="messages" autoUpdate="true" showDetail="true" showSummary="true" escape="false" sticky="true" />
                 
-                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
-                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">   
-                    <h:panelGrid columns="3"  >  
-                        <p:graphicImage value="/resources/images/loaderA32.gif"   alt="#{msg.progress}" title="#{msg.progress}" styleClass="images" /> 
-                        <p:spacer width="10" />
-                        <p:outputLabel value="#{msg.wait}" styleClass="inprocess" /> 
-                    </h:panelGrid>  
-                </p:dialog>
+                
                 
                 <h:form id="sequenceform"  enctype="multipart/form-data" prependId="false">  
                     <h:panelGroup layout="block" styleClass="text" > 

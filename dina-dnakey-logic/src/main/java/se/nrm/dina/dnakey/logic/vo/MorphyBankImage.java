@@ -37,9 +37,7 @@ public class MorphyBankImage {
     public String getCatalogNumber() {
         return catalogNumber;
     }
-    
-    
-
+     
     public String getName() {
         return name;
     }
@@ -51,9 +49,7 @@ public class MorphyBankImage {
     public String getMbview() {
         return mbview;
     }
-    
-   
-    
+     
     @Override
     public String toString() {
         return "MorphBankImage : [" + morphybankImageLink + " - " + thumb;

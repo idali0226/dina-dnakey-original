@@ -1,11 +1,13 @@
 package se.nrm.dina.dnakey.logic.metadata;
   
 import java.util.List;     
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
  * @author idali
  */
+@Slf4j
 public class BlastMetadata { 
     
     private String program;
@@ -13,14 +15,13 @@ public class BlastMetadata {
     private String reference; 
     private String database;
     private String query;
-    private String queryLen;
-    private String statisticDbNumber;
-    private String statisticDbLength; 
+    private int queryLen;
+    private int statisticDbNumber;
+    private int statisticDbLength; 
     private String sequence;
     private boolean openLowMatch = false; 
-    
-//    private BlastQueryMetadata query;
-//    private BlastStatistic statistic;
+    private boolean hasHit;
+     
     private List<BlastSubjectMetadata> subjectMetadataList;
     private List<BlastSubjectMetadata> lowMatchsubjectMetadataList;
      
@@ -29,9 +30,9 @@ public class BlastMetadata {
         
     }
     
-    public BlastMetadata(String program, String version, String reference, String database, String query, String queryLen, 
-                         String statisticDbNumber, String statisticDbLength, List<BlastSubjectMetadata> subjectMetadataList, 
-                         List<BlastSubjectMetadata> lowMatchSubjectMetadataList, boolean openLowMatch) {
+    public BlastMetadata(String program, String version, String reference, String database, String query, int queryLen, 
+                         int statisticDbNumber, int statisticDbLength, List<BlastSubjectMetadata> subjectMetadataList, 
+                         List<BlastSubjectMetadata> lowMatchSubjectMetadataList, boolean openLowMatch, boolean hasHit) {
         this.program = program;
         this.version = version;
         this.reference = reference;
@@ -40,12 +41,17 @@ public class BlastMetadata {
         this.queryLen = queryLen;
         this.statisticDbNumber = statisticDbNumber;
         this.statisticDbLength = statisticDbLength;
-//        this.statistic = statistic;
+ 
         this.subjectMetadataList = subjectMetadataList;
         this.lowMatchsubjectMetadataList = lowMatchSubjectMetadataList; 
         this.openLowMatch = openLowMatch;
+        this.hasHit = hasHit;
     }
-  
+
+    public String getProgram() {
+        return program;
+    }
+     
     public String getDatabase() {
         return database;
     }  
@@ -54,7 +60,7 @@ public class BlastMetadata {
         return query;
     }
 
-    public String getQueryLen() {
+    public int getQueryLen() {
         return queryLen;
     } 
     
@@ -62,11 +68,11 @@ public class BlastMetadata {
         return reference;
     }
 
-    public String getStatisticDbLength() {
+    public int getStatisticDbLength() {
         return statisticDbLength;
     }
 
-    public String getStatisticDbNumber() {
+    public int getStatisticDbNumber() {
         return statisticDbNumber;
     }
  
@@ -106,13 +112,20 @@ public class BlastMetadata {
         return !lowMatchsubjectMetadataList.isEmpty();
     }
 
-    public boolean isHasResult() {
-        return !subjectMetadataList.isEmpty() || !lowMatchsubjectMetadataList.isEmpty();
+    public boolean isHasHit() {
+        return hasHit;
     }
+    
+    
+
+//    public boolean isHasResult() {
+//        log.info("isHasResult : {} -- {}", subjectMetadataList, lowMatchsubjectMetadataList);
+//        return !subjectMetadataList.isEmpty() || !lowMatchsubjectMetadataList.isEmpty();
+//    }
   
     public String getGenbankUrl() { 
         return subjectMetadataList.isEmpty() ? "http://www.ncbi.nlm.nih.gov/blast/Blast.cgi?QUERY=" + sequence + 
-                                    "&DATABASE=nr&HITLIST_SIZE=10&FILTER=L&EXPECT=10&FORMAT_TYPE=HTML" +
-                                    "&PROGRAM=blastn&CLIENT=web&SERVICE=plain&NCBI_GI=on&PAGE=Nucleotides&CMD=Put" : null;
+                                                "&DATABASE=nr&HITLIST_SIZE=10&FILTER=L&EXPECT=10&FORMAT_TYPE=HTML" +
+                                                "&PROGRAM=blastn&CLIENT=web&SERVICE=plain&NCBI_GI=on&PAGE=Nucleotides&CMD=Put" : null;
     }
 }

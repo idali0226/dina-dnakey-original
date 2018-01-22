@@ -26,8 +26,8 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker; 
-import se.nrm.dina.dnakey.logic.BlastQueue;
-import se.nrm.dina.dnakey.logic.Blaster; 
+import se.nrm.dina.dnakey.logic.BlastQueue; 
+import se.nrm.dina.dnakey.logic.GenbankBlaster;
 import se.nrm.dina.dnakey.logic.metadata.BlastMetadata;
 import se.nrm.dina.dnakey.logic.metadata.BlastSubjectHsp;
 import se.nrm.dina.dnakey.logic.metadata.BlastSubjectMetadata; 
@@ -51,23 +51,31 @@ import se.nrm.dina.dnakey.portal.util.FastaFiles;
 @Slf4j
 public class BlastBean implements Serializable {
       
-    private String sequenceList;                                        // sequence or sequences are listed in tab1
-    private String testSequences;                                       // list of sequences in tab3 
+    private String sequenceList;                                                    // sequence or sequences are listed in tab1
+    private String testSequences;                                                   // list of sequences in tab3 
     
     
-    private List<UploadedFile> uploadedFiles = new ArrayList<>();       // upload fasta files in tab2
+    private List<UploadedFile> uploadedFiles = new ArrayList<>();                   // upload fasta files in tab2
     private Map<String, List<String>> sequencesMap = new HashMap();
     
     private List<String> sequences;
     
     private int numOfTestSeqs = 0;  
     private final int MAX_UPLOADED_FILES = 5; 
-    private int activeIndex = 0;                                        // active tab in sequence page
+    private int activeIndex = 0;                                                    // active tab in sequence page
+    
+    
+//    private String dbVersion;
+//    private int statisticDbNumber;
+//    private int statisticDbLength;
+    
+    
      
     private Map<BlastMetadata, String> ridMap = new HashMap<>(); 
     private String database;    
     
     // Result
+    private BlastMetadata metadata;
     private List<ResultBean> resultBeans; 
     private int totalSequences = 0;
     // End of result
@@ -97,7 +105,8 @@ public class BlastBean implements Serializable {
     @Inject
     private BlastQueue serviceQueue;
     
-    
+    @Inject
+    private GenbankBlaster blaster;
     
     
     
@@ -125,9 +134,7 @@ public class BlastBean implements Serializable {
         
         
     
-    private String dbVersion;
-    private String statisticDbNumber;
-    private String statisticDbLength;
+
      
     
    
@@ -173,8 +180,7 @@ public class BlastBean implements Serializable {
     private FacesContext context;
     RequestContext requestContext; 
   
-    @Inject
-    private Blaster blaster;
+
     
 
      
@@ -408,11 +414,10 @@ public class BlastBean implements Serializable {
         
         totalSequences = sequences.size();                                      // display in result page
         map = new HashMap<>();
-        listMetadata = new ArrayList<>();
+//        listMetadata = new ArrayList<>();                                  
 
         List<String> fastaFilesPath = buildFastaFilePath(); 
-        listMetadata = serviceQueue.run(fastaFilesPath, database);
-        
+        listMetadata = serviceQueue.run(fastaFilesPath, database); 
         fileHandler.deleteTempFiles(fastaFilesPath);                            // remove temp fasta files
         
         
@@ -430,44 +435,44 @@ public class BlastBean implements Serializable {
         
 
 //            listMetadata = blaster.multipleBlast(fastaFilesPath, database);
-        BlastMetadata metadata = listMetadata.get(0);
-        dbVersion = metadata.getVersion();
-        statisticDbLength = metadata.getStatisticDbLength();
-        statisticDbNumber = metadata.getStatisticDbNumber();
+        metadata = listMetadata.get(0);
+//        dbVersion = metadata.getVersion();
+//        statisticDbLength = metadata.getStatisticDbLength();
+//        statisticDbNumber = metadata.getStatisticDbNumber();
 
         String query;
         String catalogNumber;
         String scientificName;
-            String genbankAcc;
-            String boldId;
-            String identity;
-            String score;
-            String evalue;
-            String collection = null;
-            String swedishName = null;
-            String locality = null;
-            String latLnt;
-            String date = null;
-            String collector = null;
-            String mark;
-                
-            int count = 0;
-            boolean hasResult;
-            for (BlastMetadata bm : listMetadata) {
-                hasResult = true;
-                if(!bm.isHasResult() ) { 
-                    hasResult = false;
+        String genbankAcc;
+        String boldId;
+        String identity;
+        double score;
+        double evalue;
+        String collection = null;
+        String swedishName = null;
+        String locality = null;
+        String latLnt;
+        String date = null;
+        String collector = null;
+        String mark;
+
+        int count = 0;
+        boolean hasResult;
+        for (BlastMetadata bm : listMetadata) {
+            hasResult = true;
+            if (!bm.isHasHit()) {
+                hasResult = false;
+                bm.setSequence(sequences.get(count));
+            }
+
+            if (hasResult) {
+                query = bm.getQuery();
+                if (!bm.isHasHighMatach()) {
                     bm.setSequence(sequences.get(count));
-                } 
-                
-                if(hasResult) {
-                    query = bm.getQuery();
-                    if(!bm.isHasHighMatach()) {
-                        bm.setSequence(sequences.get(count));
-                    }
-                    for (BlastSubjectMetadata subMetadata : bm.getSubjectMetadataList()) {
-                        catalogNumber = subMetadata.getCatalogNumber();
-                        scientificName = subMetadata.getScientificName();
+                }
+                for (BlastSubjectMetadata subMetadata : bm.getSubjectMetadataList()) {
+                    catalogNumber = subMetadata.getCatalogNumber();
+                    scientificName = subMetadata.getScientificName();
                         genbankAcc = subMetadata.getGenbankAccession();
                         boldId = subMetadata.getBoldId();
                         latLnt = subMetadata.getCoordinates();
@@ -503,9 +508,9 @@ public class BlastBean implements Serializable {
                                 } 
                             }
                             ResultBean bean = new ResultBean(query, catalogNumber, scientificName,
-                                    genbankAcc, boldId, identity, mark,
-                                    score, evalue, collection, swedishName,
-                                    locality, latLnt, date, collector);
+                                                                genbankAcc, boldId, identity, mark,
+                                                                score, evalue, collection, swedishName,
+                                                                locality, latLnt, date, collector);
                             resultBeans.add(bean);
                         }
                     }
@@ -616,8 +621,25 @@ public class BlastBean implements Serializable {
     public boolean isIsMax() {
         return uploadedFiles.size() >= MAX_UPLOADED_FILES;
     }
+
+    public BlastMetadata getMetadata() {
+        return metadata;
+    }
  
-    
+    /**
+     * Description of blast database
+     * @return 
+     */
+    public String getDbFullName() { 
+        switch (database) {
+            case "nrm":
+                return languages.isIsSwedish() ? "Svenska ryggradsdjur (COI, 16S)" : "Swedish vertebrate animals (COI, 16S)";
+            case "bold":
+                return languages.isIsSwedish() ? "Barkodsekvenser för svenska organismer (COI, matK, rbcL, 16S*)" : "Barcode sequences for Swedish organisms (COI, matK, rbcL, 16S*)";
+            default:
+                return languages.isIsSwedish() ? "Barkodsekvenser från Genbank (COI, matK, rbcL, 16S*)" : "Barcode sequences from Genbank (COI, matK, rbcL, 16S*)";
+        }
+    } 
     
     
     
@@ -664,6 +686,7 @@ public class BlastBean implements Serializable {
         
         String seq = metadata.getSequence(); 
         String rid = blaster.remoteGenbankBlast(seq); 
+    
         ridMap.remove(metadata);
         ridMap.put(metadata, rid);
     }
@@ -838,15 +861,7 @@ public class BlastBean implements Serializable {
     public boolean isSolrAvailble() {
         return solrAvailble;
     }
- 
- 
-
-
-
-    
-
-         
-
+  
 
     public List<BlastMetadata> getListMetadata() {
         return listMetadata;
@@ -889,17 +904,17 @@ public class BlastBean implements Serializable {
         return selectedRecord;
     }
 
-    public String getDbVersion() {
-        return dbVersion;
-    }
-
-    public String getStatisticDbLength() {
-        return statisticDbLength;
-    }
-
-    public String getStatisticDbNumber() {
-        return statisticDbNumber;
-    }
+//    public String getDbVersion() {
+//        return dbVersion;
+//    }
+//
+//    public String getStatisticDbLength() {
+//        return statisticDbLength;
+//    }
+//
+//    public String getStatisticDbNumber() {
+//        return statisticDbNumber;
+//    }
 
     public String getDatabase() {
         return database;
@@ -955,6 +970,7 @@ public class BlastBean implements Serializable {
     }
  
     public String ridByMetadata(BlastMetadata metadata) {
+        log.info("ridByMetadata : {}", metadata);
         return ridMap.get(metadata);
     }
     
@@ -972,16 +988,5 @@ public class BlastBean implements Serializable {
         return totalSequences;
     }
 
-     
-    public String getDbFullName() {
-         
-        switch (database) {
-            case "nrm":
-                return languages.isIsSwedish() ? "Svenska ryggradsdjur (COI, 16S)" : "Swedish vertebrate animals (COI, 16S)";
-            case "bold":
-                return languages.isIsSwedish() ? "Barkodsekvenser för svenska organismer (COI, matK, rbcL, 16S*)" : "Barcode sequences for Swedish organisms (COI, matK, rbcL, 16S*)";
-            default:
-                return languages.isIsSwedish() ? "Barkodsekvenser från Genbank (COI, matK, rbcL, 16S*)" : "Barcode sequences from Genbank (COI, matK, rbcL, 16S*)";
-        }
-    } 
+
 }
