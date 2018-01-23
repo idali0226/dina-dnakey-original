@@ -1,0 +1,40 @@
+version: '3.1'
+
+services: 
+  blast:
+    #image: simonalpha/ncbi-blast-docker:latest
+    image: biocontainers/blast
+    container_name: blast
+    volumes:
+      - ./data/blast/db:/data/
+
+  solr:
+    image: solr
+    ports:
+      - "8983:8983"
+
+
+  ui:
+    image: dina/dnakey:v0.1 
+    environment:
+      - VIRTUAL_HOST=dnakey.dina-web.net
+      - VIRTUAL_PORT=8080
+    volumes:
+      - ./data/dnakey/geo_coords.tsv:/usr/geo_coords.tsv
+      - ./data/blast:/usr/local/blast
+    ports:
+      - "8080:8080"
+ 
+#      - "8443:8443"
+#      - "9443:443"
+#      - "9990:9990"
+ 
+ 
+ 
+
+
+# running with external proxy (check the network 'docker network ls')
+networks:
+  default:
+    external:
+      name: dwproxy_default
