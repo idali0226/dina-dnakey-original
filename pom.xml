@@ -107,18 +107,26 @@
                 </configuration>
             </plugin> 
   
-<!--            <plugin>
+            <plugin>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId>
+                <artifactId>wildfly-swarm-plugin</artifactId> 
                 <version>${version.wildfly.swarm}</version> 
                 <executions>
                     <execution>
                         <goals>
                             <goal>package</goal>
                         </goals>
-                    </execution>
+                    </execution>  
                 </executions>
-            </plugin>-->
+                <configuration> 
+                    <jvmArguments>
+                        <jvmArgument>-Xmx2048m</jvmArgument>
+                    </jvmArguments> 
+                    <properties> 
+                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack> 
+                    </properties> 
+                </configuration>  
+            </plugin> 
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

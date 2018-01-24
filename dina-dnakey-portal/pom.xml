@@ -134,7 +134,7 @@
                 <!--<version>3.1.0</version>-->
             </plugin> 
             
-            <plugin>
+<!--            <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId> 
                 <version>${version.wildfly.swarm}</version> 
@@ -153,7 +153,7 @@
                         <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack> 
                     </properties> 
                 </configuration>  
-            </plugin> 
+            </plugin> -->
             <!--             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>

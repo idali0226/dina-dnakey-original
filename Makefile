@@ -1,7 +1,6 @@
 #!make
 PWD=$(shell pwd)
-
-#all:  build up-dev
+ 
 all: build up
 
 .PHONY: all
