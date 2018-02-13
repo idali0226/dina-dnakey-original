@@ -22,8 +22,8 @@ build-ui:
  
 
 up:
-	docker-compose -f docker-compose.yml up -d blast
-	docker-compose -f docker-compose.yml up -d solr
+#	docker-compose -f docker-compose.yml up -d blast
+#	docker-compose -f docker-compose.yml up -d solr
 	docker-compose -f docker-compose.yml up -d ui
  
  

@@ -13,7 +13,7 @@ swarm:
     tempfile:
       path: /usr/local/blast/tempfastafiles
   solr:
-    path: http://dina-db:8983/solr/
+    path: http://dina-db.nrm.se:8983/solr/
   http:
     port: 8080
   management:

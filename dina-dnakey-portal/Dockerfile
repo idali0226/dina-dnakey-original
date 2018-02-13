@@ -1,11 +1,12 @@
-FROM openjdk:8u111-jdk-alpine
+FROM openjdk:8-jdk-stretch
  
-
-RUN apk update && apk add --no-cache tini openssl bash
+WORKDIR /usr/local/blast
+RUN curl ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.30/ncbi-blast-2.2.30+-x64-linux.tar.gz | tar -zxC /usr/local/blast --strip-components=1
+ 
 
 COPY target/dnakey-swarm.jar /usr/src/myapp/
 WORKDIR /usr/src/myapp
 
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT [""]
 EXPOSE 8080
-CMD java -jar dnakey-swarm.jar -Sinitdata
+CMD ["java", "-jar", "dnakey-swarm.jar", "-Sinitdata"]
