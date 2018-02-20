@@ -5,12 +5,12 @@ services:
   ui:
     image: dina/dnakey:v0.1 
     environment:
-      - VIRTUAL_HOST=dnakey.dina-web.net
+      - VIRTUAL_HOST=beta-dnakey.dina-web.net
       - VIRTUAL_PORT=8080
-    volumes:
-      - ./data/dnakey/geo_coords.tsv:/usr/geo_coords.tsv
-      - ./data/blast/db:/usr/local/blast/db
-      - ./data/blast/tempfastafiles:/usr/local/blast/tempfastafiles
+#    volumes:
+#      - ./data/dnakey/geo_coords.tsv:/usr/geo_coords.tsv
+#      - ./data/blast/db:/usr/local/blast/db
+#      - ./data/blast/tempfastafiles:/usr/local/blast/tempfastafiles
     ports:
       - "8080:8080"
     extra_hosts:
