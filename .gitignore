@@ -1,2 +1,7 @@
 /dina-dnakey-portal/target/
 /dina-dnakey-logic/target/
+/certs
+/audit.log
+/m2
+/dina-dnakey-portal/data
+/dina-dnakey-portal/audit.log
