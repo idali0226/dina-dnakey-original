@@ -5,7 +5,7 @@ services:
   ui:
     image: dina/dnakey:v0.1 
     environment:
-      - VIRTUAL_HOST=dnakey.dina-web.net
+      - VIRTUAL_HOST=beta.dnakey.se
       - VIRTUAL_PORT=8080
 #    volumes:
 #      - ./data/dnakey/geo_coords.tsv:/usr/geo_coords.tsv
