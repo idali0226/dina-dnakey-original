@@ -19,19 +19,20 @@ build-ui:
 	make -C dina-dnakey-portal
 
 
- 
+up-local:
+	docker-compose -f docker-compose.local.yml up -d proxy
+	docker-compose -f docker-compose.local.yml up -d ui
 
 up:
 #	docker-compose -f docker-compose.yml up -d blast
 #	docker-compose -f docker-compose.yml up -d solr
 	docker-compose -f docker-compose.yml up -d ui
- 
- 
+	
 down:
 	docker-compose -f docker-compose.yml down
 
- 
- 
+test:
+ 	xdg-open https://beta.dnakey.se/dnakey
 
 # docker login
 release:
