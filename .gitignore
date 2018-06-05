@@ -5,3 +5,6 @@
 /m2
 /dina-dnakey-portal/data
 /dina-dnakey-portal/audit.log
+
+*.tar
+
