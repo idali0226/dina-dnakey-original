@@ -681,13 +681,18 @@ a {
 }
 
 .contact1 {
-    width: 120px; 
+    width: 100px; 
     float: left;
     font-weight: bold;
 }
 
 .contact2 {
-    width: 220px; 
+    width: 200px; 
+    float: left;
+}
+
+.phonetext {
+    width: 450px;
     float: left;
 }
 
