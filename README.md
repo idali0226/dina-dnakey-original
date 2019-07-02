@@ -25,7 +25,8 @@ cd to directory dina-dnakey-original
 
 Update project-initdata.xml file with solr and blast path
 
-To run the portal local:
+## To run the portal local:
+
 mvn package
 
 java -jar dina-dnakey-portal/target/dnakey-swarm.jar -Sinitdata
@@ -34,7 +35,7 @@ Now you can access the portal with url:
 
 http://localhost:8080/dnakey
 
-To run with docker:
+## To run with docker:
 
 make
 
