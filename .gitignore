@@ -5,6 +5,8 @@
 /m2
 /dina-dnakey-portal/data
 /dina-dnakey-portal/audit.log
+/dina-dnakey-portal/nb-configuration.xml
+/dina-dnakey-logic/nb-configuration.xml
 
 *.tar
 
