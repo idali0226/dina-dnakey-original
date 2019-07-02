@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-      
+
     <groupId>se.nrm.dina</groupId>
     <artifactId>dina-dnakey</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
-  
+
     <organization>
         <name>Swedish Natural History of Museum</name>
         <url>http://www.nrm.se</url>
     </organization>
-      
+
     <developers>
         <developer>
             <id>idali</id>
             <name>Ida Li</name>
             <email>idal.li@nrm.se</email>
             <organization>nrm.se</organization>
-        </developer> 
+        </developer>
     </developers>
- 
-  
-    <properties> 
-        <version.wildfly.swarm>2017.12.1</version.wildfly.swarm>    
+
+
+    <properties>
+        <version.wildfly.swarm>2017.12.1</version.wildfly.swarm>
         <version.org.slf4j>1.7.25</version.org.slf4j>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-     
+
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId> 
+                <groupId>org.wildfly.swarm</groupId>
                 <artifactId>bom-all</artifactId>
                 <version>${version.wildfly.swarm}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency> 
+            </dependency>
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
@@ -51,51 +51,45 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
- 
-    <modules> 
+
+    <modules>
         <module>dina-dnakey-logic</module>
-        <module>dina-dnakey-portal</module> 
+        <module>dina-dnakey-portal</module>
     </modules>
 
     <dependencies>
-  
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${version.org.slf4j}</version>
-        </dependency> 
- 
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.18</version>
+            <version>1.18.8</version>
             <scope>provided</scope>
-        </dependency> 
-        
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
- 
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
             <scope>test</scope>
-        </dependency> 
-        
-<!--        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>cdi</artifactId> 
-        </dependency>-->
+        </dependency>
 
- 
     </dependencies>
-     
+
     <build>
-        <plugins> 
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -105,32 +99,32 @@
                     <target>1.8</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
-            </plugin> 
-  
+            </plugin>
+
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>wildfly-swarm-plugin</artifactId> 
-                <version>${version.wildfly.swarm}</version> 
+                <artifactId>wildfly-swarm-plugin</artifactId>
+                <version>${version.wildfly.swarm}</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>package</goal>
                         </goals>
-                    </execution>  
+                    </execution>
                 </executions>
-                <configuration> 
+                <configuration>
                     <jvmArguments>
                         <jvmArgument>-Xmx2048m</jvmArgument>
-                    </jvmArguments> 
-                    <properties> 
-                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack> 
-                    </properties> 
-                </configuration>  
-            </plugin> 
+                    </jvmArguments>
+                    <properties>
+                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+                    </properties>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.4</version>
                 <executions>
                     <execution>
                         <goals>
@@ -145,7 +139,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin> 
-        </plugins> 
-    </build>  
+            </plugin>
+        </plugins>
+    </build>
 </project>
