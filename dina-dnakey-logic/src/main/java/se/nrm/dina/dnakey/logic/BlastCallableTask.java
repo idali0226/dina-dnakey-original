@@ -8,9 +8,9 @@ package se.nrm.dina.dnakey.logic;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.Callable;  
+import java.util.concurrent.Callable;   
 import lombok.extern.slf4j.Slf4j;  
-import org.apache.commons.io.IOUtils; 
+import org.apache.commons.io.IOUtils;  
 import se.nrm.dina.dnakey.logic.metadata.BlastMetadata; 
 import se.nrm.dina.dnakey.logic.metadata.MetadataDataFactory;
 
@@ -20,8 +20,8 @@ import se.nrm.dina.dnakey.logic.metadata.MetadataDataFactory;
  * @author idali
  */
 @Slf4j
-public class BlastCallableTask implements Callable<BlastMetadata> {
- 
+public class BlastCallableTask implements Callable<BlastMetadata> { 
+    
     private final String outputStyle2 = " -task blastn -dust no -outfmt 5 -num_alignments 10 -num_descriptions 10 -parse_deflines";       // xml output
  
     private String blastCommand;
@@ -32,6 +32,7 @@ public class BlastCallableTask implements Callable<BlastMetadata> {
     }
      
     public BlastCallableTask(final String fastafilePath, final String dbName, String blastPath, String blastDbPath) { 
+        
         log.info("BlastCallableTask");
   
         blastCommand = buildBlastCommand(fastafilePath, dbName, blastPath, blastDbPath);   
@@ -44,9 +45,7 @@ public class BlastCallableTask implements Callable<BlastMetadata> {
      */
     @Override
     public BlastMetadata call() {
-        
-//        logger.info("call : {}", dbName);
- 
+          
         InputStream is = null;
         try {
             Process process = Runtime.getRuntime().exec(blastCommand);

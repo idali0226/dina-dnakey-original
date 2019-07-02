@@ -1,18 +1,12 @@
 version: '3.1'
 
-services:   
-  
+services:
+
   ui:
-    image: dina/dnakey:v0.1 
+    image: dina/dnakey:v0.2
     environment:
       - VIRTUAL_HOST=beta.dnakey.se
       - VIRTUAL_PORT=8080
-#    volumes:
-#      - ./data/dnakey/geo_coords.tsv:/usr/geo_coords.tsv
-#      - ./data/blast/db:/usr/local/blast/db
-#      - ./data/blast/tempfastafiles:/usr/local/blast/tempfastafiles
-#    ports:
-#      - "8080:8080"
     extra_hosts:
       - "dina-db.nrm.se:172.16.0.86"
 
@@ -24,4 +18,4 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certs:/etc/nginx/certs
-      
+
